@@ -44,4 +44,21 @@ public class PesquisaDAO {
             AcessoDB.closeConnection(con);
         }
     }
+    
+    public void truncarBD(){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("TRUNCATE pesquisa");
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Banco apagado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao apagar Banco!" + ex);
+        } finally{
+            AcessoDB.closeConnection(con);
+        }
+    }
 }

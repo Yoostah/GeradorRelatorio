@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório de Colaborador por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1" backcolor="#C0C0C0"/>
+	<parameter name="colaborador" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_inicial" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_final" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.pergunta as Pergunta,
+(select count(*) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=1) as '1 - Excelente',
+(select count(*) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=2) as '2 - Muito Bom',
+(select count(*) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=3) as '3 - Bom',
+(select count(*) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=4) as '4 - Regular',
+(select count(*) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=5) as '5 - Ruim',
+(select count(*) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
+from pesquisa as p where colaborador=$P{colaborador} and data between $P{data_inicial} and $P{data_final}
+group by pergunta;]]>
+	</queryString>
+	<field name="Pergunta" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="1 - Excelente" class="java.lang.Long"/>
+	<field name="2 - Muito Bom" class="java.lang.Long"/>
+	<field name="3 - Bom" class="java.lang.Long"/>
+	<field name="4 - Regular" class="java.lang.Long"/>
+	<field name="5 - Ruim" class="java.lang.Long"/>
+	<field name="TOTAL" class="java.lang.Long"/>
+	<group name="Pergunta">
+		<groupExpression><![CDATA[$F{Pergunta}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="122" splitType="Stretch">
+			<staticText>
+				<reportElement x="217" y="74" width="63" height="20" uuid="da134bae-01a5-4070-b65a-1945bae1ec86"/>
+				<text><![CDATA[Colaborador :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="74" width="120" height="20" uuid="de14a746-4f4f-4f10-990d-71c9a6e689e8"/>
+				<textFieldExpression><![CDATA[$P{colaborador}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy - ">
+				<reportElement x="470" y="-12" width="62" height="20" uuid="141cb104-e5bb-4211-97cc-eeede908af05"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="524" y="-12" width="47" height="20" uuid="0c0cceef-20ef-47dd-bf0f-b6f1964bb32b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="-12" width="100" height="20" uuid="3f270d56-d694-40f3-bcf0-90e466a62934"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Relatório gerado em:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="21" width="200" height="57" uuid="b88adbfe-5e09-4463-8b87-92e0c7bad754"/>
+				<imageExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\CORMED_200.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="217" y="24" width="307" height="20" uuid="94e1778d-88be-42a6-8abd-8713c904d82a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE COLABORADOR POR GRUPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="48" width="63" height="20" uuid="2312fd5c-4242-4957-8f52-b7d89b0269bf"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Período de :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="48" width="14" height="20" uuid="422a1386-cfb2-4b3a-9344-801d11747bc3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="280" y="48" width="53" height="20" uuid="8ffe2bbf-f940-4b32-b749-ce97e4847b28"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{data_inicial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="349" y="48" width="53" height="20" uuid="26890b9a-3c8e-4f44-9237-6d4d4930222e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{data_final}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="217" y="59" width="38" height="20" uuid="aafb5d92-05b4-432f-b3b1-840e951f3f6d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Grupo :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="59" width="100" height="20" uuid="b833d1f8-0940-4b53-a181-ba8944fe1ac9"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Marcação de Exames]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="458" y="3" width="80" height="20" uuid="07f3a70f-0b4c-4270-8bb9-d3806c8ee82c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="538" y="3" width="40" height="20" uuid="bb6c80dd-2ee6-4b58-9cb5-d2ae7abe97c3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21">
+			<rectangle>
+				<reportElement x="0" y="1" width="547" height="20" backcolor="#CCCCCC" uuid="fe4c2d48-92a0-40a7-a499-8471fa748e13"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="1" width="151" height="20" uuid="f0b8f741-1c35-4bc1-884a-099a9ff355ef"/>
+				<box leftPadding="6">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Verdana" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERGUNTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="1" width="66" height="20" uuid="b42e2860-04c4-43cb-98d9-b7824311cb70"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1 - Excelente ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="217" y="1" width="66" height="20" uuid="f31bc6d4-4cea-4632-a967-35e91b0605fe"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2 - Muito Bom ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="1" width="66" height="20" uuid="707f3fc0-d885-4004-9a48-885470c69db4"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3 - Bom ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="1" width="66" height="20" uuid="3addf87e-6412-439a-8a5f-1895feaa56b6"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4 - Regular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="1" width="66" height="20" uuid="a8ae468f-55b8-4f9b-8adc-83d84b8b6709"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5 - Ruim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="1" width="66" height="20" uuid="ba149de3-ea56-47e2-892a-fe2e48e3f183"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="151" height="20" uuid="062da5cc-83e0-4c65-91fa-2f86e74c3b24"/>
+				<box leftPadding="6">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Pergunta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="0" width="66" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{1 - Excelente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="0" width="66" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{2 - Muito Bom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="0" width="66" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{3 - Bom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="0" width="66" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{4 - Regular}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="0" width="66" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{5 - Ruim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="481" y="0" width="66" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="37">
+			<staticText>
+				<reportElement x="112" y="18" width="337" height="19" uuid="61968925-771a-4739-add5-61ac273ce40a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rua Conselheiro Lafaiete, 1959 - Loja 13, Sagrada Família, Belo Horizonte, MG - 31035-560]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="6" width="100" height="20" uuid="1964155c-4bb2-4d89-bd5b-548def17c8a0"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORMED ELETRÔNICA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="2" width="548" height="1" uuid="36949bd4-86f0-48fd-886c-dc801895e60c"/>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>
