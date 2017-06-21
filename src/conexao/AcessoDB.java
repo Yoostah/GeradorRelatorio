@@ -26,10 +26,10 @@ import java.util.logging.Logger;
  */
 public class AcessoDB {
     
-    private static final String DRIVER = "org.firebirdsql.jdbc.FBDriver";
-    private static final String URL = "jdbc:firebirdsql:localhost/3050:C:\\AppRelatorio\\APPRELATORIO.fdb"+"?lc_ctype=utf8";
-    private static final String USER = "sysdba";
-    private static final String PASS = "masterkey";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3306/relatoriodb";
+    private static final String USER = "root";
+    private static final String PASS = "";
     
     public static Connection getConnection() {
         try {

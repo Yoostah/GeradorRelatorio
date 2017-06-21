@@ -30,7 +30,7 @@ public class RelatorioHMC {
     public static void main(String[] args) throws ParseException {
         
         File arquivos[];
-        File diretorio = new File("C:\\Users\\Thulio\\Desktop\\Relatórios");
+        File diretorio = new File("C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\Dados");
         arquivos = diretorio.listFiles();
 
         System.out.println("### Arquivos encontrados no diretório ###");
