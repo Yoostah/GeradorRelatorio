@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Thulio/Documents/NetBeansProjects/RelatorioHMC/src/dao/PesquisaDAO.java</file>
-            <file>file:/C:/Users/Thulio/Documents/NetBeansProjects/RelatorioHMC/src/view/TelaApp.java</file>
-            <file>file:/C:/Users/Thulio/Documents/NetBeansProjects/RelatorioHMC/src/relatoriohmc/RelatorioHMC.java</file>
+            <file>file:/C:/Users/Thulio/Desktop/Relatórios/src/relatoriohmc/RelatorioHMC.java</file>
+            <file>file:/C:/Users/Thulio/Desktop/Relatórios/src/conexao/AcessoDB.java</file>
+            <file>file:/C:/Users/Thulio/Desktop/Relatórios/src/dao/PesquisaDAO.java</file>
         </group>
     </open-files>
 </project-private>

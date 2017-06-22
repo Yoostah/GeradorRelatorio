@@ -30,7 +30,7 @@ public class RelatorioHMC {
     public static void main(String[] args) throws ParseException {
         
         File arquivos[];
-        File diretorio = new File("C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\CORMED_05.04.16");
+        File diretorio = new File("C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\CORMED_05.04.16");
         arquivos = diretorio.listFiles();
 
         System.out.println("### Arquivos encontrados no diretório ###");
@@ -73,7 +73,12 @@ public class RelatorioHMC {
 
                 //Criação do objeto para guardar os dados no BD (String pesquisa, Date data, int pergunta, int resposta, int colaborador)
                 Pesquisa p = new Pesquisa(dados[1], data, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()));
-                banco.create(p);
+                if (p.getData().getYear() > 115){
+                    
+                    banco.create(p);
+                    
+                }
+                
             }
         }
         br.close();
