@@ -9,9 +9,13 @@ import classes.Pesquisa;
 import conexao.AcessoDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +23,7 @@ import javax.swing.JOptionPane;
  * @author Thulio
  */
 public class PesquisaDAO {
+    
     public void create(Pesquisa p){
         Connection con = AcessoDB.getConnection();
         PreparedStatement stmt = null;
@@ -31,13 +36,11 @@ public class PesquisaDAO {
             stmt.setString(1,p.getPesquisa());
             stmt.setInt(2, p.getPergunta());
             stmt.setInt(3, p.getResposta());
-            stmt.setInt(4, p.getColaborador());
+            stmt.setInt(4, p.getId_colaborador());
             stmt.setString(5, formatacao.format(p.getData()));
             
             stmt.executeUpdate();
             
-        } catch (SQLIntegrityConstraintViolationException ex) {
-            JOptionPane.showMessageDialog(null, "Pesquisa já cadastrada");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar!" + ex);
         } finally{
@@ -60,5 +63,38 @@ public class PesquisaDAO {
         } finally{
             AcessoDB.closeConnection(con);
         }
+    }
+    
+    public List<Pesquisa> listar(){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Pesquisa> pesquisa = new ArrayList<>();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM pesquisa ORDER BY id");
+            rs = stmt.executeQuery();
+            
+            
+            while (rs.next()){
+                Pesquisa p = new Pesquisa();
+                
+                p.setId(rs.getInt("id"));
+                p.setPesquisa(rs.getString("pesquisa"));
+                p.setData(rs.getDate("data"));
+                p.setPergunta(rs.getInt("pergunta"));
+                p.setResposta(rs.getInt("resposta"));
+                p.setId_colaborador(rs.getInt("colaborador"));
+                
+                pesquisa.add(p);
+                        
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PesquisaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            AcessoDB.closeConnection(con, stmt, rs);
+        }
+        
+        return pesquisa;
     }
 }

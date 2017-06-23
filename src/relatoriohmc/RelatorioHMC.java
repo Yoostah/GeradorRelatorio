@@ -5,7 +5,11 @@
  */
 package relatoriohmc;
 
+import classes.Grupo;
+import classes.Maquina;
 import classes.Pesquisa;
+import dao.GrupoDAO;
+import dao.MaquinaDAO;
 import dao.PesquisaDAO;
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,7 +33,7 @@ public class RelatorioHMC {
     
     public static void main(String[] args) throws ParseException {
         
-        File arquivos[];
+        /*File arquivos[];
         File diretorio = new File("C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\CORMED_05.04.16");
         arquivos = diretorio.listFiles();
 
@@ -48,12 +52,31 @@ public class RelatorioHMC {
                     }
                 }
             }
-        }
-
-//        for (int i = 0; i < pesquisas.size(); i++){
-//            System.out.println(pesquisas.get(i).toString());
-//        }
+        }*/
         
+        /*GrupoDAO g = new GrupoDAO();
+        Grupo gr = new Grupo(("internação").toUpperCase());
+        List<Grupo> grupos = new ArrayList<>();
+        
+        g.deletar(1);
+        grupos = g.listar();
+        for (Grupo i : grupos){
+            System.out.println("ID: "+i.getId()+" / "+"NOME: "+ i.getNome());
+        }
+        
+        
+        MaquinaDAO m = new MaquinaDAO();
+        Maquina maq = new Maquina("SEIPA1111", "C:\\Users\\Thulio\\Desktop\\", ("Int").toUpperCase());
+        m.deletar(1);
+        List<Maquina> maquinas = new ArrayList<>();
+        maquinas = m.listar();
+        
+        System.out.println("");
+        
+        for (Maquina i : maquinas){
+            System.out.println("ID: "+i.getId()+" / "+"NOME: "+ i.getNome()+" / "+"CAMINHO: "+ i.getCaminho()+" / "+"GRUPO: "+ i.getGrupo());
+        }*/
+
     }
 
     private static String leitura(String dir) throws Exception {

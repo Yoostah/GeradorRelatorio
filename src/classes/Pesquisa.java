@@ -9,26 +9,41 @@ import java.util.Date;
  * @author Thulio
  */
 public class Pesquisa {
+    private int id;
     private String pesquisa;
     private Date data;
     private int pergunta;
     private int resposta;
-    private int colaborador;
+    private int id_colaborador;
 
+    //Construtor
     public Pesquisa(String pesquisa, Date data, int pergunta, int resposta, int colaborador) {
         this.pesquisa = pesquisa;
         this.data = data;
         this.pergunta = pergunta;
         this.resposta = resposta;
-        this.colaborador = colaborador;
+        this.id_colaborador = colaborador;
+    }
+    
+    //Construtor Vazio
+    public Pesquisa() {
+    
     }
 
-    public int getColaborador() {
-        return colaborador;
+    public int getId() {
+        return id;
     }
 
-    public void setColaborador(int colaborador) {
-        this.colaborador = colaborador;
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public int getId_colaborador() {
+        return id_colaborador;
+    }
+
+    public void setId_colaborador(int id_colaborador) {
+        this.id_colaborador = id_colaborador;
     }
   
     public String getPesquisa() {
@@ -65,7 +80,7 @@ public class Pesquisa {
 
     @Override
     public String toString() {
-        return "Pesquisa=" + pesquisa + ", Data=" + data + ", Pergunta=" + pergunta + ", Resposta=" + resposta + ", Colaborador=" + colaborador + '}';
+        return "Pesquisa=" + pesquisa + ", Data=" + data + ", Pergunta=" + pergunta + ", Resposta=" + resposta + ", Colaborador=" + id_colaborador + '}';
     }
     
     

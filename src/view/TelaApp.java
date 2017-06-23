@@ -5,20 +5,76 @@
  */
 package view;
 
+import classes.Pesquisa;
 import dao.PesquisaDAO;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import ux.JTableUtilities;
+import view.framesCadastro.FrameCadastroColaborador;
+import view.framesCadastro.FrameCadastroGrupo;
+import view.framesCadastro.FrameCadastroMaquinas;
 
 /**
  *
  * @author Thulio
  */
 public class TelaApp extends javax.swing.JFrame {
-
+    
+    GridBagLayout layout = new GridBagLayout();
+    FrameCadastroMaquinas cadMaq;
+    FrameCadastroGrupo cadGru;
+    FrameCadastroColaborador cadColab;
     /**
      * Creates new form TelaApp
      */
     public TelaApp() {
         initComponents();
+        lerBanco();
+        
+        //Criação dos Paineis do Cadastro
+        cadMaq = new FrameCadastroMaquinas();
+        cadGru = new FrameCadastroGrupo();
+        cadColab = new FrameCadastroColaborador();
+        
+        jPainelDinamico.setLayout(layout);
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipady = 10;
+        
+        jPainelDinamico.add(cadMaq, c);
+        jPainelDinamico.add(cadGru, c);
+        jPainelDinamico.add(cadColab,c);
+        
+        cadMaq.setVisible(false);
+        cadGru.setVisible(false);
+        cadColab.setVisible(false);
+    }
+    
+    public void lerBanco() {
+        DefaultTableModel modelo = (DefaultTableModel) jTableBD.getModel();
+        JTableUtilities.setCellsAlignment(jTableBD, SwingConstants.LEFT);
+        PesquisaDAO p = new PesquisaDAO();
+        modelo.setNumRows(0);
+
+        for (Pesquisa i : p.listar()) {
+
+            modelo.addRow(new Object[]{
+                i.getId(),
+                i.getPesquisa(),
+                i.getData(),
+                i.getPergunta(),
+                i.getResposta(),
+                i.getId_colaborador()
+
+            });
+
+        }
+
     }
 
     /**
@@ -30,44 +86,32 @@ public class TelaApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableCadastro = new javax.swing.JTable();
         jTabs = new javax.swing.JTabbedPane();
         jPanelBD = new javax.swing.JPanel();
-        jBtnLerDados = new javax.swing.JButton();
-        jBtnApagarBanco = new javax.swing.JButton();
-        jPanelCorpo = new javax.swing.JPanel();
+        jPanelBtnBD = new javax.swing.JPanel();
+        jBtnBDApagar = new javax.swing.JButton();
+        jBtnBDLer = new javax.swing.JButton();
+        jPanelTabelaBD = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableBD = new javax.swing.JTable();
         jPanelRelatorio = new javax.swing.JPanel();
-        jPanelBD1 = new javax.swing.JPanel();
+        jPanelBtnRel = new javax.swing.JPanel();
         jBtnRelGeral = new javax.swing.JButton();
         jBtnRelGrupo = new javax.swing.JButton();
+        jPanelTabelaRelatorio = new javax.swing.JPanel();
         jPanelCadastro = new javax.swing.JPanel();
-        jPanelBD2 = new javax.swing.JPanel();
+        jPanelBtnCad = new javax.swing.JPanel();
         jBtnCadColaborador = new javax.swing.JButton();
         jBtnCadGrupo = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jBtnCadMaq = new javax.swing.JButton();
+        jPainelDinamico = new javax.swing.JPanel();
+        jMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(":: CORMED RELATÓRIOS ::");
-        setResizable(false);
-
-        jPanelBD.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelBD.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jBtnLerDados.setText("LER");
-
-        jBtnApagarBanco.setText("APAGAR");
-        jBtnApagarBanco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnApagarBancoActionPerformed(evt);
-            }
-        });
-
-        jPanelCorpo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCadastro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -78,142 +122,293 @@ public class TelaApp extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTableCadastro);
 
-        javax.swing.GroupLayout jPanelCorpoLayout = new javax.swing.GroupLayout(jPanelCorpo);
-        jPanelCorpo.setLayout(jPanelCorpoLayout);
-        jPanelCorpoLayout.setHorizontalGroup(
-            jPanelCorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle(":: CORMED RELATÓRIOS ::");
+        setResizable(false);
+
+        jTabs.setBackground(new java.awt.Color(255, 0, 51));
+        jTabs.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+
+        jPanelBtnBD.setBackground(new java.awt.Color(255, 204, 204));
+        jPanelBtnBD.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelBtnBD.setPreferredSize(new java.awt.Dimension(942, 91));
+
+        jBtnBDApagar.setText("APAGAR");
+        jBtnBDApagar.setMaximumSize(new java.awt.Dimension(67, 23));
+        jBtnBDApagar.setMinimumSize(new java.awt.Dimension(67, 23));
+        jBtnBDApagar.setPreferredSize(new java.awt.Dimension(67, 23));
+        jBtnBDApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBDApagarActionPerformed(evt);
+            }
+        });
+
+        jBtnBDLer.setText("LER");
+        jBtnBDLer.setMaximumSize(new java.awt.Dimension(67, 23));
+        jBtnBDLer.setMinimumSize(new java.awt.Dimension(67, 23));
+        jBtnBDLer.setPreferredSize(new java.awt.Dimension(67, 23));
+
+        javax.swing.GroupLayout jPanelBtnBDLayout = new javax.swing.GroupLayout(jPanelBtnBD);
+        jPanelBtnBD.setLayout(jPanelBtnBDLayout);
+        jPanelBtnBDLayout.setHorizontalGroup(
+            jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBtnBDLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBtnBDApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanelCorpoLayout.setVerticalGroup(
-            jPanelCorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+        jPanelBtnBDLayout.setVerticalGroup(
+            jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBtnBDLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnBDApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTableBD.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTableBD.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "PESQUISA", "DATA", "PERGUNTA", "RESPOSTA", "COLABORADOR"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableBD.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(jTableBD);
+        jTableBD.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTableBD.getColumnModel().getColumnCount() > 0) {
+            jTableBD.getColumnModel().getColumn(0).setMinWidth(70);
+            jTableBD.getColumnModel().getColumn(0).setPreferredWidth(70);
+            jTableBD.getColumnModel().getColumn(0).setMaxWidth(70);
+            jTableBD.getColumnModel().getColumn(0).setHeaderValue("ID");
+            jTableBD.getColumnModel().getColumn(1).setMinWidth(150);
+            jTableBD.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jTableBD.getColumnModel().getColumn(1).setMaxWidth(150);
+            jTableBD.getColumnModel().getColumn(1).setHeaderValue("PESQUISA");
+            jTableBD.getColumnModel().getColumn(2).setMinWidth(150);
+            jTableBD.getColumnModel().getColumn(2).setPreferredWidth(150);
+            jTableBD.getColumnModel().getColumn(2).setMaxWidth(150);
+            jTableBD.getColumnModel().getColumn(2).setHeaderValue("DATA");
+            jTableBD.getColumnModel().getColumn(3).setMinWidth(70);
+            jTableBD.getColumnModel().getColumn(3).setPreferredWidth(70);
+            jTableBD.getColumnModel().getColumn(3).setMaxWidth(70);
+            jTableBD.getColumnModel().getColumn(3).setHeaderValue("PERGUNTA");
+            jTableBD.getColumnModel().getColumn(4).setMinWidth(70);
+            jTableBD.getColumnModel().getColumn(4).setPreferredWidth(70);
+            jTableBD.getColumnModel().getColumn(4).setMaxWidth(70);
+            jTableBD.getColumnModel().getColumn(4).setHeaderValue("RESPOSTA");
+            jTableBD.getColumnModel().getColumn(5).setResizable(false);
+            jTableBD.getColumnModel().getColumn(5).setPreferredWidth(350);
+            jTableBD.getColumnModel().getColumn(5).setHeaderValue("COLABORADOR");
+        }
+
+        javax.swing.GroupLayout jPanelTabelaBDLayout = new javax.swing.GroupLayout(jPanelTabelaBD);
+        jPanelTabelaBD.setLayout(jPanelTabelaBDLayout);
+        jPanelTabelaBDLayout.setHorizontalGroup(
+            jPanelTabelaBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+        );
+        jPanelTabelaBDLayout.setVerticalGroup(
+            jPanelTabelaBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTabelaBDLayout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                .addGap(281, 281, 281))
         );
 
         javax.swing.GroupLayout jPanelBDLayout = new javax.swing.GroupLayout(jPanelBD);
         jPanelBD.setLayout(jPanelBDLayout);
         jPanelBDLayout.setHorizontalGroup(
             jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBDLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jBtnLerDados, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnApagarBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanelCorpo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelBtnBD, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+            .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelBDLayout.setVerticalGroup(
             jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBDLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnLerDados, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnApagarBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanelCorpo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelBtnBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabs.addTab("BANCO DE DADOS", jPanelBD);
 
-        jPanelBD1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelBD1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelBtnRel.setBackground(new java.awt.Color(204, 255, 204));
+        jPanelBtnRel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelBtnRel.setPreferredSize(new java.awt.Dimension(942, 91));
 
         jBtnRelGeral.setText("GERAL");
+        jBtnRelGeral.setMaximumSize(new java.awt.Dimension(67, 23));
+        jBtnRelGeral.setMinimumSize(new java.awt.Dimension(67, 23));
+        jBtnRelGeral.setPreferredSize(new java.awt.Dimension(67, 23));
 
         jBtnRelGrupo.setText("GRUPO");
 
-        javax.swing.GroupLayout jPanelBD1Layout = new javax.swing.GroupLayout(jPanelBD1);
-        jPanelBD1.setLayout(jPanelBD1Layout);
-        jPanelBD1Layout.setHorizontalGroup(
-            jPanelBD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBD1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelBtnRelLayout = new javax.swing.GroupLayout(jPanelBtnRel);
+        jPanelBtnRel.setLayout(jPanelBtnRelLayout);
+        jPanelBtnRelLayout.setHorizontalGroup(
+            jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBtnRelLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(702, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanelBD1Layout.setVerticalGroup(
-            jPanelBD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBD1Layout.createSequentialGroup()
+        jPanelBtnRelLayout.setVerticalGroup(
+            jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBtnRelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(475, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanelTabelaRelatorioLayout = new javax.swing.GroupLayout(jPanelTabelaRelatorio);
+        jPanelTabelaRelatorio.setLayout(jPanelTabelaRelatorioLayout);
+        jPanelTabelaRelatorioLayout.setHorizontalGroup(
+            jPanelTabelaRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 950, Short.MAX_VALUE)
+        );
+        jPanelTabelaRelatorioLayout.setVerticalGroup(
+            jPanelTabelaRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 387, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanelRelatorioLayout = new javax.swing.GroupLayout(jPanelRelatorio);
         jPanelRelatorio.setLayout(jPanelRelatorioLayout);
         jPanelRelatorioLayout.setHorizontalGroup(
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 938, Short.MAX_VALUE)
-            .addGroup(jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanelBD1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanelBtnRel, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+            .addComponent(jPanelTabelaRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelRelatorioLayout.setVerticalGroup(
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
-            .addGroup(jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanelBD1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelRelatorioLayout.createSequentialGroup()
+                .addComponent(jPanelBtnRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(jPanelTabelaRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabs.addTab("RELATÓRIOS", jPanelRelatorio);
 
-        jPanelBD2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelBD2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelBtnCad.setBackground(new java.awt.Color(204, 204, 255));
+        jPanelBtnCad.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelBtnCad.setPreferredSize(new java.awt.Dimension(950, 91));
 
         jBtnCadColaborador.setText("COLABORADOR");
         jBtnCadColaborador.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        jBtnCadColaborador.setMaximumSize(new java.awt.Dimension(67, 23));
+        jBtnCadColaborador.setMinimumSize(new java.awt.Dimension(67, 23));
+        jBtnCadColaborador.setPreferredSize(new java.awt.Dimension(67, 23));
+        jBtnCadColaborador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCadColaboradorActionPerformed(evt);
+            }
+        });
 
         jBtnCadGrupo.setText("GRUPO");
+        jBtnCadGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCadGrupoActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanelBD2Layout = new javax.swing.GroupLayout(jPanelBD2);
-        jPanelBD2.setLayout(jPanelBD2Layout);
-        jPanelBD2Layout.setHorizontalGroup(
-            jPanelBD2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBD2Layout.createSequentialGroup()
+        jBtnCadMaq.setText("MÁQUINA");
+        jBtnCadMaq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCadMaqActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelBtnCadLayout = new javax.swing.GroupLayout(jPanelBtnCad);
+        jPanelBtnCad.setLayout(jPanelBtnCadLayout);
+        jPanelBtnCadLayout.setHorizontalGroup(
+            jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBtnCadLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jBtnCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(702, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(606, Short.MAX_VALUE))
         );
-        jPanelBD2Layout.setVerticalGroup(
-            jPanelBD2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBD2Layout.createSequentialGroup()
+        jPanelBtnCadLayout.setVerticalGroup(
+            jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBtnCadLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBD2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(475, Short.MAX_VALUE))
+                    .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPainelDinamico.setBackground(new java.awt.Color(204, 204, 204));
+
+        javax.swing.GroupLayout jPainelDinamicoLayout = new javax.swing.GroupLayout(jPainelDinamico);
+        jPainelDinamico.setLayout(jPainelDinamicoLayout);
+        jPainelDinamicoLayout.setHorizontalGroup(
+            jPainelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPainelDinamicoLayout.setVerticalGroup(
+            jPainelDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 459, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
         jPanelCadastro.setLayout(jPanelCadastroLayout);
         jPanelCadastroLayout.setHorizontalGroup(
             jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 938, Short.MAX_VALUE)
-            .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanelBD2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanelBtnCad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPainelDinamico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelCadastroLayout.setVerticalGroup(
             jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
-            .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanelBD2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                .addComponent(jPanelBtnCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPainelDinamico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabs.addTab("CADASTRO", jPanelCadastro);
 
+        jMenu.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+
         jMenu1.setText("Arquivo");
-        jMenuBar1.add(jMenu1);
+        jMenu1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jMenu.add(jMenu1);
 
         jMenu2.setText("Sobre");
-        jMenuBar1.add(jMenu2);
+        jMenu2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jMenu.add(jMenu2);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,9 +424,10 @@ public class TelaApp extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBtnApagarBancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnApagarBancoActionPerformed
+    private void jBtnBDApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBDApagarActionPerformed
         String message = "DESEJA REALMENTE APAGAR O BANCO DE DADOS ? ";
         String title = "CONFIRME OPERAÇÃO";
         // display the JOptionPane showConfirmDialog
@@ -241,7 +437,25 @@ public class TelaApp extends javax.swing.JFrame {
             PesquisaDAO dao = new PesquisaDAO();
             dao.truncarBD();
         }
-    }//GEN-LAST:event_jBtnApagarBancoActionPerformed
+    }//GEN-LAST:event_jBtnBDApagarActionPerformed
+
+    private void jBtnCadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadGrupoActionPerformed
+        cadColab.setVisible(false);
+        cadMaq.setVisible(false);
+        cadGru.setVisible(true);
+    }//GEN-LAST:event_jBtnCadGrupoActionPerformed
+
+    private void jBtnCadMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadMaqActionPerformed
+        cadColab.setVisible(false);
+        cadGru.setVisible(false);
+        cadMaq.setVisible(true);
+    }//GEN-LAST:event_jBtnCadMaqActionPerformed
+
+    private void jBtnCadColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadColaboradorActionPerformed
+        cadGru.setVisible(false);
+        cadMaq.setVisible(false);
+        cadColab.setVisible(true);
+    }//GEN-LAST:event_jBtnCadColaboradorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,23 +493,29 @@ public class TelaApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnApagarBanco;
+    private javax.swing.JButton jBtnBDApagar;
+    private javax.swing.JButton jBtnBDLer;
     private javax.swing.JButton jBtnCadColaborador;
     private javax.swing.JButton jBtnCadGrupo;
-    private javax.swing.JButton jBtnLerDados;
+    private javax.swing.JButton jBtnCadMaq;
     private javax.swing.JButton jBtnRelGeral;
     private javax.swing.JButton jBtnRelGrupo;
+    private javax.swing.JMenuBar jMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPainelDinamico;
     private javax.swing.JPanel jPanelBD;
-    private javax.swing.JPanel jPanelBD1;
-    private javax.swing.JPanel jPanelBD2;
+    private javax.swing.JPanel jPanelBtnBD;
+    private javax.swing.JPanel jPanelBtnCad;
+    private javax.swing.JPanel jPanelBtnRel;
     private javax.swing.JPanel jPanelCadastro;
-    private javax.swing.JPanel jPanelCorpo;
     private javax.swing.JPanel jPanelRelatorio;
+    private javax.swing.JPanel jPanelTabelaBD;
+    private javax.swing.JPanel jPanelTabelaRelatorio;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableBD;
+    private javax.swing.JTable jTableCadastro;
     private javax.swing.JTabbedPane jTabs;
     // End of variables declaration//GEN-END:variables
 }
