@@ -44,9 +44,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
                 i.getId(),
                 i.getNome()
             });
-
         }
-
     }
     
     public void esconderCampos(){
@@ -247,31 +245,32 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
     private void jBtnADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnADDActionPerformed
         GrupoDAO gdao = new GrupoDAO();
         Grupo g = new Grupo();
-        
-        if (op == 1){
-            g.setNome(jTxtNome.getText().toUpperCase());
-            gdao.create(g);
-            lerGrupos();
+        if (jTxtNome.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencher todos os Campos!");
+        }else{
+            if (op == 1){
+                g.setNome(jTxtNome.getText().toUpperCase());
+                gdao.create(g);
+                lerGrupos();
 
-            jTxtNome.setText("");
-            
-        } else {
-            //Pega ID do item Selecionado na tabela
-            int selecionado = (Integer.parseInt(jTableGrupos.getValueAt(jTableGrupos.getSelectedRow(), 0).toString()));
-            
-            g.setNome(jTxtNome.getText().toUpperCase());
-            gdao.atualizar(g, selecionado);
-            lerGrupos();
+                jTxtNome.setText("");
 
-            jTxtNome.setText("");
-            
-            esconderCampos();
-            
-            //Habilitar seleção de linhas novamente
-            jTableGrupos.setEnabled(true);
-        }   
-        
-        
+            } else {
+                //Pega ID do item Selecionado na tabela
+                int selecionado = (Integer.parseInt(jTableGrupos.getValueAt(jTableGrupos.getSelectedRow(), 0).toString()));
+
+                g.setNome(jTxtNome.getText().toUpperCase());
+                gdao.atualizar(g, selecionado);
+                lerGrupos();
+
+                jTxtNome.setText("");
+
+                esconderCampos();
+
+                //Habilitar seleção de linhas novamente
+                jTableGrupos.setEnabled(true);
+            }   
+        }
     }//GEN-LAST:event_jBtnADDActionPerformed
 
     private void jBtnMaqDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqDELActionPerformed
@@ -288,10 +287,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
 
         }else {
             JOptionPane.showMessageDialog(null, "Escolha um Grupo para deletar!");
-            
         }
-        
-        
     }//GEN-LAST:event_jBtnMaqDELActionPerformed
 
     private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqUPDActionPerformed
@@ -308,7 +304,6 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         
         } else {
             JOptionPane.showMessageDialog(null, "Escolha um Grupo para alterar!");
-            
         }
     }//GEN-LAST:event_jBtnMaqUPDActionPerformed
 

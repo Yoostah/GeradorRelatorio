@@ -9,6 +9,7 @@ import classes.Grupo;
 import classes.Maquina;
 import dao.GrupoDAO;
 import dao.MaquinaDAO;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,7 +17,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Thulio
  */
 public class FrameCadastroMaquinas extends javax.swing.JPanel {
-
+    
+    //Variavel para controlar se o botao ADD fara uma inclusão ou alteração
+    static int op;
+    
     /**
      * Creates new form FrameCadastroMaquinas2
      */
@@ -30,6 +34,9 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         for (Grupo i : g.listar()) {
             jCGrupo.addItem(i.getNome());
         }
+        
+        //Esconder os Campos ao Iniciar Frame
+        esconderCampos();
     }
     
     public void lerMaquinas() {
@@ -49,6 +56,30 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
 
         }
 
+    }
+    
+    public void esconderCampos(){
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jTxtNome.setVisible(false);
+        jTxtCaminho.setVisible(false);
+        jPanelBtnADD.setVisible(false);
+        jCGrupo.setVisible(false);
+        jBtnCaminho.setVisible(false);
+        
+    }
+
+    public void mostrarCampos(){
+        jLabel2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jTxtNome.setVisible(true);
+        jTxtCaminho.setVisible(true);
+        jPanelBtnADD.setVisible(true);
+        jCGrupo.setVisible(true);
+        jBtnCaminho.setVisible(true);
+        
     }
 
     /**
@@ -93,6 +124,11 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqADD.setMaximumSize(new java.awt.Dimension(60, 60));
         jBtnMaqADD.setMinimumSize(new java.awt.Dimension(60, 60));
         jBtnMaqADD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnMaqADD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnMaqADDActionPerformed(evt);
+            }
+        });
 
         jBtnMaqDEL.setBackground(new java.awt.Color(255, 51, 51));
         jBtnMaqDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
@@ -103,6 +139,11 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqDEL.setMaximumSize(new java.awt.Dimension(60, 60));
         jBtnMaqDEL.setMinimumSize(new java.awt.Dimension(60, 60));
         jBtnMaqDEL.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnMaqDEL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnMaqDELActionPerformed(evt);
+            }
+        });
 
         jBtnMaqUPD.setBackground(new java.awt.Color(0, 0, 0));
         jBtnMaqUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
@@ -113,6 +154,11 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqUPD.setMaximumSize(new java.awt.Dimension(60, 60));
         jBtnMaqUPD.setMinimumSize(new java.awt.Dimension(60, 60));
         jBtnMaqUPD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnMaqUPD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnMaqUPDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBotoesLayout = new javax.swing.GroupLayout(jPanelBotoes);
         jPanelBotoes.setLayout(jPanelBotoesLayout);
@@ -223,6 +269,11 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnADD.setBackground(new java.awt.Color(255, 255, 255));
         jBtnADD.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnADD.setText("ADD");
+        jBtnADD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnADDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBtnADDLayout = new javax.swing.GroupLayout(jPanelBtnADD);
         jPanelBtnADD.setLayout(jPanelBtnADDLayout);
@@ -243,6 +294,93 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
 
         add(jPanelBtnADD, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 66, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnMaqADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqADDActionPerformed
+        //Habilitar Botoões
+        mostrarCampos();
+        
+        op = 1;
+    }//GEN-LAST:event_jBtnMaqADDActionPerformed
+
+    private void jBtnADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnADDActionPerformed
+        MaquinaDAO mdao = new MaquinaDAO();
+        Maquina m = new Maquina();
+        if (jTxtNome.getText().isEmpty() || jTxtCaminho.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencher todos os Campos!");
+        }else if (jCGrupo.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Escolha um Grupo!");
+        }else{
+            if (op == 1){
+                m.setNome(jTxtNome.getText().toUpperCase());
+                m.setCaminho(jTxtCaminho.getText());
+                m.setGrupo(jCGrupo.getSelectedItem().toString());
+                mdao.create(m);
+                lerMaquinas();
+
+                jTxtNome.setText("");
+                jTxtCaminho.setText("");
+                jCGrupo.setSelectedIndex(0);
+
+            } else {
+                //Pega ID do item Selecionado na tabela
+                int selecionado = (Integer.parseInt(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 0).toString()));
+
+                m.setNome(jTxtNome.getText().toUpperCase());
+                m.setCaminho(jTxtCaminho.getText());
+                m.setGrupo(jCGrupo.getSelectedItem().toString());
+                mdao.atualizar(m, selecionado);
+                lerMaquinas();
+
+                jTxtNome.setText("");
+                jTxtCaminho.setText("");
+                jCGrupo.setSelectedIndex(0);
+
+                esconderCampos();
+
+                //Habilitar seleção de linhas novamente
+                jTableMaquinas.setEnabled(true);
+            } 
+        }
+    }//GEN-LAST:event_jBtnADDActionPerformed
+
+    private void jBtnMaqDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqDELActionPerformed
+        MaquinaDAO mdao = new MaquinaDAO();
+        
+        if (jTableMaquinas.getSelectedRow() != -1) {
+            //DELETAR OS DADOS
+            
+            int selecionado = (Integer.parseInt(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 0).toString()));
+
+            //CHAMAR O OBJETO QUE MANIPULA O BANCO DE DADOS
+            mdao.deletar(selecionado);
+            lerMaquinas();
+
+        }else {
+            JOptionPane.showMessageDialog(null, "Escolha uma Máquina para deletar!");
+            
+        }
+    }//GEN-LAST:event_jBtnMaqDELActionPerformed
+
+    private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqUPDActionPerformed
+        //LER OS DADOS DA LINHA SELECIOANDA
+        if (jTableMaquinas.getSelectedRow() != -1) {
+            //Travar a seleção de outra linha da tabela antes da alteração ser enviada
+            jTableMaquinas.setEnabled(false);
+            //Mostrar campos ocultos
+            mostrarCampos();
+            
+            jTxtNome.setText(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 1).toString());
+            jTxtCaminho.setText(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 2).toString());
+            jCGrupo.setSelectedItem(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 3).toString());
+            
+            //TODO Fazer a leitura do campo boolean
+            op = 2;
+        
+        } else {
+            JOptionPane.showMessageDialog(null, "Escolha uma Máquina para alterar!");
+            
+        }
+    }//GEN-LAST:event_jBtnMaqUPDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

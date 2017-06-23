@@ -15,16 +15,26 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select p.pergunta as Pergunta,
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=1) as '1 - Excelente',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=2) as '2 - Muito Bom',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=3) as '3 - Bom',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=4) as '4 - Regular',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=5) as '5 - Ruim',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
-from pesquisa as p where colaborador=$P{colaborador} and data between $P{data_inicial} and $P{data_final}
-group by pergunta;]]>
+(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=1 and data between $P{data_inicial} and $P{data_final}) as '1 - Excelente',
+(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=2 and data between $P{data_inicial} and $P{data_final}) as '2 - Muito Bom',
+(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=3 and data between $P{data_inicial} and $P{data_final}) as '3 - Bom',
+(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=4 and data between $P{data_inicial} and $P{data_final}) as '4 - Regular',
+(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=5 and data between $P{data_inicial} and $P{data_final}) as '5 - Ruim',
+(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and data between $P{data_inicial} and $P{data_final} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
+from pesquisa as p where colaborador= $P{colaborador} and data between $P{data_inicial} and $P{data_final}
+group by pergunta
+
+union
+
+select 'TOTAL', (select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=1 and data between $P{data_inicial} and $P{data_final}) as '1',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=2 and data between $P{data_inicial} and $P{data_final}) as '2',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=3 and data between $P{data_inicial} and $P{data_final}) as '3',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=4 and data between $P{data_inicial} and $P{data_final}) as '4',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=5 and data between $P{data_inicial} and $P{data_final}) as '5',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5) and data between $P{data_inicial} and $P{data_final}) as 'TOTAL' from pesquisa where colaborador= $P{colaborador}
+group by 'TOTAL';]]>
 	</queryString>
-	<field name="Pergunta" class="java.lang.Integer">
+	<field name="Pergunta" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="1 - Excelente" class="java.lang.Long"/>
@@ -70,7 +80,7 @@ group by pergunta;]]>
 			</staticText>
 			<image>
 				<reportElement x="5" y="21" width="200" height="57" uuid="b88adbfe-5e09-4463-8b87-92e0c7bad754"/>
-				<imageExpression><![CDATA["C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\CORMED_200.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="24" width="307" height="20" uuid="94e1778d-88be-42a6-8abd-8713c904d82a"/>

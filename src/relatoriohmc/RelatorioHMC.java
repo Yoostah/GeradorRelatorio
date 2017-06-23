@@ -31,7 +31,7 @@ public class RelatorioHMC {
      */
     static List pesquisas = new ArrayList();
     
-    public static void main(String[] args) throws ParseException {
+    //public static void main(String[] args) throws ParseException {
         
         /*File arquivos[];
         File diretorio = new File("C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\CORMED_05.04.16");
@@ -77,7 +77,7 @@ public class RelatorioHMC {
             System.out.println("ID: "+i.getId()+" / "+"NOME: "+ i.getNome()+" / "+"CAMINHO: "+ i.getCaminho()+" / "+"GRUPO: "+ i.getGrupo());
         }*/
 
-    }
+    //}
 
     private static String leitura(String dir) throws Exception {
         String linha = "", conteudo = "";

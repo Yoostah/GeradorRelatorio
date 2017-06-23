@@ -9,6 +9,7 @@ import classes.Colaborador;
 import classes.Grupo;
 import dao.ColaboradorDAO;
 import dao.GrupoDAO;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import ux.JTableUtilities;
@@ -19,6 +20,8 @@ import ux.JTableUtilities;
  */
 public class FrameCadastroColaborador extends javax.swing.JPanel {
     
+    //Variavel para controlar se o botao ADD fara uma inclusão ou alteração
+    static int op;
     
     /**
      * Creates new form FrameCadastroMaquinas2
@@ -34,11 +37,14 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         for (Grupo i : g.listar()) {
             jCGrupo.addItem(i.getNome());
         }
+        
+        //Esconder os Campos ao Iniciar Frame
+        esconderCampos();
     }
     
     public void lerColaboradores() {
-        DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
-        JTableUtilities.setCellsAlignment(jTableMaquinas, SwingConstants.LEFT);
+        DefaultTableModel modelo = (DefaultTableModel) jTableColaboradores.getModel();
+        JTableUtilities.setCellsAlignment(jTableColaboradores, SwingConstants.LEFT);
         ColaboradorDAO c = new ColaboradorDAO();
         modelo.setNumRows(0);
 
@@ -54,8 +60,27 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
 
     }
     
-    
+    public void esconderCampos(){
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jTxtNome.setVisible(false);
+        jTxtID.setVisible(false);
+        jPanelBtnADD.setVisible(false);
+        jCGrupo.setVisible(false);
+        
+    }
 
+    public void mostrarCampos(){
+        jLabel2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jTxtNome.setVisible(true);
+        jTxtID.setVisible(true);
+        jPanelBtnADD.setVisible(true);
+        jCGrupo.setVisible(true);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,13 +95,13 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnMaqDEL = new javax.swing.JButton();
         jBtnMaqUPD = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMaquinas = new javax.swing.JTable();
+        jTableColaboradores = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTxtNome = new javax.swing.JTextField();
-        jTxtCaminho = new javax.swing.JTextField();
+        jTxtID = new javax.swing.JTextField();
         jCGrupo = new javax.swing.JComboBox<>();
         jPanelBtnADD = new javax.swing.JPanel();
         jBtnADD = new javax.swing.JButton();
@@ -97,6 +122,11 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnMaqADD.setMaximumSize(new java.awt.Dimension(60, 60));
         jBtnMaqADD.setMinimumSize(new java.awt.Dimension(60, 60));
         jBtnMaqADD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnMaqADD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnMaqADDActionPerformed(evt);
+            }
+        });
 
         jBtnMaqDEL.setBackground(new java.awt.Color(255, 51, 51));
         jBtnMaqDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
@@ -107,6 +137,11 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnMaqDEL.setMaximumSize(new java.awt.Dimension(60, 60));
         jBtnMaqDEL.setMinimumSize(new java.awt.Dimension(60, 60));
         jBtnMaqDEL.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnMaqDEL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnMaqDELActionPerformed(evt);
+            }
+        });
 
         jBtnMaqUPD.setBackground(new java.awt.Color(0, 0, 0));
         jBtnMaqUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
@@ -117,6 +152,11 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnMaqUPD.setMaximumSize(new java.awt.Dimension(60, 60));
         jBtnMaqUPD.setMinimumSize(new java.awt.Dimension(60, 60));
         jBtnMaqUPD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnMaqUPD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnMaqUPDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBotoesLayout = new javax.swing.GroupLayout(jPanelBotoes);
         jPanelBotoes.setLayout(jPanelBotoesLayout);
@@ -144,8 +184,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
 
         add(jPanelBotoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, 375));
 
-        jTableMaquinas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTableMaquinas.setModel(new javax.swing.table.DefaultTableModel(
+        jTableColaboradores.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jTableColaboradores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -168,17 +208,15 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTableMaquinas.setColumnSelectionAllowed(true);
-        jTableMaquinas.setGridColor(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTableMaquinas);
-        jTableMaquinas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTableMaquinas.getColumnModel().getColumnCount() > 0) {
-            jTableMaquinas.getColumnModel().getColumn(0).setMinWidth(100);
-            jTableMaquinas.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTableMaquinas.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTableMaquinas.getColumnModel().getColumn(2).setMinWidth(200);
-            jTableMaquinas.getColumnModel().getColumn(2).setPreferredWidth(200);
-            jTableMaquinas.getColumnModel().getColumn(2).setMaxWidth(200);
+        jTableColaboradores.setGridColor(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(jTableColaboradores);
+        if (jTableColaboradores.getColumnModel().getColumnCount() > 0) {
+            jTableColaboradores.getColumnModel().getColumn(0).setMinWidth(100);
+            jTableColaboradores.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jTableColaboradores.getColumnModel().getColumn(0).setMaxWidth(100);
+            jTableColaboradores.getColumnModel().getColumn(2).setMinWidth(200);
+            jTableColaboradores.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTableColaboradores.getColumnModel().getColumn(2).setMaxWidth(200);
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 171, 574, 195));
@@ -206,8 +244,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jTxtNome.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         add(jTxtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 83, 290, -1));
 
-        jTxtCaminho.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        add(jTxtCaminho, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 114, 290, -1));
+        jTxtID.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
+        add(jTxtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 114, 290, -1));
 
         jCGrupo.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jCGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "( Escolha um Grupo )" }));
@@ -218,6 +256,11 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnADD.setBackground(new java.awt.Color(255, 255, 255));
         jBtnADD.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnADD.setText("ADD");
+        jBtnADD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnADDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBtnADDLayout = new javax.swing.GroupLayout(jPanelBtnADD);
         jPanelBtnADD.setLayout(jPanelBtnADDLayout);
@@ -239,6 +282,92 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         add(jPanelBtnADD, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 66, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBtnMaqADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqADDActionPerformed
+        //Habilitar Botoões
+        mostrarCampos();
+        
+        op = 1;
+    }//GEN-LAST:event_jBtnMaqADDActionPerformed
+
+    private void jBtnADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnADDActionPerformed
+        ColaboradorDAO cdao = new ColaboradorDAO();
+        Colaborador c = new Colaborador();
+        if (jTxtNome.getText().isEmpty() || jTxtID.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Preencher todos os Campos!");
+        }else if (jCGrupo.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Escolha um Grupo!");
+        }else{
+            if (op == 1){
+                c.setNome(jTxtNome.getText());
+                c.setId(Integer.parseInt(jTxtID.getText()));
+                c.setGrupo(jCGrupo.getSelectedItem().toString());
+                cdao.create(c);
+                lerColaboradores();
+
+                jTxtNome.setText("");
+                jTxtID.setText("");
+                jCGrupo.setSelectedIndex(0);
+
+            } else {
+                //Pega ID do item Selecionado na tabela
+                int selecionado = (Integer.parseInt(jTableColaboradores.getValueAt(jTableColaboradores.getSelectedRow(), 0).toString()));
+
+                c.setNome(jTxtNome.getText().toUpperCase());
+                c.setId(Integer.parseInt(jTxtID.getText()));
+                c.setGrupo(jCGrupo.getSelectedItem().toString());
+                cdao.atualizar(c, selecionado);
+                lerColaboradores();
+
+                jTxtNome.setText("");
+                jTxtID.setText("");
+                jCGrupo.setSelectedIndex(0);
+
+                esconderCampos();
+
+                //Habilitar seleção de linhas novamente
+                jTableColaboradores.setEnabled(true);
+            }    
+        }
+    }//GEN-LAST:event_jBtnADDActionPerformed
+
+    private void jBtnMaqDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqDELActionPerformed
+        ColaboradorDAO cdao = new ColaboradorDAO();
+        
+        if (jTableColaboradores.getSelectedRow() != -1) {
+            //DELETAR OS DADOS
+            
+            int selecionado = (Integer.parseInt(jTableColaboradores.getValueAt(jTableColaboradores.getSelectedRow(), 0).toString()));
+
+            //CHAMAR O OBJETO QUE MANIPULA O BANCO DE DADOS
+            cdao.deletar(selecionado);
+            lerColaboradores();
+
+        }else {
+            JOptionPane.showMessageDialog(null, "Escolha um Colaborador para deletar!");
+            
+        }
+    }//GEN-LAST:event_jBtnMaqDELActionPerformed
+
+    private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqUPDActionPerformed
+        //LER OS DADOS DA LINHA SELECIOANDA
+        if (jTableColaboradores.getSelectedRow() != -1) {
+            //Travar a seleção de outra linha da tabela antes da alteração ser enviada
+            jTableColaboradores.setEnabled(false);
+            //Mostrar campos ocultos
+            mostrarCampos();
+            
+            jTxtNome.setText(jTableColaboradores.getValueAt(jTableColaboradores.getSelectedRow(), 1).toString());
+            jTxtID.setText(jTableColaboradores.getValueAt(jTableColaboradores.getSelectedRow(), 0).toString());
+            jCGrupo.setSelectedItem(jTableColaboradores.getValueAt(jTableColaboradores.getSelectedRow(), 2).toString());
+            
+            op = 2;
+        
+        } else {
+            JOptionPane.showMessageDialog(null, "Escolha um Colaborador para alterar!");
+            
+        }
+    }//GEN-LAST:event_jBtnMaqUPDActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnADD;
@@ -253,8 +382,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelBotoes;
     private javax.swing.JPanel jPanelBtnADD;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableMaquinas;
-    private javax.swing.JTextField jTxtCaminho;
+    private javax.swing.JTable jTableColaboradores;
+    private javax.swing.JTextField jTxtID;
     private javax.swing.JTextField jTxtNome;
     // End of variables declaration//GEN-END:variables
 }
