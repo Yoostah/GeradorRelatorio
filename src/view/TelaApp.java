@@ -475,18 +475,24 @@ public class TelaApp extends javax.swing.JFrame {
         cadColab.setVisible(false);
         cadMaq.setVisible(false);
         cadGru.setVisible(true);
+        FrameCadastroGrupo g = new FrameCadastroGrupo();
+        g.lerGrupos();
     }//GEN-LAST:event_jBtnCadGrupoActionPerformed
 
     private void jBtnCadMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadMaqActionPerformed
         cadColab.setVisible(false);
         cadGru.setVisible(false);
         cadMaq.setVisible(true);
+        FrameCadastroMaquinas m = new FrameCadastroMaquinas();
+        m.lerMaquinas();
     }//GEN-LAST:event_jBtnCadMaqActionPerformed
 
     private void jBtnCadColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadColaboradorActionPerformed
         cadGru.setVisible(false);
         cadMaq.setVisible(false);
         cadColab.setVisible(true);
+        FrameCadastroColaborador f = new FrameCadastroColaborador();
+        f.lerColaboradores();
     }//GEN-LAST:event_jBtnCadColaboradorActionPerformed
 
     private void jBtnRelGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelGeralActionPerformed

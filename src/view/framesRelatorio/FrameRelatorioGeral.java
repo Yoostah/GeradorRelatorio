@@ -6,7 +6,17 @@
 package view.framesRelatorio;
 
 import classes.Grupo;
+import conexao.AcessoDB;
 import dao.GrupoDAO;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 /**
@@ -50,14 +60,14 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jCGrupo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jCData_Inicial = new javax.swing.JComboBox<>();
-        jCData_Final = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        jDateInicial = new com.toedter.calendar.JDateChooser();
+        jDateFinal = new com.toedter.calendar.JDateChooser();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        setMaximumSize(new java.awt.Dimension(698, 118));
-        setMinimumSize(new java.awt.Dimension(698, 118));
-        setPreferredSize(new java.awt.Dimension(698, 118));
+        setMaximumSize(new java.awt.Dimension(698, 188));
+        setMinimumSize(new java.awt.Dimension(698, 188));
+        setPreferredSize(new java.awt.Dimension(698, 188));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setPreferredSize(new java.awt.Dimension(100, 183));
@@ -86,6 +96,11 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
         jBtnGerar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnGerar.setText("GERAR");
         jBtnGerar.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnGerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnGerarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -109,15 +124,14 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
 
         jCGrupo.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jCGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "( Escolha um Grupo )" }));
+        jCGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCGrupoActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel5.setText("DATA:");
-
-        jCData_Inicial.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jCData_Inicial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "( Data Inicial )" }));
-
-        jCData_Final.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jCData_Final.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "( Data Final )" }));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel3.setText("A");
@@ -132,19 +146,18 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addGap(69, 69, 69)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(69, 69, 69)
-                                .addComponent(jCGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCData_Inicial, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16)
+                                .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
                                 .addComponent(jLabel3)
-                                .addGap(16, 16, 16)
-                                .addComponent(jCData_Final, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(21, 21, 21)
+                                .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jCGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(73, 73, 73)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -164,28 +177,67 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
                                 .addComponent(jCGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jCData_Inicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5))
-                            .addComponent(jCData_Final, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel3)))))
+                                .addGap(7, 7, 7)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel5)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGerarActionPerformed
+        if (jCGrupo.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Selecione um Grupo!");
+        
+        }else if (jDateInicial.getDate() == null || jDateFinal.getDate() == null){
+            JOptionPane.showMessageDialog(this, "Preencha corretamente os campos Data Inicial e Data Final!");
+        
+        }else{
+            Connection con = AcessoDB.getConnection();
+            
+            try {
+                String data_inicial = new SimpleDateFormat("dd/MM/yyyy").format(jDateInicial.getDate());
+                String data_final = new SimpleDateFormat("dd/MM/yyyy").format(jDateFinal.getDate());
+
+                //Map com os parametro da query
+                Map map = new HashMap();
+                map.put("data_inicial",data_inicial);
+                map.put("data_final",data_final);
+                map.put("grupo",jCGrupo.getSelectedItem().toString());
+
+                //Carregando o Relatório
+                InputStream jasper2 = this.getClass().getResourceAsStream("/relatorios/Geral_Colaborador.jasper");
+
+                //Passando os dados para a query e a conexao ao relatorio
+                JasperPrint p = JasperFillManager.fillReport(jasper2,map, con);
+                JasperViewer view = new JasperViewer(p, false);
+                view.setVisible(true);
+                view.toFront();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( "+e+" )");
+            }
+        }
+    }//GEN-LAST:event_jBtnGerarActionPerformed
+
+    private void jCGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCGrupoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCGrupoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnGerar;
-    private javax.swing.JComboBox<String> jCData_Final;
-    private javax.swing.JComboBox<String> jCData_Inicial;
     private javax.swing.JComboBox<String> jCGrupo;
+    private com.toedter.calendar.JDateChooser jDateFinal;
+    private com.toedter.calendar.JDateChooser jDateInicial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -308,7 +308,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanelBtnRel" pref="945" max="32767" attributes="0"/>
-                  <Component id="jPainelDinamicoRel" pref="945" max="32767" attributes="0"/>
+                  <Component id="jPainelDinamicoRel" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -316,7 +316,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jPanelBtnRel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="jPainelDinamicoRel" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="jPainelDinamicoRel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="262" max="32767" attributes="0"/>
                   </Group>
               </Group>

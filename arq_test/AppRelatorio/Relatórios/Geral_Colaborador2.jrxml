@@ -7,22 +7,22 @@
 	<parameter name="colaborador" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="data_inicial" class="java.util.Date">
+	<parameter name="data_inicial" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="data_final" class="java.util.Date">
+	<parameter name="data_final" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.pergunta as Pergunta, 
-(select count(resposta) from pesquisa where pergunta=p.pergunta and resposta=1) as '1 - Excelente', 
-(select count(resposta) from pesquisa where pergunta=p.pergunta and resposta=2) as '2 - Muito Bom', 
+		<![CDATA[select p.pergunta as Pergunta,
+(select count(resposta) from pesquisa where pergunta=p.pergunta and resposta=1) as '1 - Excelente',
+(select count(resposta) from pesquisa where pergunta=p.pergunta and resposta=2) as '2 - Muito Bom',
 (select count(resposta) from pesquisa where pergunta=p.pergunta and resposta=3) as '3 - Bom',
 (select count(resposta) from pesquisa where pergunta=p.pergunta and resposta=4) as '4 - Regular',
 (select count(resposta) from pesquisa where pergunta=p.pergunta and resposta=5) as '5 - Ruim',
 (select count(resposta) from pesquisa where pergunta=p.pergunta and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
-from pesquisa as p where colaborador=$P{colaborador} and data between $P{data_inicial} and $P{data_final}
-group by pergunta; ]]>
+from pesquisa as p where colaborador=$P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")
+group by pergunta;]]>
 	</queryString>
 	<field name="Pergunta" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -68,10 +68,6 @@ group by pergunta; ]]>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Relatório gerado em:]]></text>
 			</staticText>
-			<image>
-				<reportElement x="5" y="21" width="200" height="57" uuid="b88adbfe-5e09-4463-8b87-92e0c7bad754"/>
-				<imageExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\CORMED_200.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="217" y="24" width="307" height="20" uuid="94e1778d-88be-42a6-8abd-8713c904d82a"/>
 				<textElement verticalAlignment="Middle">

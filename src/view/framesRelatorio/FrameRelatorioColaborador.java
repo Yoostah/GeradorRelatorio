@@ -11,14 +11,21 @@ import conexao.AcessoDB;
 import dao.ColaboradorDAO;
 import dao.GrupoDAO;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 
@@ -61,16 +68,16 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jCGrupo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jCData_Inicial = new javax.swing.JComboBox<>();
-        jCData_Final = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jCColaborador = new javax.swing.JComboBox<>();
+        jDateInicial = new com.toedter.calendar.JDateChooser();
+        jDateFinal = new com.toedter.calendar.JDateChooser();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        setMaximumSize(new java.awt.Dimension(698, 118));
-        setMinimumSize(new java.awt.Dimension(698, 118));
-        setPreferredSize(new java.awt.Dimension(698, 118));
+        setMaximumSize(new java.awt.Dimension(698, 188));
+        setMinimumSize(new java.awt.Dimension(698, 188));
+        setPreferredSize(new java.awt.Dimension(698, 188));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -136,12 +143,6 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel5.setText("DATA:");
 
-        jCData_Inicial.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jCData_Inicial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "( Data Inicial )" }));
-
-        jCData_Final.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jCData_Final.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "( Data Final )" }));
-
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel3.setText("A");
 
@@ -166,15 +167,15 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
                         .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jCGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jCColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCData_Inicial, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16)
+                                .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
                                 .addComponent(jLabel3)
-                                .addGap(16, 16, 16)
-                                .addComponent(jCData_Final, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(73, 73, 73)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -197,13 +198,13 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                         .addComponent(jCGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(jCColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCData_Inicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel3))
-                            .addComponent(jCData_Final, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel3)
+                                .addGap(3, 3, 3))))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -225,22 +226,41 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
     }//GEN-LAST:event_jCGrupoItemStateChanged
 
     private void jBtnGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGerarActionPerformed
-        Connection con = AcessoDB.getConnection();
+        if (jCGrupo.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Selecione um Grupo!");
         
+        }else if(jCColaborador.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Selecione um Colaborador!");
         
+        }else if (jDateInicial.getDate() == null || jDateFinal.getDate() == null){
+            JOptionPane.showMessageDialog(this, "Preencha corretamente os campos Data Inicial e Data Final!");
         
-        try {
-            PreparedStatement comando = con.prepareStatement("select distinct pergunta from pesquisa"); 
-            ResultSet rs = comando.executeQuery();
+        }else{
+            Connection con = AcessoDB.getConnection();
             
-            JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
-            
-            JasperPrint p = JasperFillManager.fillReport(FrameRelatorioColaborador.class.getResourceAsStream("relatorios/TesteFim.jasper"),new HashMap<String, Object>(), jrRS);
-            JasperViewer view = new JasperViewer(p, false);
-            view.setVisible(true);
-            view.toFront();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( "+e+" )");
+            try {
+                String data_inicial = new SimpleDateFormat("dd/MM/yyyy").format(jDateInicial.getDate());
+                String data_final = new SimpleDateFormat("dd/MM/yyyy").format(jDateFinal.getDate());
+                String colaborador[] = (jCColaborador.getSelectedItem().toString()).split(" - ");
+
+                //Map com os parametro da query
+                Map map = new HashMap();
+                map.put("colaborador",Integer.parseInt(colaborador[0]));
+                map.put("data_inicial",data_inicial);
+                map.put("data_final",data_final);
+                map.put("grupo",jCGrupo.getSelectedItem().toString());
+
+                //Carregando o Relatório
+                InputStream jasper2 = this.getClass().getResourceAsStream("/relatorios/Geral_Colaborador.jasper");
+
+                //Passando os dados para a query e a conexao ao relatorio
+                JasperPrint p = JasperFillManager.fillReport(jasper2,map, con);
+                JasperViewer view = new JasperViewer(p, false);
+                view.setVisible(true);
+                view.toFront();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( "+e+" )");
+            }
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed
 
@@ -248,9 +268,9 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnGerar;
     private javax.swing.JComboBox<String> jCColaborador;
-    private javax.swing.JComboBox<String> jCData_Final;
-    private javax.swing.JComboBox<String> jCData_Inicial;
     private javax.swing.JComboBox<String> jCGrupo;
+    private com.toedter.calendar.JDateChooser jDateFinal;
+    private com.toedter.calendar.JDateChooser jDateInicial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
