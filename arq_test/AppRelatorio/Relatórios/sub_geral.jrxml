@@ -7,14 +7,20 @@
 	<parameter name="colaborador" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="data_inicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_final" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select colaborador,(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=1 and data between '2016/01/01' and '2016/01/20') as '1',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=2 and data between '2016/01/01' and '2016/01/20') as '2',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=3 and data between '2016/01/01' and '2016/01/20') as '3',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=4 and data between '2016/01/01' and '2016/01/20') as '4',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=5 and data between '2016/01/01' and '2016/01/20') as '5',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5) and data between '2016/01/01' and '2016/01/20') as 'TOTAL'
-from pesquisa as p where data between '2016/01/01' and '2016/01/20' and colaborador= $P{colaborador}
+		<![CDATA[select colaborador,(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=1 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '1',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=2 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '2',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=3 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '3',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=4 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '4',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=5 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '5',
+(select count(resposta) from pesquisa where colaborador= $P{colaborador} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5) and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as 'TOTAL'
+from pesquisa as p where data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador= $P{colaborador}
 group by $P{colaborador};]]>
 	</queryString>
 	<field name="colaborador" class="java.lang.Integer">

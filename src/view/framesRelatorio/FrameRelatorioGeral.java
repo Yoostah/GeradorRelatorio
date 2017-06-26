@@ -212,10 +212,10 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                 Map map = new HashMap();
                 map.put("data_inicial",data_inicial);
                 map.put("data_final",data_final);
-                map.put("grupo",jCGrupo.getSelectedItem().toString());
+                //map.put("grupo",jCGrupo.getSelectedItem().toString());
 
                 //Carregando o Relatório
-                InputStream jasper2 = this.getClass().getResourceAsStream("/relatorios/Geral_Colaborador.jasper");
+                InputStream jasper2 = this.getClass().getResourceAsStream("/relatorios/Geral.jasper");
 
                 //Passando os dados para a query e a conexao ao relatorio
                 JasperPrint p = JasperFillManager.fillReport(jasper2,map, con);

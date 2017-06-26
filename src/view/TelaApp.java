@@ -12,8 +12,9 @@ import java.awt.GridBagLayout;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 import ux.JTableUtilities;
+import view.Banco.Filho;
+import view.Banco.SelecaoMaquinas;
 import view.framesCadastro.FrameCadastroColaborador;
 import view.framesCadastro.FrameCadastroGrupo;
 import view.framesCadastro.FrameCadastroMaquinas;
@@ -32,6 +33,7 @@ public class TelaApp extends javax.swing.JFrame {
     FrameCadastroColaborador cadColab;
     FrameRelatorioColaborador relColab;
     FrameRelatorioGeral relGeral;
+    public static Filho filho;
     /**
      * Creates new form TelaApp
      */
@@ -169,6 +171,11 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnBDLer.setMaximumSize(new java.awt.Dimension(67, 23));
         jBtnBDLer.setMinimumSize(new java.awt.Dimension(67, 23));
         jBtnBDLer.setPreferredSize(new java.awt.Dimension(67, 23));
+        jBtnBDLer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBDLerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBtnBDLayout = new javax.swing.GroupLayout(jPanelBtnBD);
         jPanelBtnBD.setLayout(jPanelBtnBDLayout);
@@ -222,26 +229,20 @@ public class TelaApp extends javax.swing.JFrame {
             jTableBD.getColumnModel().getColumn(0).setMinWidth(70);
             jTableBD.getColumnModel().getColumn(0).setPreferredWidth(70);
             jTableBD.getColumnModel().getColumn(0).setMaxWidth(70);
-            jTableBD.getColumnModel().getColumn(0).setHeaderValue("ID");
             jTableBD.getColumnModel().getColumn(1).setMinWidth(150);
             jTableBD.getColumnModel().getColumn(1).setPreferredWidth(150);
             jTableBD.getColumnModel().getColumn(1).setMaxWidth(150);
-            jTableBD.getColumnModel().getColumn(1).setHeaderValue("PESQUISA");
-            jTableBD.getColumnModel().getColumn(2).setMinWidth(150);
-            jTableBD.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTableBD.getColumnModel().getColumn(2).setMaxWidth(150);
-            jTableBD.getColumnModel().getColumn(2).setHeaderValue("DATA");
-            jTableBD.getColumnModel().getColumn(3).setMinWidth(70);
-            jTableBD.getColumnModel().getColumn(3).setPreferredWidth(70);
-            jTableBD.getColumnModel().getColumn(3).setMaxWidth(70);
-            jTableBD.getColumnModel().getColumn(3).setHeaderValue("PERGUNTA");
-            jTableBD.getColumnModel().getColumn(4).setMinWidth(70);
-            jTableBD.getColumnModel().getColumn(4).setPreferredWidth(70);
-            jTableBD.getColumnModel().getColumn(4).setMaxWidth(70);
-            jTableBD.getColumnModel().getColumn(4).setHeaderValue("RESPOSTA");
+            jTableBD.getColumnModel().getColumn(2).setMinWidth(120);
+            jTableBD.getColumnModel().getColumn(2).setPreferredWidth(120);
+            jTableBD.getColumnModel().getColumn(2).setMaxWidth(120);
+            jTableBD.getColumnModel().getColumn(3).setMinWidth(80);
+            jTableBD.getColumnModel().getColumn(3).setPreferredWidth(80);
+            jTableBD.getColumnModel().getColumn(3).setMaxWidth(80);
+            jTableBD.getColumnModel().getColumn(4).setMinWidth(80);
+            jTableBD.getColumnModel().getColumn(4).setPreferredWidth(80);
+            jTableBD.getColumnModel().getColumn(4).setMaxWidth(80);
             jTableBD.getColumnModel().getColumn(5).setResizable(false);
             jTableBD.getColumnModel().getColumn(5).setPreferredWidth(350);
-            jTableBD.getColumnModel().getColumn(5).setHeaderValue("COLABORADOR");
         }
 
         javax.swing.GroupLayout jPanelTabelaBDLayout = new javax.swing.GroupLayout(jPanelTabelaBD);
@@ -334,14 +335,14 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelRelatorioLayout.setHorizontalGroup(
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelBtnRel, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
-            .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
+            .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelRelatorioLayout.setVerticalGroup(
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelatorioLayout.createSequentialGroup()
                 .addComponent(jPanelBtnRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(262, Short.MAX_VALUE))
         );
 
@@ -469,6 +470,7 @@ public class TelaApp extends javax.swing.JFrame {
             PesquisaDAO dao = new PesquisaDAO();
             dao.truncarBD();
         }
+        lerBanco();
     }//GEN-LAST:event_jBtnBDApagarActionPerformed
 
     private void jBtnCadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadGrupoActionPerformed
@@ -504,6 +506,11 @@ public class TelaApp extends javax.swing.JFrame {
         relGeral.setVisible(false);
         relColab.setVisible(true);
     }//GEN-LAST:event_jBtnRelGrupoActionPerformed
+
+    private void jBtnBDLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBDLerActionPerformed
+        filho = new Filho(this, true);
+        filho.setVisible(true);
+    }//GEN-LAST:event_jBtnBDLerActionPerformed
 
     /**
      * @param args the command line arguments

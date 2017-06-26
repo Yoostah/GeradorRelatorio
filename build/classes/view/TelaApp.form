@@ -197,6 +197,9 @@
                       <Dimension value="[67, 23]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBDLerActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -244,32 +247,32 @@
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="1">
                             <Column maxWidth="70" minWidth="70" prefWidth="70" resizable="true">
-                              <Title value="ID"/>
+                              <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
                             <Column maxWidth="150" minWidth="150" prefWidth="150" resizable="true">
-                              <Title value="PESQUISA"/>
+                              <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="150" minWidth="150" prefWidth="150" resizable="true">
-                              <Title value="DATA"/>
+                            <Column maxWidth="120" minWidth="120" prefWidth="120" resizable="true">
+                              <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="70" minWidth="70" prefWidth="70" resizable="true">
-                              <Title value="PERGUNTA"/>
+                            <Column maxWidth="80" minWidth="80" prefWidth="80" resizable="true">
+                              <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="70" minWidth="70" prefWidth="70" resizable="true">
-                              <Title value="RESPOSTA"/>
+                            <Column maxWidth="80" minWidth="80" prefWidth="80" resizable="true">
+                              <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="350" resizable="false">
-                              <Title value="COLABORADOR"/>
+                              <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>

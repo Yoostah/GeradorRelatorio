@@ -90,6 +90,7 @@ public class RelatorioHMC {
                 
                 //Formatação da data
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                //" If you have a pattern and create a date object that strictly matches your pattern, set lenient to false"
                 sdf.setLenient(false);
                 Date data = sdf.parse(dados[2]+" "+dados[3]);
                 //System.out.println(data);

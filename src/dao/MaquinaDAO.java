@@ -42,7 +42,7 @@ public class MaquinaDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar!" + ex);
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
     
@@ -70,7 +70,7 @@ public class MaquinaDAO {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar!" + ex);
             return false;
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
     
@@ -89,7 +89,7 @@ public class MaquinaDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar!" + ex);
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
     
@@ -123,5 +123,26 @@ public class MaquinaDAO {
         }
         
         return maquinas;
+    }
+    
+    public boolean importar(int id, boolean importar){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE maquinas set importar = ? where id = ?");
+            stmt.setBoolean(1, importar);
+            stmt.setInt(2, id);
+           
+            
+            stmt.executeUpdate();
+            return true;
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar!" + ex);
+            return false;
+        } finally{
+            AcessoDB.closeConnection(con,stmt);
+        }
     }
 }

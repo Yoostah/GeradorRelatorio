@@ -4,10 +4,10 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="style2"/>
-	<parameter name="data_inicial" class="java.util.Date">
+	<parameter name="data_inicial" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="data_final" class="java.util.Date">
+	<parameter name="data_final" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -15,14 +15,14 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select p.colaborador, p.pergunta as Pergunta,
-(select count(resposta) from pesquisa where data between '2016/01/01' and '2016/01/20' and colaborador = p.colaborador and pergunta=p.pergunta and resposta=1) as '1 - Excelente',
-(select count(resposta) from pesquisa where data between '2016/01/01' and '2016/01/20' and colaborador = p.colaborador and pergunta=p.pergunta and resposta=2) as '2 - Muito Bom',
-(select count(resposta) from pesquisa where data between '2016/01/01' and '2016/01/20' and colaborador = p.colaborador and pergunta=p.pergunta and resposta=3) as '3 - Bom',
-(select count(resposta) from pesquisa where data between '2016/01/01' and '2016/01/20' and colaborador = p.colaborador and pergunta=p.pergunta and resposta=4) as '4 - Regular',
-(select count(resposta) from pesquisa where data between '2016/01/01' and '2016/01/20' and colaborador = p.colaborador and pergunta=p.pergunta and resposta=5) as '5 - Ruim',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador = p.colaborador and data between '2016/01/01' and '2016/01/20'
+(select count(resposta) from pesquisa where data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=1) as '1 - Excelente',
+(select count(resposta) from pesquisa where data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=2) as '2 - Muito Bom',
+(select count(resposta) from pesquisa where data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=3) as '3 - Bom',
+(select count(resposta) from pesquisa where data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=4) as '4 - Regular',
+(select count(resposta) from pesquisa where data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=5) as '5 - Ruim',
+(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador = p.colaborador and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")
 and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
-from pesquisa as p where data between '2016/01/01' and '2016/01/20' and resposta < 6
+from pesquisa as p where data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and resposta < 6
 group by p.colaborador, p.pergunta]]>
 	</queryString>
 	<field name="colaborador" class="java.lang.Integer">
@@ -171,8 +171,14 @@ group by p.colaborador, p.pergunta]]>
 			<band height="3">
 				<subreport>
 					<reportElement isPrintRepeatedValues="false" x="4" y="-20" width="544" height="18" uuid="b69cbe44-e75e-4e99-932b-1ac8452033f1"/>
+					<subreportParameter name="data_inicial">
+						<subreportParameterExpression><![CDATA[$P{data_inicial}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter name="colaborador">
 						<subreportParameterExpression><![CDATA[$F{colaborador}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="data_final">
+						<subreportParameterExpression><![CDATA[$P{data_final}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sub_geral.jasper"]]></subreportExpression>
