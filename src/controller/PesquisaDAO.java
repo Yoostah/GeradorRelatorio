@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package controller;
 
-import classes.Pesquisa;
-import conexao.AcessoDB;
+import model.Pesquisa;
+import controller.conexao.AcessoDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +44,7 @@ public class PesquisaDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar!" + ex);
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
     
@@ -61,9 +61,25 @@ public class PesquisaDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao apagar Banco!" + ex);
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
+    
+    /*public void indexarBD(){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("ALTER TABLE pesquisa ADD INDEX(data), ADD INDEX(colaborador);");
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Indexar!" + ex);
+        } finally{
+            AcessoDB.closeConnection(con, stmt);
+        }
+    }*/
     
     public List<Pesquisa> listar(){
         Connection con = AcessoDB.getConnection();
@@ -97,4 +113,6 @@ public class PesquisaDAO {
         
         return pesquisa;
     }
+    
+    
 }

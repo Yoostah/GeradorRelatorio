@@ -85,7 +85,7 @@ group by 'TOTAL';]]>
 			</staticText>
 			<image>
 				<reportElement x="5" y="45" width="200" height="57" uuid="b88adbfe-5e09-4463-8b87-92e0c7bad754"/>
-				<imageExpression><![CDATA["C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\CORMED_200.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="48" width="307" height="20" uuid="94e1778d-88be-42a6-8abd-8713c904d82a"/>
@@ -154,10 +154,10 @@ group by 'TOTAL';]]>
 			<staticText>
 				<reportElement x="0" y="15" width="151" height="20" uuid="f0b8f741-1c35-4bc1-884a-099a9ff355ef"/>
 				<box leftPadding="6">
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
@@ -167,10 +167,10 @@ group by 'TOTAL';]]>
 			<staticText>
 				<reportElement x="151" y="15" width="66" height="20" uuid="b42e2860-04c4-43cb-98d9-b7824311cb70"/>
 				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
@@ -180,10 +180,10 @@ group by 'TOTAL';]]>
 			<staticText>
 				<reportElement x="217" y="15" width="66" height="20" uuid="f31bc6d4-4cea-4632-a967-35e91b0605fe"/>
 				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
@@ -193,10 +193,10 @@ group by 'TOTAL';]]>
 			<staticText>
 				<reportElement x="283" y="15" width="66" height="20" uuid="707f3fc0-d885-4004-9a48-885470c69db4"/>
 				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
@@ -206,10 +206,10 @@ group by 'TOTAL';]]>
 			<staticText>
 				<reportElement x="349" y="15" width="66" height="20" uuid="3addf87e-6412-439a-8a5f-1895feaa56b6"/>
 				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
@@ -219,10 +219,10 @@ group by 'TOTAL';]]>
 			<staticText>
 				<reportElement x="415" y="15" width="66" height="20" uuid="a8ae468f-55b8-4f9b-8adc-83d84b8b6709"/>
 				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
@@ -232,10 +232,10 @@ group by 'TOTAL';]]>
 			<staticText>
 				<reportElement x="481" y="15" width="66" height="20" uuid="ba149de3-ea56-47e2-892a-fe2e48e3f183"/>
 				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
@@ -249,9 +249,10 @@ group by 'TOTAL';]]>
 			<textField>
 				<reportElement x="0" y="0" width="151" height="20" uuid="062da5cc-83e0-4c65-91fa-2f86e74c3b24"/>
 				<box leftPadding="6">
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -261,9 +262,10 @@ group by 'TOTAL';]]>
 			<textField>
 				<reportElement x="151" y="0" width="66" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
 				<box>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -273,9 +275,10 @@ group by 'TOTAL';]]>
 			<textField>
 				<reportElement x="217" y="0" width="66" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
 				<box>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -285,9 +288,10 @@ group by 'TOTAL';]]>
 			<textField>
 				<reportElement x="283" y="0" width="66" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
 				<box>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -297,9 +301,10 @@ group by 'TOTAL';]]>
 			<textField>
 				<reportElement x="349" y="0" width="66" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
 				<box>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -309,9 +314,10 @@ group by 'TOTAL';]]>
 			<textField>
 				<reportElement x="415" y="0" width="66" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
 				<box>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -321,9 +327,10 @@ group by 'TOTAL';]]>
 			<textField>
 				<reportElement x="481" y="0" width="66" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
 				<box>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>

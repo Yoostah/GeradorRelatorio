@@ -1,5 +1,5 @@
 
-package classes;
+package model;
 
 /**
  *
@@ -11,6 +11,8 @@ public class Maquina {
     private String caminho;
     private String grupo;
     private boolean importar;
+    private boolean importado;
+    
 
     //Construtor
     public Maquina(String nome, String caminho, String grupo) {
@@ -18,6 +20,7 @@ public class Maquina {
         this.caminho = caminho;
         this.grupo = grupo;
         this.importar = true;
+        this.importar = false;
     }
     
     //Construtor Vazio
@@ -25,6 +28,14 @@ public class Maquina {
     
     }
 
+    public boolean isImportado() {
+        return importado;
+    }
+
+    public void setImportado(boolean importado) {
+        this.importado = importado;
+    }
+    
     public boolean isImportar() {
         return importar;
     }

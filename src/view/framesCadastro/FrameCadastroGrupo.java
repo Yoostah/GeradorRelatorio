@@ -5,12 +5,12 @@
  */
 package view.framesCadastro;
 
-import classes.Grupo;
-import dao.GrupoDAO;
+import model.Grupo;
+import controller.GrupoDAO;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import ux.JTableUtilities;
+import z_ux.JTableUtilities;
 
 /**
  *

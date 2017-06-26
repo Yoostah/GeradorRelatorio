@@ -5,10 +5,10 @@
  */
 package view.framesCadastro;
 
-import classes.Grupo;
-import classes.Maquina;
-import dao.GrupoDAO;
-import dao.MaquinaDAO;
+import model.Grupo;
+import model.Maquina;
+import controller.GrupoDAO;
+import controller.MaquinaDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

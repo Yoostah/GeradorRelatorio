@@ -5,9 +5,9 @@
  */
 package view.framesRelatorio;
 
-import classes.Grupo;
-import conexao.AcessoDB;
-import dao.GrupoDAO;
+import model.Grupo;
+import controller.conexao.AcessoDB;
+import controller.GrupoDAO;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
@@ -215,7 +215,7 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                 //map.put("grupo",jCGrupo.getSelectedItem().toString());
 
                 //Carregando o Relatório
-                InputStream jasper2 = this.getClass().getResourceAsStream("/relatorios/Geral.jasper");
+                InputStream jasper2 = this.getClass().getResourceAsStream("/_relatorios/Geral.jasper");
 
                 //Passando os dados para a query e a conexao ao relatorio
                 JasperPrint p = JasperFillManager.fillReport(jasper2,map, con);

@@ -5,8 +5,8 @@
  */
 package z_componentes_sem_uso;
 
-import classes.Maquina;
-import dao.MaquinaDAO;
+import model.Maquina;
+import controller.MaquinaDAO;
 import javax.swing.table.DefaultTableModel;
 
 /**

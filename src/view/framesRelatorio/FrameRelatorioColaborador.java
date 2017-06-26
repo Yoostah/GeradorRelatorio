@@ -5,11 +5,11 @@
  */
 package view.framesRelatorio;
 
-import classes.Colaborador;
-import classes.Grupo;
-import conexao.AcessoDB;
-import dao.ColaboradorDAO;
-import dao.GrupoDAO;
+import model.Colaborador;
+import model.Grupo;
+import controller.conexao.AcessoDB;
+import controller.ColaboradorDAO;
+import controller.GrupoDAO;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.net.URL;
@@ -251,7 +251,7 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                 map.put("grupo",jCGrupo.getSelectedItem().toString());
 
                 //Carregando o Relatório
-                InputStream jasper2 = this.getClass().getResourceAsStream("/relatorios/Geral_Colaborador.jasper");
+                InputStream jasper2 = this.getClass().getResourceAsStream("/_relatorios/Geral_Colaborador.jasper");
 
                 //Passando os dados para a query e a conexao ao relatorio
                 JasperPrint p = JasperFillManager.fillReport(jasper2,map, con);

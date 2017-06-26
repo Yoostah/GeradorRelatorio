@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package controller;
 
-import classes.Maquina;
-import conexao.AcessoDB;
+import model.Maquina;
+import controller.conexao.AcessoDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -112,6 +112,7 @@ public class MaquinaDAO {
                 m.setCaminho(rs.getString("caminho"));
                 m.setGrupo(rs.getString("grupo"));
                 m.setImportar(rs.getBoolean("importar"));
+                m.setImportado(rs.getBoolean("importado"));
                 
                 maquinas.add(m);
                         
@@ -143,6 +144,42 @@ public class MaquinaDAO {
             return false;
         } finally{
             AcessoDB.closeConnection(con,stmt);
+        }
+    }
+    public boolean importado(int id, boolean importado){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE maquinas set importado = ? where id = ?");
+            stmt.setBoolean(1, importado);
+            stmt.setInt(2, id);
+           
+            
+            stmt.executeUpdate();
+            return true;
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar!" + ex);
+            return false;
+        } finally{
+            AcessoDB.closeConnection(con,stmt);
+        }
+    }
+    
+    public void resetarImportados(){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE maquinas SET importado = false");
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar!" + ex);
+        } finally{
+            AcessoDB.closeConnection(con, stmt);
         }
     }
 }

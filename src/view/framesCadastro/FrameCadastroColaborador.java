@@ -5,14 +5,14 @@
  */
 package view.framesCadastro;
 
-import classes.Colaborador;
-import classes.Grupo;
-import dao.ColaboradorDAO;
-import dao.GrupoDAO;
+import model.Colaborador;
+import model.Grupo;
+import controller.ColaboradorDAO;
+import controller.GrupoDAO;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import ux.JTableUtilities;
+import z_ux.JTableUtilities;
 
 /**
  *

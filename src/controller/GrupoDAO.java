@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package controller;
 
-import classes.Grupo;
-import conexao.AcessoDB;
+import model.Grupo;
+import controller.conexao.AcessoDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +39,7 @@ public class GrupoDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar!" + ex);
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
     
@@ -64,7 +64,7 @@ public class GrupoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar!" + ex);
             return false;
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
     
@@ -83,7 +83,7 @@ public class GrupoDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar!" + ex);
         } finally{
-            AcessoDB.closeConnection(con);
+            AcessoDB.closeConnection(con,stmt);
         }
     }
     

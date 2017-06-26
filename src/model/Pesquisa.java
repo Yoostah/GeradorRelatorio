@@ -1,5 +1,5 @@
 
-package classes;
+package model;
 
 import java.util.Date;
 
@@ -82,9 +82,5 @@ public class Pesquisa {
     public String toString() {
         return "Pesquisa=" + pesquisa + ", Data=" + data + ", Pergunta=" + pergunta + ", Resposta=" + resposta + ", Colaborador=" + id_colaborador + '}';
     }
-    
-    
-    
-    
-    
+
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório Geral por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="28"/>
+	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="style2"/>
 	<parameter name="data_inicial" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -11,7 +12,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\AppRelatorio\\Relatórios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\AppRelatorio\\Relatórios\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select p.colaborador, p.pergunta as Pergunta,
@@ -37,7 +38,7 @@ group by p.colaborador, p.pergunta]]>
 	<field name="4 - Regular" class="java.lang.Long"/>
 	<field name="5 - Ruim" class="java.lang.Long"/>
 	<field name="TOTAL" class="java.lang.Long"/>
-	<group name="Colaborador">
+	<group name="Colaborador" keepTogether="true">
 		<groupExpression><![CDATA[$F{colaborador}]]></groupExpression>
 		<groupHeader>
 			<band height="55">
@@ -49,7 +50,12 @@ group by p.colaborador, p.pergunta]]>
 				</rectangle>
 				<staticText>
 					<reportElement x="0" y="35" width="151" height="20" uuid="f0b8f741-1c35-4bc1-884a-099a9ff355ef"/>
-					<box leftPadding="6"/>
+					<box leftPadding="6">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
 					</textElement>
@@ -58,11 +64,11 @@ group by p.colaborador, p.pergunta]]>
 				<staticText>
 					<reportElement x="151" y="35" width="66" height="20" uuid="b42e2860-04c4-43cb-98d9-b7824311cb70"/>
 					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25"/>
-						<leftPen lineWidth="0.25"/>
-						<bottomPen lineWidth="0.25"/>
-						<rightPen lineWidth="0.25"/>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
@@ -78,7 +84,9 @@ group by p.colaborador, p.pergunta]]>
 				<textField>
 					<reportElement x="77" y="15" width="470" height="20" backcolor="#FFFFFF" uuid="bda78fd8-bc45-4958-9013-b31f8486ace5"/>
 					<box>
-						<rightPen lineWidth="0.25"/>
+						<topPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font fontName="Verdana" size="10"/>
@@ -88,7 +96,9 @@ group by p.colaborador, p.pergunta]]>
 				<staticText>
 					<reportElement x="0" y="15" width="77" height="20" backcolor="#FFFFFF" uuid="262daac6-c8b6-4c27-a4c9-f10540ec908e"/>
 					<box leftPadding="6">
-						<leftPen lineWidth="0.25"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
@@ -98,11 +108,11 @@ group by p.colaborador, p.pergunta]]>
 				<staticText>
 					<reportElement x="217" y="35" width="66" height="20" uuid="f31bc6d4-4cea-4632-a967-35e91b0605fe"/>
 					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25"/>
-						<leftPen lineWidth="0.25"/>
-						<bottomPen lineWidth="0.25"/>
-						<rightPen lineWidth="0.25"/>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
@@ -112,11 +122,11 @@ group by p.colaborador, p.pergunta]]>
 				<staticText>
 					<reportElement x="283" y="35" width="66" height="20" uuid="707f3fc0-d885-4004-9a48-885470c69db4"/>
 					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25"/>
-						<leftPen lineWidth="0.25"/>
-						<bottomPen lineWidth="0.25"/>
-						<rightPen lineWidth="0.25"/>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
@@ -126,11 +136,11 @@ group by p.colaborador, p.pergunta]]>
 				<staticText>
 					<reportElement x="349" y="35" width="66" height="20" uuid="3addf87e-6412-439a-8a5f-1895feaa56b6"/>
 					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25"/>
-						<leftPen lineWidth="0.25"/>
-						<bottomPen lineWidth="0.25"/>
-						<rightPen lineWidth="0.25"/>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
@@ -140,11 +150,11 @@ group by p.colaborador, p.pergunta]]>
 				<staticText>
 					<reportElement x="415" y="35" width="66" height="20" uuid="a8ae468f-55b8-4f9b-8adc-83d84b8b6709"/>
 					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25"/>
-						<leftPen lineWidth="0.25"/>
-						<bottomPen lineWidth="0.25"/>
-						<rightPen lineWidth="0.25"/>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
@@ -154,11 +164,11 @@ group by p.colaborador, p.pergunta]]>
 				<staticText>
 					<reportElement x="481" y="35" width="66" height="20" uuid="ba149de3-ea56-47e2-892a-fe2e48e3f183"/>
 					<box>
-						<pen lineWidth="0.25"/>
-						<topPen lineWidth="0.25"/>
-						<leftPen lineWidth="0.25"/>
-						<bottomPen lineWidth="0.25"/>
-						<rightPen lineWidth="0.25"/>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Verdana" size="7" isBold="true"/>
@@ -212,7 +222,7 @@ group by p.colaborador, p.pergunta]]>
 			</staticText>
 			<image>
 				<reportElement x="5" y="45" width="200" height="57" uuid="81a6039f-2c84-4ad4-bad6-70abda92a076"/>
-				<imageExpression><![CDATA["C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\CORMED_200.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="48" width="216" height="20" uuid="095019a3-f1b6-4c96-9f8f-83c3f34a47e6"/>
@@ -275,11 +285,11 @@ group by p.colaborador, p.pergunta]]>
 			<textField>
 				<reportElement x="0" y="0" width="151" height="20" uuid="062da5cc-83e0-4c65-91fa-2f86e74c3b24"/>
 				<box leftPadding="6">
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -289,11 +299,11 @@ group by p.colaborador, p.pergunta]]>
 			<textField>
 				<reportElement x="151" y="0" width="66" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
 				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -303,11 +313,11 @@ group by p.colaborador, p.pergunta]]>
 			<textField>
 				<reportElement x="217" y="0" width="66" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
 				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -317,11 +327,11 @@ group by p.colaborador, p.pergunta]]>
 			<textField>
 				<reportElement x="283" y="0" width="66" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
 				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -331,11 +341,11 @@ group by p.colaborador, p.pergunta]]>
 			<textField>
 				<reportElement x="349" y="0" width="66" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
 				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -345,11 +355,11 @@ group by p.colaborador, p.pergunta]]>
 			<textField>
 				<reportElement x="415" y="0" width="66" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
 				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
@@ -359,11 +369,11 @@ group by p.colaborador, p.pergunta]]>
 			<textField>
 				<reportElement x="481" y="0" width="66" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
 				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>

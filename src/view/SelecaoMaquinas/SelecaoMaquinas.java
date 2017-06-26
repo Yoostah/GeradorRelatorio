@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package view.Banco;
+package view.SelecaoMaquinas;
 
-import classes.Maquina;
-import classes.Pesquisa;
-import dao.MaquinaDAO;
-import dao.PesquisaDAO;
+import model.Maquina;
+import model.Pesquisa;
+import controller.MaquinaDAO;
+import controller.PesquisaDAO;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -16,28 +11,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.joda.time.DateTimeComparator;
 import view.TelaApp;
 
 /**
  *
  * @author Thulio
  */
-public class Filho extends javax.swing.JDialog {
-    
-    public static TelaApp pai;
+public class SelecaoMaquinas extends javax.swing.JDialog {
+
+    public static TelaApp telaApp;
+
     /**
      * Creates new form Filho
      */
-    public Filho(TelaApp parent, boolean modal) {
+    public SelecaoMaquinas(TelaApp parent, boolean modal) {
         //super(parent, modal);
-        this.pai = parent;
+        this.telaApp = parent;
         this.setModal(modal);
-        this.setLocationRelativeTo(null);
         initComponents();
         lerMaquinas();
-        
+
     }
-    
+
     public void lerMaquinas() {
         DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
         MaquinaDAO m = new MaquinaDAO();
@@ -50,13 +46,13 @@ public class Filho extends javax.swing.JDialog {
                 i.getNome(),
                 i.getCaminho(),
                 i.getGrupo(),
-                i.isImportar()
+                i.isImportar(),
+                i.isImportado()
             });
 
         }
-
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,9 +64,10 @@ public class Filho extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jBtnImportar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMaquinas = new javax.swing.JTable();
-        jBtnImportar = new javax.swing.JButton();
+        jDateInicial = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -81,20 +78,27 @@ public class Filho extends javax.swing.JDialog {
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel1.setOpaque(true);
 
+        jBtnImportar.setText("IMPORTAR");
+        jBtnImportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnImportarActionPerformed(evt);
+            }
+        });
+
         jTableMaquinas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableMaquinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "NOME", "CAMINHO", "GRUPO", "IMPORTAR?"
+                "ID", "NOME", "CAMINHO", "GRUPO", "IMPORTAR?", "IMPORTADO?"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -108,13 +112,7 @@ public class Filho extends javax.swing.JDialog {
         jTableMaquinas.setColumnSelectionAllowed(true);
         jTableMaquinas.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTableMaquinas);
-
-        jBtnImportar.setText("IMPORTAR");
-        jBtnImportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnImportarActionPerformed(evt);
-            }
-        });
+        jTableMaquinas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,118 +122,127 @@ public class Filho extends javax.swing.JDialog {
                 .addGap(119, 119, 119)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jBtnImportar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(371, 371, 371))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(130, 130, 130)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(130, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(279, 279, 279)
+                .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
                 .addComponent(jBtnImportar)
                 .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(125, 125, 125)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(125, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 473, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 28, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImportarActionPerformed
         //DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
         MaquinaDAO m = new MaquinaDAO();
 
-        for (int linha = 0; linha < jTableMaquinas.getRowCount(); linha++){
+        for (int linha = 0; linha < jTableMaquinas.getRowCount(); linha++) {
             int id = Integer.parseInt(jTableMaquinas.getValueAt(linha, 0).toString());
             boolean importar = Boolean.valueOf(jTableMaquinas.getValueAt(linha, 4).toString());
             m.importar(id, importar);
         }
-        JOptionPane.showMessageDialog(null, "Máquinas selecionadas.");
 
-        for (Maquina i : m.listar()){
-            if (i.isImportar()){
-                //File arquivos[];
-                //Caminho onde estarao os arquivos resposta.txt estarão centralizados
-                //File diretorio = new File("C:\\Users\\Thulio\\Desktop\\Relatórios\\arq_test\\CORMED_05.04.16");
-                //Arquivos[] é preenchida com a lista de diretorios encontrados no diretorio informado
-                //arquivos = diretorio.listFiles();
-
-                //System.out.println("### Arquivos encontrados no diretório ###");
-                //Percorre o arquivo imprimindo os arquivos encontrados
-                //for (int i = 0; i < arquivos.length; i++) {
-                    // System.out.println("arq.tostring "+arquivos[i].toString());
-
+        if (jDateInicial.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Escolha a Data Inicial para importação!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Máquinas selecionadas.");
+            for (Maquina i : m.listar()) {
+                if (i.isImportar() && !i.isImportado()) {
                     String dir = i.getCaminho();
                     File file = new File(dir);
-                    for (String arq : file.list()) {
-                        if (arq.endsWith(".txt")) {
-                            System.out.println("------>" + arq + "<------");
-                            try {
-                                System.out.println("Importando dados de ("+dir+ "\\" + arq+")");
-                                leitura(dir + "\\" + arq);
+                    try {
+                        for (String arq : file.list()) {
+                            if (arq.endsWith(".txt")) {
+                                System.out.println("------>" + arq + "<------");
+                                try {
+                                    System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
+                                    leitura(dir + "\\" + arq);
+                                    m.importado(i.getId(), true);
                                 } catch (Exception ex) {
-                                    JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina "+i.getNome());
+                                    JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
                                 }
                             }
                         }
-                        //}
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
+                    }
                 }
-                pai.lerBanco();
             }
 
+            lerMaquinas();
+            telaApp.lerBanco();
+        }
     }//GEN-LAST:event_jBtnImportarActionPerformed
 
-    private static void leitura(String dir) throws Exception {
-        String linha = "", conteudo = "";
+    public void leitura(String dir) throws Exception {
+        String linha = "";
         BufferedReader br = new BufferedReader(new FileReader(new File(dir)));
         PesquisaDAO banco = new PesquisaDAO();
         while ((linha = br.readLine()) != null) {
             if (!linha.isEmpty()) {
                 //Divisão da linha da pesquisa por parametros
                 String[] dados = linha.split(";");
-                
+
                 //Formatação da data
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 //" If you have a pattern and create a date object that strictly matches your pattern, set lenient to false"
                 sdf.setLenient(false);
-                Date data = sdf.parse(dados[2]+" "+dados[3]);
-                //System.out.println(data);
 
-                //Criação do objeto para guardar os dados no BD (String pesquisa, Date data, int pergunta, int resposta, int colaborador)
-                Pesquisa p = new Pesquisa(dados[1], data, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()));
-                if (p.getData().getYear() > 115){
-                    
+                //Pega a data inicial escolhida pelo usuário;
+                Date data_inicial = jDateInicial.getDate();
+
+                Date data = sdf.parse(dados[2] + " " + dados[3]);
+
+                //Se a data do registro for maior que a data informada no jCalendar fazer a inclusão do objeto no banco
+                if (DateTimeComparator.getDateOnlyInstance().compare(data_inicial, data) <= 0) {
+                    //Criação do objeto para guardar os dados no BD (String pesquisa, Date data, int pergunta, int resposta, int colaborador)
+                    Pesquisa p = new Pesquisa(dados[1], data, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()));
                     banco.create(p);
-                    
                 }
-                
             }
         }
         br.close();
     }
+
     /**
      * @param args the command line arguments
      */
@@ -253,20 +260,21 @@ public class Filho extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Filho.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelecaoMaquinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Filho.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelecaoMaquinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Filho.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelecaoMaquinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Filho.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelecaoMaquinas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Filho dialog = new Filho(pai, true);
+                SelecaoMaquinas dialog = new SelecaoMaquinas(telaApp, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -280,6 +288,7 @@ public class Filho extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnImportar;
+    private com.toedter.calendar.JDateChooser jDateInicial;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -5,16 +5,16 @@
  */
 package view;
 
-import classes.Pesquisa;
-import dao.PesquisaDAO;
+import controller.MaquinaDAO;
+import model.Pesquisa;
+import controller.PesquisaDAO;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import ux.JTableUtilities;
-import view.Banco.Filho;
-import view.Banco.SelecaoMaquinas;
+import z_ux.JTableUtilities;
+import view.SelecaoMaquinas.SelecaoMaquinas;
 import view.framesCadastro.FrameCadastroColaborador;
 import view.framesCadastro.FrameCadastroGrupo;
 import view.framesCadastro.FrameCadastroMaquinas;
@@ -33,7 +33,7 @@ public class TelaApp extends javax.swing.JFrame {
     FrameCadastroColaborador cadColab;
     FrameRelatorioColaborador relColab;
     FrameRelatorioGeral relGeral;
-    public static Filho filho;
+    public static SelecaoMaquinas telaSelecaoMaq;
     /**
      * Creates new form TelaApp
      */
@@ -469,6 +469,8 @@ public class TelaApp extends javax.swing.JFrame {
         {
             PesquisaDAO dao = new PesquisaDAO();
             dao.truncarBD();
+            MaquinaDAO m = new MaquinaDAO();
+            m.resetarImportados();
         }
         lerBanco();
     }//GEN-LAST:event_jBtnBDApagarActionPerformed
@@ -508,8 +510,8 @@ public class TelaApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnRelGrupoActionPerformed
 
     private void jBtnBDLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBDLerActionPerformed
-        filho = new Filho(this, true);
-        filho.setVisible(true);
+        telaSelecaoMaq = new SelecaoMaquinas(this, true);
+        telaSelecaoMaq.setVisible(true);
     }//GEN-LAST:event_jBtnBDLerActionPerformed
 
     /**
