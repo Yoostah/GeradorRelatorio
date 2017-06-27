@@ -9,6 +9,10 @@ import model.Colaborador;
 import model.Grupo;
 import controller.ColaboradorDAO;
 import controller.GrupoDAO;
+import java.awt.BorderLayout;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
@@ -91,9 +95,10 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanelBotoes = new javax.swing.JPanel();
-        jBtnMaqADD = new javax.swing.JButton();
-        jBtnMaqDEL = new javax.swing.JButton();
-        jBtnMaqUPD = new javax.swing.JButton();
+        jBtnColabADD = new javax.swing.JButton();
+        jBtnColabDEL = new javax.swing.JButton();
+        jBtnColabUPD = new javax.swing.JButton();
+        textura = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableColaboradores = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -113,51 +118,59 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
 
         jPanelBotoes.setBackground(new java.awt.Color(153, 153, 153));
 
-        jBtnMaqADD.setBackground(new java.awt.Color(153, 204, 255));
-        jBtnMaqADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
-        jBtnMaqADD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
-        jBtnMaqADD.setBorder(null);
-        jBtnMaqADD.setBorderPainted(false);
-        jBtnMaqADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
-        jBtnMaqADD.setMaximumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqADD.setMinimumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqADD.setPreferredSize(new java.awt.Dimension(60, 60));
-        jBtnMaqADD.addActionListener(new java.awt.event.ActionListener() {
+        jBtnColabADD.setBackground(new java.awt.Color(153, 204, 255));
+        jBtnColabADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnColabADD.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnColabADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
+        jBtnColabADD.setBorder(null);
+        jBtnColabADD.setBorderPainted(false);
+        jBtnColabADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        jBtnColabADD.setMaximumSize(new java.awt.Dimension(60, 60));
+        jBtnColabADD.setMinimumSize(new java.awt.Dimension(60, 60));
+        jBtnColabADD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnColabADD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMaqADDActionPerformed(evt);
+                jBtnColabADDActionPerformed(evt);
             }
         });
+        jBtnColabADD.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnColabADD.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnMaqDEL.setBackground(new java.awt.Color(255, 51, 51));
-        jBtnMaqDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
-        jBtnMaqDEL.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
-        jBtnMaqDEL.setBorder(null);
-        jBtnMaqDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
-        jBtnMaqDEL.setMaximumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqDEL.setMinimumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqDEL.setPreferredSize(new java.awt.Dimension(60, 60));
-        jBtnMaqDEL.addActionListener(new java.awt.event.ActionListener() {
+        jBtnColabDEL.setBackground(new java.awt.Color(255, 51, 51));
+        jBtnColabDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnColabDEL.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnColabDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
+        jBtnColabDEL.setBorder(null);
+        jBtnColabDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnColabDEL.setMaximumSize(new java.awt.Dimension(60, 60));
+        jBtnColabDEL.setMinimumSize(new java.awt.Dimension(60, 60));
+        jBtnColabDEL.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnColabDEL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMaqDELActionPerformed(evt);
+                jBtnColabDELActionPerformed(evt);
             }
         });
+        jBtnColabDEL.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnColabDEL.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnMaqUPD.setBackground(new java.awt.Color(204, 204, 204));
-        jBtnMaqUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
-        jBtnMaqUPD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
-        jBtnMaqUPD.setBorder(null);
-        jBtnMaqUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
-        jBtnMaqUPD.setMaximumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqUPD.setMinimumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqUPD.setPreferredSize(new java.awt.Dimension(60, 60));
-        jBtnMaqUPD.addActionListener(new java.awt.event.ActionListener() {
+        jBtnColabUPD.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnColabUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnColabUPD.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnColabUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
+        jBtnColabUPD.setBorder(null);
+        jBtnColabUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnColabUPD.setMaximumSize(new java.awt.Dimension(60, 60));
+        jBtnColabUPD.setMinimumSize(new java.awt.Dimension(60, 60));
+        jBtnColabUPD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnColabUPD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMaqUPDActionPerformed(evt);
+                jBtnColabUPDActionPerformed(evt);
             }
         });
+        jBtnColabUPD.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnColabUPD.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        textura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/teste2.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelBotoesLayout = new javax.swing.GroupLayout(jPanelBotoes);
         jPanelBotoes.setLayout(jPanelBotoesLayout);
@@ -166,21 +179,31 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             .addGroup(jPanelBotoesLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jBtnMaqDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnMaqADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnMaqUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBtnColabDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnColabADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnColabUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBotoesLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(textura)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanelBotoesLayout.setVerticalGroup(
             jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotoesLayout.createSequentialGroup()
                 .addGap(71, 71, 71)
-                .addComponent(jBtnMaqADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnColabADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(jBtnMaqDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnColabDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(jBtnMaqUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnColabUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBotoesLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(textura)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         add(jPanelBotoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, 375));
@@ -223,7 +246,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 171, 574, 195));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 25)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CADASTRO DE COLABORADOR");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -289,13 +312,6 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         add(jPanelBtnADD, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 66, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBtnMaqADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqADDActionPerformed
-        //Habilitar Botoões
-        mostrarCampos();
-        
-        op = 1;
-    }//GEN-LAST:event_jBtnMaqADDActionPerformed
-
     private void jBtnADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnADDActionPerformed
         ColaboradorDAO cdao = new ColaboradorDAO();
         Colaborador c = new Colaborador();
@@ -337,7 +353,14 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jBtnADDActionPerformed
 
-    private void jBtnMaqDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqDELActionPerformed
+    private void jBtnColabADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnColabADDActionPerformed
+        //Habilitar Botoões
+        mostrarCampos();
+
+        op = 1;
+    }//GEN-LAST:event_jBtnColabADDActionPerformed
+
+    private void jBtnColabDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnColabDELActionPerformed
         ColaboradorDAO cdao = new ColaboradorDAO();
         
         if (jTableColaboradores.getSelectedRow() != -1) {
@@ -353,9 +376,9 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Escolha um Colaborador para deletar!");
             
         }
-    }//GEN-LAST:event_jBtnMaqDELActionPerformed
+    }//GEN-LAST:event_jBtnColabDELActionPerformed
 
-    private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqUPDActionPerformed
+    private void jBtnColabUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnColabUPDActionPerformed
         //LER OS DADOS DA LINHA SELECIOANDA
         if (jTableColaboradores.getSelectedRow() != -1) {
             //Travar a seleção de outra linha da tabela antes da alteração ser enviada
@@ -373,14 +396,14 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Escolha um Colaborador para alterar!");
             
         }
-    }//GEN-LAST:event_jBtnMaqUPDActionPerformed
+    }//GEN-LAST:event_jBtnColabUPDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnADD;
-    private javax.swing.JButton jBtnMaqADD;
-    private javax.swing.JButton jBtnMaqDEL;
-    private javax.swing.JButton jBtnMaqUPD;
+    private javax.swing.JButton jBtnColabADD;
+    private javax.swing.JButton jBtnColabDEL;
+    private javax.swing.JButton jBtnColabUPD;
     private javax.swing.JComboBox<String> jCGrupo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -392,5 +415,6 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     private javax.swing.JTable jTableColaboradores;
     private javax.swing.JTextField jTxtID;
     private javax.swing.JTextField jTxtNome;
+    private javax.swing.JLabel textura;
     // End of variables declaration//GEN-END:variables
 }

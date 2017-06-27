@@ -32,12 +32,15 @@ public class PesquisaDAO {
             //Converte o formato de Date para um formato aceito no BD
             SimpleDateFormat formatacao = new SimpleDateFormat("yyyy-MM-dd");
             
-            stmt = con.prepareStatement("INSERT INTO pesquisa (PESQUISA, PERGUNTA, RESPOSTA, COLABORADOR, DATA) VALUES (?,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO pesquisa (PESQUISA, PERGUNTA, RESPOSTA, COLABORADOR, DATA, GRUPO, MAQUINA, TEXTOP) VALUES (?,?,?,?,?,?,?,?)");
             stmt.setString(1,p.getPesquisa());
             stmt.setInt(2, p.getPergunta());
             stmt.setInt(3, p.getResposta());
             stmt.setInt(4, p.getId_colaborador());
             stmt.setString(5, formatacao.format(p.getData()));
+            stmt.setString(6, (p.getGrupo()));
+            stmt.setString(7, (p.getMaquina()));
+            stmt.setInt(8, p.getTextop());
             
             stmt.executeUpdate();
             
@@ -101,6 +104,9 @@ public class PesquisaDAO {
                 p.setPergunta(rs.getInt("pergunta"));
                 p.setResposta(rs.getInt("resposta"));
                 p.setId_colaborador(rs.getInt("colaborador"));
+                p.setGrupo(rs.getString("grupo"));
+                p.setMaquina(rs.getString("maquina"));
+                p.setTextop(rs.getInt("textop"));
                 
                 pesquisa.add(p);
                         

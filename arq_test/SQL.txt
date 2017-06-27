@@ -1,0 +1,34 @@
+select p.pergunta as Pergunta,
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=1 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '1 - Excelente',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=2 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '2 - Muito Bom',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=3 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '3 - Bom',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=4 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '4 - Regular',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=5 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '5 - Ruim',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=p.pergunta and colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
+from pesquisa as p where grupo= $P{grupo} and colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")
+group by p.pergunta
+
+
+
+
+
+
+union
+
+select 'TOTAL', (select count(resposta) from pesquisa where grupo= $P{grupo} and colaborador= $P{colaborador} and resposta=1 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '1',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and colaborador= $P{colaborador} and resposta=2 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '2',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and colaborador= $P{colaborador} and resposta=3 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '3',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and colaborador= $P{colaborador} and resposta=4 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '4',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and colaborador= $P{colaborador} and resposta=5 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '5',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and colaborador= $P{colaborador} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5) and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as 'TOTAL' from pesquisa where grupo= $P{grupo} and colaborador= $P{colaborador}
+group by 'TOTAL';
+
+
+select p.pergunta as Pergunta,
+(select count(resposta) from (select * from (select * from pesquisa where grupo='teste') as s where colaborador = '1111') as r where resposta=1) as R1,
+(select count(resposta) from (select * from (select * from pesquisa where grupo='teste') as s where colaborador = '1111') as r where resposta=2) as R2,
+(select count(resposta) from (select * from (select * from pesquisa where grupo='teste') as s where colaborador = '1111') as r where resposta=3) as R3,
+(select count(resposta) from (select * from (select * from pesquisa where grupo='teste') as s where colaborador = '1111') as r where resposta=4) as R4,
+(select count(resposta) from (select * from (select * from pesquisa where grupo='teste') as s where colaborador = '1111') as r where resposta=5) as R5
+from pesquisa as p where grupo= 'teste' and colaborador= '1111'
+group by p.pergunta, pergunta;

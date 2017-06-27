@@ -48,16 +48,7 @@ public class TelaApp extends javax.swing.JFrame {
     public TelaApp() {
         initComponents();
         
-        try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
-        }
+        
         lerBanco();
         
         //Criação dos Paineis do Cadastro
@@ -110,8 +101,9 @@ public class TelaApp extends javax.swing.JFrame {
                 i.getData(),
                 i.getPergunta(),
                 i.getResposta(),
-                i.getId_colaborador()
-
+                i.getId_colaborador(),
+                i.getGrupo(),
+                i.getMaquina()
             });
 
         }
@@ -134,6 +126,8 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelBtnBD = new javax.swing.JPanel();
         jBtnBDApagar = new javax.swing.JButton();
         jBtnBDLer = new javax.swing.JButton();
+        logoFSFX = new javax.swing.JLabel();
+        logoHMC = new javax.swing.JLabel();
         jPanelTabelaBD = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableBD = new javax.swing.JTable();
@@ -141,12 +135,16 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelBtnRel = new javax.swing.JPanel();
         jBtnRelGeral = new javax.swing.JButton();
         jBtnRelGrupo = new javax.swing.JButton();
+        logoHMC1 = new javax.swing.JLabel();
+        logoFSFX1 = new javax.swing.JLabel();
         jPainelDinamicoRel = new javax.swing.JPanel();
         jPanelCadastro = new javax.swing.JPanel();
         jPanelBtnCad = new javax.swing.JPanel();
         jBtnCadColaborador = new javax.swing.JButton();
         jBtnCadMaq = new javax.swing.JButton();
         jBtnCadGrupo = new javax.swing.JButton();
+        logoHMC2 = new javax.swing.JLabel();
+        logoFSFX2 = new javax.swing.JLabel();
         jPainelDinamicoCad = new javax.swing.JPanel();
         jMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -166,7 +164,8 @@ public class TelaApp extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTableCadastro);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(":: CORMED RELATÓRIOS ::");
+        setTitle(":: CORMED SISAT ::");
+        setAutoRequestFocus(false);
         setResizable(false);
 
         jTabs.setBackground(new java.awt.Color(204, 204, 255));
@@ -206,6 +205,10 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnBDLer.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnBDLer.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        logoFSFX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/fsfx.png"))); // NOI18N
+
+        logoHMC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/logo-hmc.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanelBtnBDLayout = new javax.swing.GroupLayout(jPanelBtnBD);
         jPanelBtnBD.setLayout(jPanelBtnBDLayout);
         jPanelBtnBDLayout.setHorizontalGroup(
@@ -215,15 +218,24 @@ public class TelaApp extends javax.swing.JFrame {
                 .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnBDApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 476, Short.MAX_VALUE)
+                .addGroup(jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(logoHMC, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logoFSFX, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanelBtnBDLayout.setVerticalGroup(
             jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBtnBDLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnBDApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelBtnBDLayout.createSequentialGroup()
+                        .addComponent(logoFSFX)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logoHMC))
+                    .addGroup(jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBtnBDApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -235,14 +247,14 @@ public class TelaApp extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "PESQUISA", "DATA", "PERGUNTA", "RESPOSTA", "COLABORADOR"
+                "ID", "PESQUISA", "DATA", "PERGUNTA", "RESPOSTA", "COLABORADOR", "GRUPO", "MAQUINA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -257,37 +269,46 @@ public class TelaApp extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableBD);
         jTableBD.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTableBD.getColumnModel().getColumnCount() > 0) {
-            jTableBD.getColumnModel().getColumn(0).setMinWidth(70);
-            jTableBD.getColumnModel().getColumn(0).setPreferredWidth(70);
-            jTableBD.getColumnModel().getColumn(0).setMaxWidth(70);
-            jTableBD.getColumnModel().getColumn(1).setMinWidth(150);
-            jTableBD.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jTableBD.getColumnModel().getColumn(1).setMaxWidth(150);
-            jTableBD.getColumnModel().getColumn(2).setMinWidth(120);
-            jTableBD.getColumnModel().getColumn(2).setPreferredWidth(120);
-            jTableBD.getColumnModel().getColumn(2).setMaxWidth(120);
+            jTableBD.getColumnModel().getColumn(0).setMinWidth(60);
+            jTableBD.getColumnModel().getColumn(0).setPreferredWidth(60);
+            jTableBD.getColumnModel().getColumn(0).setMaxWidth(60);
+            jTableBD.getColumnModel().getColumn(1).setMinWidth(100);
+            jTableBD.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jTableBD.getColumnModel().getColumn(1).setMaxWidth(100);
+            jTableBD.getColumnModel().getColumn(2).setMinWidth(100);
+            jTableBD.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTableBD.getColumnModel().getColumn(2).setMaxWidth(100);
             jTableBD.getColumnModel().getColumn(3).setMinWidth(80);
             jTableBD.getColumnModel().getColumn(3).setPreferredWidth(80);
             jTableBD.getColumnModel().getColumn(3).setMaxWidth(80);
             jTableBD.getColumnModel().getColumn(4).setMinWidth(80);
             jTableBD.getColumnModel().getColumn(4).setPreferredWidth(80);
             jTableBD.getColumnModel().getColumn(4).setMaxWidth(80);
-            jTableBD.getColumnModel().getColumn(5).setResizable(false);
-            jTableBD.getColumnModel().getColumn(5).setPreferredWidth(350);
+            jTableBD.getColumnModel().getColumn(5).setMinWidth(110);
+            jTableBD.getColumnModel().getColumn(5).setPreferredWidth(110);
+            jTableBD.getColumnModel().getColumn(5).setMaxWidth(110);
+            jTableBD.getColumnModel().getColumn(6).setMinWidth(250);
+            jTableBD.getColumnModel().getColumn(6).setPreferredWidth(250);
+            jTableBD.getColumnModel().getColumn(6).setMaxWidth(250);
+            jTableBD.getColumnModel().getColumn(7).setResizable(false);
+            jTableBD.getColumnModel().getColumn(7).setPreferredWidth(125);
         }
 
         javax.swing.GroupLayout jPanelTabelaBDLayout = new javax.swing.GroupLayout(jPanelTabelaBD);
         jPanelTabelaBD.setLayout(jPanelTabelaBDLayout);
         jPanelTabelaBDLayout.setHorizontalGroup(
             jPanelTabelaBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabelaBDLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanelTabelaBDLayout.setVerticalGroup(
             jPanelTabelaBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTabelaBDLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
-                .addGap(281, 281, 281))
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelBDLayout = new javax.swing.GroupLayout(jPanelBD);
@@ -301,8 +322,8 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBDLayout.createSequentialGroup()
                 .addComponent(jPanelBtnBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         BufferedImage img = null;
@@ -341,6 +362,10 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnRelGrupo.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnRelGrupo.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        logoHMC1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/logo-hmc.png"))); // NOI18N
+
+        logoFSFX1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/fsfx.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanelBtnRelLayout = new javax.swing.GroupLayout(jPanelBtnRel);
         jPanelBtnRel.setLayout(jPanelBtnRelLayout);
         jPanelBtnRelLayout.setHorizontalGroup(
@@ -350,15 +375,24 @@ public class TelaApp extends javax.swing.JFrame {
                 .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(679, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 476, Short.MAX_VALUE)
+                .addGroup(jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(logoHMC1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logoFSFX1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanelBtnRelLayout.setVerticalGroup(
             jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBtnRelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelBtnRelLayout.createSequentialGroup()
+                        .addComponent(logoFSFX1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logoHMC1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -386,9 +420,9 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelatorioLayout.createSequentialGroup()
                 .addComponent(jPanelBtnRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addGap(60, 60, 60)
                 .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(239, Short.MAX_VALUE))
         );
 
         jTabs.addTab("RELATÓRIOS", jPanelRelatorio);
@@ -435,6 +469,10 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnCadGrupo.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnCadGrupo.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        logoHMC2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/logo-hmc.png"))); // NOI18N
+
+        logoFSFX2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/fsfx.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanelBtnCadLayout = new javax.swing.GroupLayout(jPanelBtnCad);
         jPanelBtnCad.setLayout(jPanelBtnCadLayout);
         jPanelBtnCadLayout.setHorizontalGroup(
@@ -446,16 +484,25 @@ public class TelaApp extends javax.swing.JFrame {
                 .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(logoHMC2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logoFSFX2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanelBtnCadLayout.setVerticalGroup(
             jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBtnCadLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelBtnCadLayout.createSequentialGroup()
+                        .addComponent(logoFSFX2)
+                        .addGap(12, 12, 12)
+                        .addComponent(logoHMC2))
+                    .addGroup(jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBtnCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -469,7 +516,7 @@ public class TelaApp extends javax.swing.JFrame {
         );
         jPainelDinamicoCadLayout.setVerticalGroup(
             jPainelDinamicoCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addGap(0, 499, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
@@ -483,6 +530,7 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                 .addComponent(jPanelBtnCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPainelDinamicoCad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -499,12 +547,12 @@ public class TelaApp extends javax.swing.JFrame {
 
         jMenu.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        jMenu1.setText("Arquivo");
-        jMenu1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jMenu1.setText("ARQUIVO");
+        jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenu.add(jMenu1);
 
-        jMenu2.setText("Sobre");
-        jMenu2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jMenu2.setText("SOBRE");
+        jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenu.add(jMenu2);
 
         setJMenuBar(jMenu);
@@ -513,13 +561,13 @@ public class TelaApp extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabs)
+            .addComponent(jTabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -640,5 +688,11 @@ public class TelaApp extends javax.swing.JFrame {
     private javax.swing.JTable jTableBD;
     private javax.swing.JTable jTableCadastro;
     private javax.swing.JTabbedPane jTabs;
+    private javax.swing.JLabel logoFSFX;
+    private javax.swing.JLabel logoFSFX1;
+    private javax.swing.JLabel logoFSFX2;
+    private javax.swing.JLabel logoHMC;
+    private javax.swing.JLabel logoHMC1;
+    private javax.swing.JLabel logoHMC2;
     // End of variables declaration//GEN-END:variables
 }

@@ -32,7 +32,7 @@ public class MaquinaDAO {
             stmt.setString(1,m.getNome());
             stmt.setString(2,m.getCaminho());
             stmt.setString(3,m.getGrupo());
-            stmt.setBoolean(4,true);
+            stmt.setBoolean(4,false);
             
             
             stmt.executeUpdate();

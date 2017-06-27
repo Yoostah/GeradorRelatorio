@@ -19,8 +19,8 @@ public class Maquina {
         this.nome = nome;
         this.caminho = caminho;
         this.grupo = grupo;
-        this.importar = true;
         this.importar = false;
+        this.importado = false;
     }
     
     //Construtor Vazio

@@ -55,6 +55,7 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        textura = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jBtnGerar = new javax.swing.JButton();
@@ -74,19 +75,21 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
+        textura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/teste.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addComponent(textura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 183, Short.MAX_VALUE)
+            .addComponent(textura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 25)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("RELATÓRIO POR COLABORADOR");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -95,10 +98,12 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jBtnGerar.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnGerar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnGerar.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnGerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/gerar_relatorio.png"))); // NOI18N
         jBtnGerar.setText("GERAR");
+        jBtnGerar.setBorder(null);
         jBtnGerar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jBtnGerar.setIconTextGap(10);
         jBtnGerar.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnGerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,10 +264,10 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                 map.put("grupo",jCGrupo.getSelectedItem().toString());
 
                 //Carregando o Relatório
-                InputStream jasper2 = this.getClass().getResourceAsStream("/_relatorios/Geral_Colaborador.jasper");
+                InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Geral_Colaborador.jasper");
 
                 //Passando os dados para a query e a conexao ao relatorio
-                JasperPrint p = JasperFillManager.fillReport(jasper2,map, con);
+                JasperPrint p = JasperFillManager.fillReport(jasper,map, con);
                 JasperViewer view = new JasperViewer(p, false);
                 view.setVisible(true);
                 view.toFront();
@@ -286,5 +291,6 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel textura;
     // End of variables declaration//GEN-END:variables
 }

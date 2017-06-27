@@ -67,10 +67,11 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jBtnMaqADD = new javax.swing.JButton();
-        jBtnMaqDEL = new javax.swing.JButton();
-        jBtnMaqUPD = new javax.swing.JButton();
+        jPanelBotoes = new javax.swing.JPanel();
+        jBtnGruADD = new javax.swing.JButton();
+        jBtnGruDEL = new javax.swing.JButton();
+        jBtnGruUPD = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableGrupos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -83,79 +84,97 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(698, 369));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanelBotoes.setBackground(new java.awt.Color(153, 153, 153));
 
-        jBtnMaqADD.setBackground(new java.awt.Color(153, 204, 255));
-        jBtnMaqADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
-        jBtnMaqADD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
-        jBtnMaqADD.setBorder(null);
-        jBtnMaqADD.setBorderPainted(false);
-        jBtnMaqADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
-        jBtnMaqADD.setMaximumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqADD.setMinimumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqADD.setPreferredSize(new java.awt.Dimension(60, 60));
-        jBtnMaqADD.addActionListener(new java.awt.event.ActionListener() {
+        jBtnGruADD.setBackground(new java.awt.Color(153, 204, 255));
+        jBtnGruADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnGruADD.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnGruADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
+        jBtnGruADD.setBorder(null);
+        jBtnGruADD.setBorderPainted(false);
+        jBtnGruADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        jBtnGruADD.setMaximumSize(new java.awt.Dimension(60, 60));
+        jBtnGruADD.setMinimumSize(new java.awt.Dimension(60, 60));
+        jBtnGruADD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnGruADD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMaqADDActionPerformed(evt);
+                jBtnGruADDActionPerformed(evt);
             }
         });
+        jBtnGruADD.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnGruADD.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnMaqDEL.setBackground(new java.awt.Color(255, 51, 51));
-        jBtnMaqDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
-        jBtnMaqDEL.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
-        jBtnMaqDEL.setBorder(null);
-        jBtnMaqDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
-        jBtnMaqDEL.setMaximumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqDEL.setMinimumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqDEL.setPreferredSize(new java.awt.Dimension(60, 60));
-        jBtnMaqDEL.addActionListener(new java.awt.event.ActionListener() {
+        jBtnGruDEL.setBackground(new java.awt.Color(255, 51, 51));
+        jBtnGruDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnGruDEL.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnGruDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
+        jBtnGruDEL.setBorder(null);
+        jBtnGruDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnGruDEL.setMaximumSize(new java.awt.Dimension(60, 60));
+        jBtnGruDEL.setMinimumSize(new java.awt.Dimension(60, 60));
+        jBtnGruDEL.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnGruDEL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMaqDELActionPerformed(evt);
+                jBtnGruDELActionPerformed(evt);
             }
         });
+        jBtnGruDEL.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnGruDEL.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnMaqUPD.setBackground(new java.awt.Color(204, 204, 204));
-        jBtnMaqUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
-        jBtnMaqUPD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
-        jBtnMaqUPD.setBorder(null);
-        jBtnMaqUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
-        jBtnMaqUPD.setMaximumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqUPD.setMinimumSize(new java.awt.Dimension(60, 60));
-        jBtnMaqUPD.setPreferredSize(new java.awt.Dimension(60, 60));
-        jBtnMaqUPD.addActionListener(new java.awt.event.ActionListener() {
+        jBtnGruUPD.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnGruUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnGruUPD.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnGruUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
+        jBtnGruUPD.setBorder(null);
+        jBtnGruUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnGruUPD.setMaximumSize(new java.awt.Dimension(60, 60));
+        jBtnGruUPD.setMinimumSize(new java.awt.Dimension(60, 60));
+        jBtnGruUPD.setPreferredSize(new java.awt.Dimension(60, 60));
+        jBtnGruUPD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMaqUPDActionPerformed(evt);
+                jBtnGruUPDActionPerformed(evt);
             }
         });
+        jBtnGruUPD.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnGruUPD.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/teste2.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanelBotoesLayout = new javax.swing.GroupLayout(jPanelBotoes);
+        jPanelBotoes.setLayout(jPanelBotoesLayout);
+        jPanelBotoesLayout.setHorizontalGroup(
+            jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotoesLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jBtnMaqDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnMaqADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnMaqUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jBtnGruDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnGruADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnGruUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBotoesLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelBotoesLayout.setVerticalGroup(
+            jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotoesLayout.createSequentialGroup()
                 .addGap(71, 71, 71)
-                .addComponent(jBtnMaqADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnGruADD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(jBtnMaqDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnGruDEL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(jBtnMaqUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnGruUPD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBotoesLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, 375));
+        add(jPanelBotoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, 375));
 
         jTableGrupos.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableGrupos.setModel(new javax.swing.table.DefaultTableModel(
@@ -192,7 +211,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 171, 574, 195));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 25)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CADASTRO DE GRUPO");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -243,11 +262,6 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 66, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBtnMaqADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqADDActionPerformed
-        mostrarCampos();
-        op = 1;
-    }//GEN-LAST:event_jBtnMaqADDActionPerformed
-
     private void jBtnADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnADDActionPerformed
         GrupoDAO gdao = new GrupoDAO();
         Grupo g = new Grupo();
@@ -279,7 +293,14 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jBtnADDActionPerformed
 
-    private void jBtnMaqDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqDELActionPerformed
+    private void jBtnGruADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGruADDActionPerformed
+        //Habilitar Botoões
+        mostrarCampos();
+
+        op = 1;
+    }//GEN-LAST:event_jBtnGruADDActionPerformed
+
+    private void jBtnGruDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGruDELActionPerformed
         GrupoDAO gdao = new GrupoDAO();
         
         if (jTableGrupos.getSelectedRow() != -1) {
@@ -311,18 +332,36 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "Escolha um Grupo para alterar!");
         }
-    }//GEN-LAST:event_jBtnMaqUPDActionPerformed
+    }//GEN-LAST:event_jBtnGruDELActionPerformed
+
+    private void jBtnGruUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGruUPDActionPerformed
+        //LER OS DADOS DA LINHA SELECIOANDA
+        if (jTableGrupos.getSelectedRow() != -1) {
+            //Travar a seleção de outra linha da tabela antes da alteração ser enviada
+            jTableGrupos.setEnabled(false);
+            //Mostrar campos ocultos
+            mostrarCampos();
+            
+            jTxtNome.setText(jTableGrupos.getValueAt(jTableGrupos.getSelectedRow(), 1).toString());
+            
+            op = 2;
+        
+        } else {
+            JOptionPane.showMessageDialog(null, "Escolha um Grupo para alterar!");
+        }
+    }//GEN-LAST:event_jBtnGruUPDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnADD;
-    private javax.swing.JButton jBtnMaqADD;
-    private javax.swing.JButton jBtnMaqDEL;
-    private javax.swing.JButton jBtnMaqUPD;
+    private javax.swing.JButton jBtnGruADD;
+    private javax.swing.JButton jBtnGruDEL;
+    private javax.swing.JButton jBtnGruUPD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelBotoes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableGrupos;
     private javax.swing.JTextField jTxtNome;

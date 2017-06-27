@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import org.joda.time.DateTimeComparator;
 import view.TelaApp;
@@ -75,19 +76,29 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         setIconImage(null);
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 25)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SELECIONE AS MÁQUINAS PARA IMPORTAR");
-        jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.black, null));
+        jLabel1.setMaximumSize(new java.awt.Dimension(399, 34));
+        jLabel1.setMinimumSize(new java.awt.Dimension(399, 34));
+        jLabel1.setName(""); // NOI18N
         jLabel1.setOpaque(true);
+        jLabel1.setPreferredSize(new java.awt.Dimension(399, 34));
 
+        jBtnImportar.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnImportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/ler.png"))); // NOI18N
         jBtnImportar.setText("IMPORTAR");
         jBtnImportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnImportarActionPerformed(evt);
             }
         });
+        jBtnImportar.setHorizontalTextPosition(SwingConstants.CENTER);
+        jBtnImportar.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         jTableMaquinas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableMaquinas.setModel(new javax.swing.table.DefaultTableModel(
@@ -118,9 +129,9 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTableMaquinas);
         jTableMaquinas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        jDateInicial.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jDateInicial.setBackground(new java.awt.Color(153, 153, 153));
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabel2.setText("DATA INICIAL DA IMPORTAÇÃO:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -128,44 +139,46 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBtnImportar)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(9, 9, 9)
-                            .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2)
+                        .addGap(13, 13, 13)
+                        .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnImportar)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(71, 71, 71)
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel2)
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnImportar)
-                .addContainerGap())
+                .addGap(10, 10, 10)
+                .addComponent(jBtnImportar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                .addGap(10, 10, 10))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +213,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                                 System.out.println("------>" + arq + "<------");
                                 try {
                                     System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
-                                    leitura(dir + "\\" + arq);
+                                    leitura(dir + "\\" + arq, i.getNome(), i.getGrupo());
                                     m.importado(i.getId(), true);
                                 } catch (Exception ex) {
                                     JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
@@ -218,12 +231,12 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jBtnImportarActionPerformed
 
-    public void leitura(String dir) throws Exception {
+    public void leitura(String dir, String maquina, String grupo) throws Exception {
         String linha = "";
         BufferedReader br = new BufferedReader(new FileReader(new File(dir)));
         PesquisaDAO banco = new PesquisaDAO();
         while ((linha = br.readLine()) != null) {
-            if (!linha.isEmpty()) {
+            if (!linha.isEmpty() && linha.length() >= 39) {
                 //Divisão da linha da pesquisa por parametros
                 String[] dados = linha.split(";");
 
@@ -240,7 +253,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                 //Se a data do registro for maior que a data informada no jCalendar fazer a inclusão do objeto no banco
                 if (DateTimeComparator.getDateOnlyInstance().compare(data_inicial, data) <= 0) {
                     //Criação do objeto para guardar os dados no BD (String pesquisa, Date data, int pergunta, int resposta, int colaborador)
-                    Pesquisa p = new Pesquisa(dados[1], data, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()));
+                    Pesquisa p = new Pesquisa(dados[1], data, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()), maquina, grupo, Integer.parseInt(dados[4]));
                     banco.create(p);
                 }
             }

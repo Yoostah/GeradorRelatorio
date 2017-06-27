@@ -15,19 +15,49 @@ public class Pesquisa {
     private int pergunta;
     private int resposta;
     private int id_colaborador;
+    private String maquina;
+    private String grupo;
+    private int textop;
 
     //Construtor
-    public Pesquisa(String pesquisa, Date data, int pergunta, int resposta, int colaborador) {
+    public Pesquisa(String pesquisa, Date data, int pergunta, int resposta, int colaborador, String maquina, String grupo, int textop) {
         this.pesquisa = pesquisa;
         this.data = data;
         this.pergunta = pergunta;
         this.resposta = resposta;
         this.id_colaborador = colaborador;
+        this.maquina = maquina;
+        this.grupo = grupo;
+        this.textop = textop;
     }
     
     //Construtor Vazio
     public Pesquisa() {
     
+    }
+
+    public int getTextop() {
+        return textop;
+    }
+
+    public void setTextop(int textop) {
+        this.textop = textop;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getMaquina() {
+        return maquina;
+    }
+
+    public void setMaquina(String maquina) {
+        this.maquina = maquina;
     }
 
     public int getId() {
@@ -78,9 +108,5 @@ public class Pesquisa {
         this.resposta = resposta;
     }
 
-    @Override
-    public String toString() {
-        return "Pesquisa=" + pesquisa + ", Data=" + data + ", Pergunta=" + pergunta + ", Resposta=" + resposta + ", Colaborador=" + id_colaborador + '}';
-    }
 
 }

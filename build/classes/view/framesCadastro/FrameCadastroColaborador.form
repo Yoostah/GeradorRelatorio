@@ -49,11 +49,18 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="jBtnMaqDEL" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jBtnMaqADD" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jBtnMaqUPD" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBtnColabDEL" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBtnColabADD" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBtnColabUPD" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
+              </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="textura" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -61,18 +68,25 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                  <Component id="jBtnMaqADD" min="-2" max="-2" attributes="0"/>
+                  <Component id="jBtnColabADD" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="jBtnMaqDEL" min="-2" max="-2" attributes="0"/>
+                  <Component id="jBtnColabDEL" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="jBtnMaqUPD" min="-2" max="-2" attributes="0"/>
+                  <Component id="jBtnColabUPD" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="74" max="32767" attributes="0"/>
+              </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="textura" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jBtnMaqADD">
+        <Component class="javax.swing.JButton" name="jBtnColabADD">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="cc" red="99" type="rgb"/>
@@ -104,10 +118,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnMaqADDActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnColabADDActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jBtnColabADD.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;jBtnColabADD.setHorizontalTextPosition(SwingConstants.CENTER);"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="jBtnMaqDEL">
+        <Component class="javax.swing.JButton" name="jBtnColabDEL">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="ff" type="rgb"/>
@@ -138,10 +155,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnMaqDELActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnColabDELActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jBtnColabDEL.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;jBtnColabDEL.setHorizontalTextPosition(SwingConstants.CENTER);"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="jBtnMaqUPD">
+        <Component class="javax.swing.JButton" name="jBtnColabUPD">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -172,8 +192,18 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnMaqUPDActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnColabUPDActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jBtnColabUPD.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;jBtnColabUPD.setHorizontalTextPosition(SwingConstants.CENTER);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="textura">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/_imagens/teste2.png"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -236,7 +266,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Verdana" size="24" style="0"/>
+          <Font name="Microsoft Yi Baiti" size="25" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="CADASTRO DE COLABORADOR"/>

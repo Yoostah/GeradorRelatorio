@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 
@@ -36,7 +37,10 @@ public class AcessoDB {
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new RuntimeException("Erro na conexão: ", ex);
+            //throw new RuntimeException("Erro na conexão: ", ex);
+            JOptionPane.showMessageDialog(null, "Erro de conexão com o banco de dados!");
+            System.exit(1);
+            return null;
         }
     }
 

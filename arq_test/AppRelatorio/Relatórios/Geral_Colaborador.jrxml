@@ -17,34 +17,26 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.pergunta as Pergunta,
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=1 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '1 - Excelente',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=2 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '2 - Muito Bom',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=3 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '3 - Bom',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=4 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '4 - Regular',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and resposta=5 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '5 - Ruim',
-(select count(resposta) from pesquisa where pergunta=p.pergunta and colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
-from pesquisa as p where colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")
-group by pergunta
+		<![CDATA[select a.pergunta as Pergunta,
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=1 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '1- Excelente',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=2 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '2- Muito Bom',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=3 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '3- Bom',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=4 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '4- Regular',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=5 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '5- Ruim',
+(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
+from pesquisa as p inner join perguntas as a where grupo= $P{grupo} and colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")
+group by a.pergunta, a.id
 
-union
-
-select 'TOTAL', (select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=1 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '1',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=2 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '2',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=3 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '3',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=4 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '4',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and resposta=5 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '5',
-(select count(resposta) from pesquisa where colaborador= $P{colaborador} and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5) and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as 'TOTAL' from pesquisa where colaborador= $P{colaborador}
-group by 'TOTAL';]]>
+]]>
 	</queryString>
 	<field name="Pergunta" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="1 - Excelente" class="java.lang.Long"/>
-	<field name="2 - Muito Bom" class="java.lang.Long"/>
-	<field name="3 - Bom" class="java.lang.Long"/>
-	<field name="4 - Regular" class="java.lang.Long"/>
-	<field name="5 - Ruim" class="java.lang.Long"/>
+	<field name="1- Excelente" class="java.lang.Long"/>
+	<field name="2- Muito Bom" class="java.lang.Long"/>
+	<field name="3- Bom" class="java.lang.Long"/>
+	<field name="4- Regular" class="java.lang.Long"/>
+	<field name="5- Ruim" class="java.lang.Long"/>
 	<field name="TOTAL" class="java.lang.Long"/>
 	<group name="Pergunta">
 		<groupExpression><![CDATA[$F{Pergunta}]]></groupExpression>
@@ -152,7 +144,7 @@ group by 'TOTAL';]]>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="15" width="151" height="20" uuid="f0b8f741-1c35-4bc1-884a-099a9ff355ef"/>
+				<reportElement x="0" y="15" width="203" height="20" uuid="f0b8f741-1c35-4bc1-884a-099a9ff355ef"/>
 				<box leftPadding="6">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -165,7 +157,7 @@ group by 'TOTAL';]]>
 				<text><![CDATA[PERGUNTA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="151" y="15" width="66" height="20" uuid="b42e2860-04c4-43cb-98d9-b7824311cb70"/>
+				<reportElement x="203" y="15" width="61" height="20" uuid="b42e2860-04c4-43cb-98d9-b7824311cb70"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -175,10 +167,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[1 - Excelente ]]></text>
+				<text><![CDATA[1- Excelente ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="217" y="15" width="66" height="20" uuid="f31bc6d4-4cea-4632-a967-35e91b0605fe"/>
+				<reportElement x="264" y="15" width="61" height="20" uuid="f31bc6d4-4cea-4632-a967-35e91b0605fe"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -188,10 +180,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[2 - Muito Bom ]]></text>
+				<text><![CDATA[2- Muito Bom ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="283" y="15" width="66" height="20" uuid="707f3fc0-d885-4004-9a48-885470c69db4"/>
+				<reportElement x="325" y="15" width="61" height="20" uuid="707f3fc0-d885-4004-9a48-885470c69db4"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -201,10 +193,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[3 - Bom ]]></text>
+				<text><![CDATA[3- Bom ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="349" y="15" width="66" height="20" uuid="3addf87e-6412-439a-8a5f-1895feaa56b6"/>
+				<reportElement x="386" y="15" width="61" height="20" uuid="3addf87e-6412-439a-8a5f-1895feaa56b6"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -214,10 +206,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[4 - Regular]]></text>
+				<text><![CDATA[4- Regular]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="415" y="15" width="66" height="20" uuid="a8ae468f-55b8-4f9b-8adc-83d84b8b6709"/>
+				<reportElement x="447" y="15" width="61" height="20" uuid="a8ae468f-55b8-4f9b-8adc-83d84b8b6709"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -227,10 +219,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[5 - Ruim]]></text>
+				<text><![CDATA[5- Ruim]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="481" y="15" width="66" height="20" uuid="ba149de3-ea56-47e2-892a-fe2e48e3f183"/>
+				<reportElement x="508" y="15" width="40" height="20" uuid="ba149de3-ea56-47e2-892a-fe2e48e3f183"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -247,7 +239,7 @@ group by 'TOTAL';]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="151" height="20" uuid="062da5cc-83e0-4c65-91fa-2f86e74c3b24"/>
+				<reportElement x="0" y="0" width="203" height="20" uuid="062da5cc-83e0-4c65-91fa-2f86e74c3b24"/>
 				<box leftPadding="6">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -260,7 +252,7 @@ group by 'TOTAL';]]>
 				<textFieldExpression><![CDATA[$F{Pergunta}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="151" y="0" width="66" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
+				<reportElement x="203" y="0" width="61" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -270,10 +262,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{1 - Excelente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{1- Excelente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="0" width="66" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
+				<reportElement x="264" y="0" width="61" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -283,10 +275,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{2 - Muito Bom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{2- Muito Bom}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="283" y="0" width="66" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
+				<reportElement x="325" y="0" width="61" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -296,10 +288,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{3 - Bom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{3- Bom}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="349" y="0" width="66" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
+				<reportElement x="386" y="0" width="61" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -309,10 +301,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{4 - Regular}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{4- Regular}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="415" y="0" width="66" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
+				<reportElement x="447" y="0" width="61" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -322,10 +314,10 @@ group by 'TOTAL';]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Verdana"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{5 - Ruim}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{5- Ruim}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="481" y="0" width="66" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
+				<reportElement x="508" y="0" width="40" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
