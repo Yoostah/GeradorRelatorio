@@ -10,6 +10,7 @@ import model.Maquina;
 import controller.GrupoDAO;
 import controller.MaquinaDAO;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -117,7 +118,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqADD.setBackground(new java.awt.Color(153, 204, 255));
         jBtnMaqADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqADD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqADD.setText("Adicionar");
+        jBtnMaqADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
         jBtnMaqADD.setBorder(null);
         jBtnMaqADD.setBorderPainted(false);
         jBtnMaqADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -129,11 +130,13 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
                 jBtnMaqADDActionPerformed(evt);
             }
         });
+        jBtnMaqADD.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnMaqADD.setHorizontalTextPosition(SwingConstants.CENTER);
 
         jBtnMaqDEL.setBackground(new java.awt.Color(255, 51, 51));
         jBtnMaqDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqDEL.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqDEL.setText("Deletar");
+        jBtnMaqDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
         jBtnMaqDEL.setBorder(null);
         jBtnMaqDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnMaqDEL.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -144,11 +147,13 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
                 jBtnMaqDELActionPerformed(evt);
             }
         });
+        jBtnMaqDEL.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnMaqDEL.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnMaqUPD.setBackground(new java.awt.Color(0, 0, 0));
+        jBtnMaqUPD.setBackground(new java.awt.Color(204, 204, 204));
         jBtnMaqUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqUPD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqUPD.setText("Alterar");
+        jBtnMaqUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
         jBtnMaqUPD.setBorder(null);
         jBtnMaqUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnMaqUPD.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -159,6 +164,8 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
                 jBtnMaqUPDActionPerformed(evt);
             }
         });
+        jBtnMaqUPD.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnMaqUPD.setHorizontalTextPosition(SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanelBotoesLayout = new javax.swing.GroupLayout(jPanelBotoes);
         jPanelBotoes.setLayout(jPanelBotoesLayout);
@@ -267,13 +274,19 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jPanelBtnADD.setBackground(new java.awt.Color(204, 204, 204));
 
         jBtnADD.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnADD.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jBtnADD.setText("ADD");
+        jBtnADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add_btn.png"))); // NOI18N
+        jBtnADD.setText("SALVAR");
+        jBtnADD.setBorder(null);
+        jBtnADD.setIconTextGap(10);
+        jBtnADD.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnADD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnADDActionPerformed(evt);
             }
         });
+        jBtnADD.setHorizontalTextPosition(SwingConstants.CENTER);
+        jBtnADD.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanelBtnADDLayout = new javax.swing.GroupLayout(jPanelBtnADD);
         jPanelBtnADD.setLayout(jPanelBtnADDLayout);

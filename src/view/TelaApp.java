@@ -10,8 +10,16 @@ import model.Pesquisa;
 import controller.PesquisaDAO;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.table.DefaultTableModel;
 import z_ux.JTableUtilities;
 import view.SelecaoMaquinas.SelecaoMaquinas;
@@ -39,6 +47,17 @@ public class TelaApp extends javax.swing.JFrame {
      */
     public TelaApp() {
         initComponents();
+        
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
         lerBanco();
         
         //Criação dos Paineis do Cadastro
@@ -67,8 +86,8 @@ public class TelaApp extends javax.swing.JFrame {
         
         jPainelDinamicoRel.setLayout(layout);
         
-        c.ipady = 70;
-        c.ipadx = 20;
+        c.ipady = 0;
+        c.ipadx = 0;
         
         jPainelDinamicoRel.add(relColab, c);
         jPainelDinamicoRel.add(relGeral, c);
@@ -126,8 +145,8 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelCadastro = new javax.swing.JPanel();
         jPanelBtnCad = new javax.swing.JPanel();
         jBtnCadColaborador = new javax.swing.JButton();
-        jBtnCadGrupo = new javax.swing.JButton();
         jBtnCadMaq = new javax.swing.JButton();
+        jBtnCadGrupo = new javax.swing.JButton();
         jPainelDinamicoCad = new javax.swing.JPanel();
         jMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -153,10 +172,14 @@ public class TelaApp extends javax.swing.JFrame {
         jTabs.setBackground(new java.awt.Color(204, 204, 255));
         jTabs.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
 
-        jPanelBtnBD.setBackground(new java.awt.Color(255, 204, 204));
+        jPanelBD.setBackground(new java.awt.Color(102, 102, 102));
+
+        jPanelBtnBD.setBackground(new java.awt.Color(153, 153, 153));
         jPanelBtnBD.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelBtnBD.setPreferredSize(new java.awt.Dimension(942, 91));
 
+        jBtnBDApagar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnBDApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar_bd.png"))); // NOI18N
         jBtnBDApagar.setText("APAGAR");
         jBtnBDApagar.setMaximumSize(new java.awt.Dimension(67, 23));
         jBtnBDApagar.setMinimumSize(new java.awt.Dimension(67, 23));
@@ -166,7 +189,11 @@ public class TelaApp extends javax.swing.JFrame {
                 jBtnBDApagarActionPerformed(evt);
             }
         });
+        jBtnBDApagar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnBDApagar.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        jBtnBDLer.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnBDLer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/ler.png"))); // NOI18N
         jBtnBDLer.setText("LER");
         jBtnBDLer.setMaximumSize(new java.awt.Dimension(67, 23));
         jBtnBDLer.setMinimumSize(new java.awt.Dimension(67, 23));
@@ -176,6 +203,8 @@ public class TelaApp extends javax.swing.JFrame {
                 jBtnBDLerActionPerformed(evt);
             }
         });
+        jBtnBDLer.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnBDLer.setHorizontalTextPosition(SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanelBtnBDLayout = new javax.swing.GroupLayout(jPanelBtnBD);
         jPanelBtnBD.setLayout(jPanelBtnBDLayout);
@@ -183,9 +212,9 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelBtnBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBtnBDLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jBtnBDApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnBDApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBtnBDLayout.setVerticalGroup(
@@ -197,6 +226,8 @@ public class TelaApp extends javax.swing.JFrame {
                     .addComponent(jBtnBDLer, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanelTabelaBD.setBackground(new java.awt.Color(102, 102, 102));
 
         jTableBD.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableBD.setModel(new javax.swing.table.DefaultTableModel(
@@ -274,27 +305,41 @@ public class TelaApp extends javax.swing.JFrame {
                 .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("/_imagens/bd.png"));
+        } catch (IOException e) {
+        }
         jTabs.addTab("BANCO DE DADOS", jPanelBD);
+        setIconImage(img);
 
         jPanelRelatorio.setBackground(new java.awt.Color(102, 102, 102));
 
-        jPanelBtnRel.setBackground(new java.awt.Color(102, 102, 102));
+        jPanelBtnRel.setBackground(new java.awt.Color(153, 153, 153));
         jPanelBtnRel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelBtnRel.setPreferredSize(new java.awt.Dimension(942, 91));
 
+        jBtnRelGeral.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnRelGeral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
         jBtnRelGeral.setText("GERAL");
         jBtnRelGeral.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnRelGeralActionPerformed(evt);
             }
         });
+        jBtnRelGeral.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnRelGeral.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        jBtnRelGrupo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnRelGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user.png"))); // NOI18N
         jBtnRelGrupo.setText("GRUPO");
         jBtnRelGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnRelGrupoActionPerformed(evt);
             }
         });
+        jBtnRelGrupo.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnRelGrupo.setHorizontalTextPosition(SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanelBtnRelLayout = new javax.swing.GroupLayout(jPanelBtnRel);
         jPanelBtnRel.setLayout(jPanelBtnRelLayout);
@@ -302,10 +347,10 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBtnRelLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(709, Short.MAX_VALUE))
+                .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(679, Short.MAX_VALUE))
         );
         jPanelBtnRelLayout.setVerticalGroup(
             jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,18 +386,21 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelatorioLayout.createSequentialGroup()
                 .addComponent(jPanelBtnRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(23, 23, 23)
                 .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
 
         jTabs.addTab("RELATÓRIOS", jPanelRelatorio);
 
-        jPanelBtnCad.setBackground(new java.awt.Color(204, 204, 255));
+        jPanelBtnCad.setBackground(new java.awt.Color(153, 153, 153));
         jPanelBtnCad.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelBtnCad.setPreferredSize(new java.awt.Dimension(950, 91));
 
+        jBtnCadColaborador.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnCadColaborador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user.png"))); // NOI18N
         jBtnCadColaborador.setText("COLABORADOR");
+        jBtnCadColaborador.setBorder(null);
         jBtnCadColaborador.setMargin(new java.awt.Insets(2, 0, 2, 0));
         jBtnCadColaborador.setMaximumSize(new java.awt.Dimension(67, 23));
         jBtnCadColaborador.setMinimumSize(new java.awt.Dimension(67, 23));
@@ -362,20 +410,30 @@ public class TelaApp extends javax.swing.JFrame {
                 jBtnCadColaboradorActionPerformed(evt);
             }
         });
+        jBtnCadColaborador.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnCadColaborador.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnCadGrupo.setText("GRUPO");
-        jBtnCadGrupo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnCadGrupoActionPerformed(evt);
-            }
-        });
-
+        jBtnCadMaq.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnCadMaq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/pc.png"))); // NOI18N
         jBtnCadMaq.setText("MÁQUINA");
         jBtnCadMaq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnCadMaqActionPerformed(evt);
             }
         });
+        jBtnCadMaq.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnCadMaq.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        jBtnCadGrupo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnCadGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
+        jBtnCadGrupo.setText("GRUPO");
+        jBtnCadGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCadGrupoActionPerformed(evt);
+            }
+        });
+        jBtnCadGrupo.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnCadGrupo.setHorizontalTextPosition(SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanelBtnCadLayout = new javax.swing.GroupLayout(jPanelBtnCad);
         jPanelBtnCad.setLayout(jPanelBtnCadLayout);
@@ -383,12 +441,12 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBtnCadLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jBtnCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(601, Short.MAX_VALUE))
+                .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBtnCadLayout.setVerticalGroup(
             jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,13 +459,13 @@ public class TelaApp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPainelDinamicoCad.setBackground(new java.awt.Color(204, 204, 204));
+        jPainelDinamicoCad.setBackground(new java.awt.Color(102, 102, 102));
 
         javax.swing.GroupLayout jPainelDinamicoCadLayout = new javax.swing.GroupLayout(jPainelDinamicoCad);
         jPainelDinamicoCad.setLayout(jPainelDinamicoCadLayout);
         jPainelDinamicoCadLayout.setHorizontalGroup(
             jPainelDinamicoCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 945, Short.MAX_VALUE)
         );
         jPainelDinamicoCadLayout.setVerticalGroup(
             jPainelDinamicoCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,18 +476,26 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelCadastro.setLayout(jPanelCadastroLayout);
         jPanelCadastroLayout.setHorizontalGroup(
             jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBtnCad, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
             .addComponent(jPainelDinamicoCad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelBtnCad, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
         );
         jPanelCadastroLayout.setVerticalGroup(
             jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                 .addComponent(jPanelBtnCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addComponent(jPainelDinamicoCad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabs.addTab("CADASTRO", jPanelCadastro);
+
+        ImageIcon iconBd = new ImageIcon( getClass().getResource("/_imagens/bd.png") );
+        jTabs.setIconAt(0, iconBd);
+
+        ImageIcon iconRel = new ImageIcon( getClass().getResource("/_imagens/relatorio.png") );
+        jTabs.setIconAt(1, iconRel);
+
+        ImageIcon iconCad = new ImageIcon( getClass().getResource("/_imagens/cadastro.png") );
+        jTabs.setIconAt(2, iconCad);
 
         jMenu.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 

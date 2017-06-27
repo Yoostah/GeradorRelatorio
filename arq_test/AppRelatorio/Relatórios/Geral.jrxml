@@ -12,7 +12,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\AppRelatorio\\Relatórios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Relatórios\\arq_test\\AppRelatorio\\Relatórios\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select p.colaborador, p.pergunta as Pergunta,
@@ -222,7 +222,7 @@ group by p.colaborador, p.pergunta]]>
 			</staticText>
 			<image>
 				<reportElement x="5" y="45" width="200" height="57" uuid="81a6039f-2c84-4ad4-bad6-70abda92a076"/>
-				<imageExpression><![CDATA["C:\\Users\\Thulio\\Documents\\NetBeansProjects\\RelatorioHMC\\arq_test\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Relatórios\\arq_test\\CORMED_200.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="48" width="216" height="20" uuid="095019a3-f1b6-4c96-9f8f-83c3f34a47e6"/>

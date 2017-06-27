@@ -107,6 +107,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnADD = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setMinimumSize(new java.awt.Dimension(698, 377));
         setPreferredSize(new java.awt.Dimension(698, 369));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -115,7 +116,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnMaqADD.setBackground(new java.awt.Color(153, 204, 255));
         jBtnMaqADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqADD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqADD.setText("Adicionar");
+        jBtnMaqADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
         jBtnMaqADD.setBorder(null);
         jBtnMaqADD.setBorderPainted(false);
         jBtnMaqADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -131,7 +132,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnMaqDEL.setBackground(new java.awt.Color(255, 51, 51));
         jBtnMaqDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqDEL.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqDEL.setText("Deletar");
+        jBtnMaqDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
         jBtnMaqDEL.setBorder(null);
         jBtnMaqDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnMaqDEL.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -143,10 +144,10 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             }
         });
 
-        jBtnMaqUPD.setBackground(new java.awt.Color(0, 0, 0));
+        jBtnMaqUPD.setBackground(new java.awt.Color(204, 204, 204));
         jBtnMaqUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqUPD.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnMaqUPD.setText("Alterar");
+        jBtnMaqUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
         jBtnMaqUPD.setBorder(null);
         jBtnMaqUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnMaqUPD.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -254,13 +255,19 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jPanelBtnADD.setBackground(new java.awt.Color(204, 204, 204));
 
         jBtnADD.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnADD.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jBtnADD.setText("ADD");
+        jBtnADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
+        jBtnADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add_btn.png"))); // NOI18N
+        jBtnADD.setText("SALVAR");
+        jBtnADD.setBorder(null);
+        jBtnADD.setIconTextGap(10);
+        jBtnADD.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnADD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnADDActionPerformed(evt);
             }
         });
+        jBtnADD.setHorizontalTextPosition(SwingConstants.CENTER);
+        jBtnADD.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanelBtnADDLayout = new javax.swing.GroupLayout(jPanelBtnADD);
         jPanelBtnADD.setLayout(jPanelBtnADDLayout);
@@ -298,7 +305,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Escolha um Grupo!");
         }else{
             if (op == 1){
-                c.setNome(jTxtNome.getText());
+                c.setNome(jTxtNome.getText().toUpperCase());
                 c.setId(Integer.parseInt(jTxtID.getText()));
                 c.setGrupo(jCGrupo.getSelectedItem().toString());
                 cdao.create(c);
