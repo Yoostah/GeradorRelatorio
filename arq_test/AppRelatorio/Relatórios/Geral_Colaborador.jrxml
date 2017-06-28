@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório de Colaborador por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="style1" backcolor="#C0C0C0"/>
@@ -17,29 +17,60 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select a.pergunta as Pergunta,
-(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=1 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '1- Excelente',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=2 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '2- Muito Bom',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=3 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '3- Bom',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=4 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '4- Regular',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and resposta=5 and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")) as '5- Ruim',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=a.id and colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
-from pesquisa as p inner join perguntas as a where grupo= $P{grupo} and colaborador= $P{colaborador} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")
-group by a.pergunta, a.id
+		<![CDATA[SELECT CONCAT('[ ',c.id,' ] - ',c.nome),
+       CONCAT(a.textop,'- ',b.pergunta) AS 'PERGUNTA',
+       SUM(EXCELENTE) AS '1 - EXCELENTE',
+       SUM(MUITOBOM) AS '2 - MUITO BOM',
+       SUM(BOM) AS '3 - BOM',
+       SUM(REGULAR) AS '4 - REGULAR',
+       SUM(RUIM) AS '5 - RUIM',
+       COUNT(a.textop) AS 'TOTAL'
+FROM (
+      SELECT colaborador,
+             c.textop,
+             CASE WHEN resposta = 1 THEN 1 ELSE 0 END AS 'EXCELENTE',
+             CASE WHEN resposta = 2 THEN 1 ELSE 0 END AS 'MUITOBOM',
+             CASE WHEN resposta = 3 THEN 1 ELSE 0 END AS 'BOM',
+             CASE WHEN resposta = 4 THEN 1 ELSE 0 END AS 'REGULAR',
+             CASE WHEN resposta = 5 THEN 1 ELSE 0 END AS 'RUIM'
+      FROM pesquisa AS c
+      WHERE grupo = $P{grupo} AND data BETWEEN str_to_date($P{data_inicial}, "%d/%m/%Y") AND str_to_date($P{data_final}, "%d/%m/%Y")
+            AND colaborador = $P{colaborador}
+	) AS a INNER JOIN perguntas AS b ON a.textop=b.id inner join colaborador AS c ON a.colaborador=c.id
+GROUP BY colaborador, a.textop
 
-]]>
+UNION
+
+SELECT '',
+	   'TOTAL',
+       SUM(EXCELENTE) AS '1 - EXCELENTE',
+	   SUM(MUITOBOM) AS '2 - MUITO BOM',
+       SUM(BOM) AS '3 - BOM',
+	   SUM(REGULAR) AS '4 - REGULAR',
+	   SUM(RUIM) AS '5 - RUIM',
+	   COUNT('TOTAL') AS 'TOTAL'
+FROM (SELECT colaborador,
+				 CASE WHEN resposta = 1 THEN 1 ELSE 0 END AS 'EXCELENTE',
+				 CASE WHEN resposta = 2 THEN 1 ELSE 0 END AS 'MUITOBOM',
+				 CASE WHEN resposta = 3 THEN 1 ELSE 0 END AS 'BOM',
+				 CASE WHEN resposta = 4 THEN 1 ELSE 0 END AS 'REGULAR',
+				 CASE WHEN resposta = 5 THEN 1 ELSE 0 END AS 'RUIM'
+		  FROM pesquisa AS c
+		  WHERE grupo = $P{grupo} AND data BETWEEN str_to_date($P{data_inicial}, "%d/%m/%Y") AND str_to_date($P{data_final}, "%d/%m/%Y") AND colaborador = $P{colaborador}) AS a
+ GROUP BY colaborador;]]>
 	</queryString>
-	<field name="Pergunta" class="java.lang.String">
+	<field name="CONCAT(&apos;[ &apos;,c.id,&apos; ] - &apos;,c.nome)" class="java.lang.String"/>
+	<field name="PERGUNTA" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="1- Excelente" class="java.lang.Long"/>
-	<field name="2- Muito Bom" class="java.lang.Long"/>
-	<field name="3- Bom" class="java.lang.Long"/>
-	<field name="4- Regular" class="java.lang.Long"/>
-	<field name="5- Ruim" class="java.lang.Long"/>
+	<field name="1 - EXCELENTE" class="java.math.BigDecimal"/>
+	<field name="2 - MUITO BOM" class="java.math.BigDecimal"/>
+	<field name="3 - BOM" class="java.math.BigDecimal"/>
+	<field name="4 - REGULAR" class="java.math.BigDecimal"/>
+	<field name="5 - RUIM" class="java.math.BigDecimal"/>
 	<field name="TOTAL" class="java.lang.Long"/>
 	<group name="Pergunta">
-		<groupExpression><![CDATA[$F{Pergunta}]]></groupExpression>
+		<groupExpression><![CDATA[]]></groupExpression>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -47,15 +78,10 @@ group by a.pergunta, a.id
 	<pageHeader>
 		<band height="170">
 			<staticText>
-				<reportElement x="217" y="98" width="63" height="20" uuid="da134bae-01a5-4070-b65a-1945bae1ec86"/>
+				<reportElement x="217" y="100" width="63" height="20" uuid="da134bae-01a5-4070-b65a-1945bae1ec86"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Colaborador :]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="282" y="98" width="120" height="20" uuid="de14a746-4f4f-4f10-990d-71c9a6e689e8"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{colaborador}]]></textFieldExpression>
-			</textField>
 			<textField pattern="dd/MM/yyyy - ">
 				<reportElement x="470" y="-12" width="62" height="20" uuid="141cb104-e5bb-4211-97cc-eeede908af05"/>
 				<textElement verticalAlignment="Middle">
@@ -97,17 +123,21 @@ group by a.pergunta, a.id
 				<text><![CDATA[a]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="280" y="72" width="53" height="20" uuid="8ffe2bbf-f940-4b32-b749-ce97e4847b28"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="280" y="76" width="53" height="13" uuid="8ffe2bbf-f940-4b32-b749-ce97e4847b28"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{data_inicial}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="349" y="72" width="53" height="20" uuid="26890b9a-3c8e-4f44-9237-6d4d4930222e"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="349" y="76" width="53" height="13" uuid="26890b9a-3c8e-4f44-9237-6d4d4930222e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{data_final}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="217" y="84" width="38" height="20" uuid="aafb5d92-05b4-432f-b3b1-840e951f3f6d"/>
+				<reportElement x="217" y="85" width="38" height="20" uuid="aafb5d92-05b4-432f-b3b1-840e951f3f6d"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Grupo :]]></text>
 			</staticText>
@@ -127,37 +157,33 @@ group by a.pergunta, a.id
 			</textField>
 			<textField>
 				<reportElement x="257" y="85" width="100" height="20" uuid="139f50d1-3bdb-4fad-a704-cb38ba40bb78"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{grupo}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="158" width="548" height="1" uuid="c3c27a87-3da4-4d05-960c-7b043c2ed70f"/>
 			</line>
+			<textField>
+				<reportElement x="283" y="103" width="100" height="15" uuid="bf04c2f7-bb25-4650-9d2c-84588b3473ea"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONCAT('[ ',c.id,' ] - ',c.nome)}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="35">
 			<rectangle>
-				<reportElement x="0" y="15" width="547" height="20" backcolor="#CCCCCC" uuid="fe4c2d48-92a0-40a7-a499-8471fa748e13"/>
+				<reportElement x="0" y="15" width="546" height="20" backcolor="#CCCCCC" uuid="fe4c2d48-92a0-40a7-a499-8471fa748e13"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="15" width="203" height="20" uuid="f0b8f741-1c35-4bc1-884a-099a9ff355ef"/>
-				<box leftPadding="6">
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font fontName="Verdana" size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PERGUNTA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="203" y="15" width="61" height="20" uuid="b42e2860-04c4-43cb-98d9-b7824311cb70"/>
+				<reportElement x="180" y="15" width="61" height="20" uuid="8d2a080b-5dcc-43a6-954d-f6e42159ffba"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -165,12 +191,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[1- Excelente ]]></text>
+				<text><![CDATA[1 - EXCELENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="264" y="15" width="61" height="20" uuid="f31bc6d4-4cea-4632-a967-35e91b0605fe"/>
+				<reportElement x="241" y="15" width="61" height="20" uuid="da4d9ba8-b31c-406a-8f93-b7fda03100ed"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -178,12 +204,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[2- Muito Bom ]]></text>
+				<text><![CDATA[2 - MUITO BOM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="325" y="15" width="61" height="20" uuid="707f3fc0-d885-4004-9a48-885470c69db4"/>
+				<reportElement x="302" y="15" width="61" height="20" uuid="b3364a9e-3866-49f0-aaf1-605bf30425c7"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -191,12 +217,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[3- Bom ]]></text>
+				<text><![CDATA[3 - BOM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="386" y="15" width="61" height="20" uuid="3addf87e-6412-439a-8a5f-1895feaa56b6"/>
+				<reportElement x="363" y="15" width="61" height="20" uuid="783046d7-e8b2-4b45-ba78-09797ce7455c"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -204,12 +230,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[4- Regular]]></text>
+				<text><![CDATA[4 - REGULAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="447" y="15" width="61" height="20" uuid="a8ae468f-55b8-4f9b-8adc-83d84b8b6709"/>
+				<reportElement x="424" y="15" width="61" height="20" uuid="27645504-4915-4339-98af-2b26ca4b24ca"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -217,12 +243,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[5- Ruim]]></text>
+				<text><![CDATA[5 - RUIM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="508" y="15" width="40" height="20" uuid="ba149de3-ea56-47e2-892a-fe2e48e3f183"/>
+				<reportElement x="485" y="15" width="61" height="20" uuid="4bcb0c4e-b41f-488f-8c13-e79e9d298363"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -230,16 +256,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="203" height="20" uuid="062da5cc-83e0-4c65-91fa-2f86e74c3b24"/>
+			<staticText>
+				<reportElement x="0" y="15" width="180" height="20" uuid="4a136c99-f197-4069-86f3-7ef599470672"/>
 				<box leftPadding="6">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -247,12 +269,16 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Pergunta}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[PERGUNTA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="203" y="0" width="61" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
+				<reportElement x="180" y="0" width="61" height="20" uuid="c4a4d4e7-1406-4df1-8bd9-eff5894875ce"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -260,12 +286,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{1- Excelente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{1 - EXCELENTE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="264" y="0" width="61" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
+				<reportElement x="241" y="0" width="61" height="20" uuid="22eaaabe-8949-4705-816a-3c9f2e6ee68d"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -273,12 +299,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{2- Muito Bom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{2 - MUITO BOM}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="325" y="0" width="61" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
+				<reportElement x="302" y="0" width="61" height="20" uuid="6d7b5135-46d8-4997-94c9-b52da3d26681"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -286,12 +312,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{3- Bom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{3 - BOM}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="386" y="0" width="61" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
+				<reportElement x="363" y="0" width="61" height="20" uuid="556b00fb-43d9-43a9-a880-5e82db8bcda0"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -299,12 +325,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{4- Regular}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{4 - REGULAR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="447" y="0" width="61" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
+				<reportElement x="424" y="0" width="61" height="20" uuid="959af316-4c97-497d-87ed-8716dcb92ca6"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -312,12 +338,12 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{5- Ruim}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{5 - RUIM}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="508" y="0" width="40" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
+				<reportElement x="485" y="0" width="61" height="20" uuid="ba1ff7cb-8125-4236-89fc-41ec4e257e89"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -325,9 +351,22 @@ group by a.pergunta, a.id
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="180" height="20" uuid="555e4bf4-99f9-4bb7-ace4-4b0ba337fcd1"/>
+				<box leftPadding="6">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERGUNTA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

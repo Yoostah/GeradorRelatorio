@@ -1,0 +1,21 @@
+
+SELECT colaborador, 
+       pergunta,
+	   SUM(EXCELENTE) AS '1 - EXCELENTE',
+       SUM(MUITOBOM) AS '2 - MUITO BOM',
+       SUM(BOM) AS '3 - BOM',
+	   SUM(REGULAR) AS '4 - REGULAR',
+	   SUM(RUIM) AS '5 - RUIM'
+FROM (
+      SELECT colaborador, 
+             pergunta,
+             CASE WHEN resposta = 1 THEN 1 ELSE 0 END AS 'EXCELENTE',
+             CASE WHEN resposta = 2 THEN 1 ELSE 0 END AS 'MUITOBOM',
+             CASE WHEN resposta = 3 THEN 1 ELSE 0 END AS 'BOM',
+             CASE WHEN resposta = 4 THEN 1 ELSE 0 END AS 'REGULAR',
+             CASE WHEN resposta = 5 THEN 1 ELSE 0 END AS 'RUIM'
+      FROM pesquisa
+      WHERE data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y")
+            and colaborador = $P{colaborador}
+	) AS AS
+GROUP BY colaborador, pergunta

@@ -353,7 +353,9 @@ public class TelaApp extends javax.swing.JFrame {
 
         jBtnRelGrupo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user.png"))); // NOI18N
-        jBtnRelGrupo.setText("GRUPO");
+        jBtnRelGrupo.setText("COLABORADOR");
+        jBtnRelGrupo.setBorder(null);
+        jBtnRelGrupo.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnRelGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnRelGrupoActionPerformed(evt);
