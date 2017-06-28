@@ -172,7 +172,7 @@ public class MaquinaDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE maquinas SET importado = false");
+            stmt = con.prepareStatement("UPDATE maquinas SET importado = false, importar = false");
             
             stmt.executeUpdate();
             

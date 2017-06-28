@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório Geral por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="26"/>
+	<property name="ireport.y" value="134"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="style2"/>
 	<parameter name="data_inicial" class="java.lang.String">
@@ -18,27 +18,38 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.colaborador, p.pergunta as Pergunta,
-(select count(resposta) from pesquisa where grupo= $P{grupo} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=1) as '1 - Excelente',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=2) as '2 - Muito Bom',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=3) as '3 - Bom',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=4) as '4 - Regular',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and colaborador = p.colaborador and pergunta=p.pergunta and resposta=5) as '5 - Ruim',
-(select count(resposta) from pesquisa where grupo= $P{grupo} and pergunta=p.pergunta and colaborador = p.colaborador and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and (resposta=1 or resposta=2 or resposta=3 or resposta=4 or resposta=5)) as 'TOTAL'
-from pesquisa as p where grupo= $P{grupo} and data between str_to_date($P{data_inicial}, "%d/%m/%Y") and str_to_date($P{data_final}, "%d/%m/%Y") and resposta < 6
-group by p.colaborador, p.pergunta]]>
+		<![CDATA[SELECT a.colaborador,
+       CONCAT('[ ',c.id,' ] - ',c.nome),
+       CONCAT(a.textop,'- ',b.pergunta) AS 'PERGUNTA',
+       SUM(EXCELENTE) AS '1 - EXCELENTE',
+       SUM(MUITOBOM) AS '2 - MUITO BOM',
+       SUM(BOM) AS '3 - BOM',
+       SUM(REGULAR) AS '4 - REGULAR',
+       SUM(RUIM) AS '5 - RUIM',
+       COUNT(a.textop) AS 'TOTAL'
+FROM (
+      SELECT colaborador,
+             c.textop,
+             CASE WHEN resposta = 1 THEN 1 ELSE 0 END AS 'EXCELENTE',
+             CASE WHEN resposta = 2 THEN 1 ELSE 0 END AS 'MUITOBOM',
+             CASE WHEN resposta = 3 THEN 1 ELSE 0 END AS 'BOM',
+             CASE WHEN resposta = 4 THEN 1 ELSE 0 END AS 'REGULAR',
+             CASE WHEN resposta = 5 THEN 1 ELSE 0 END AS 'RUIM'
+      FROM pesquisa AS c
+      WHERE grupo = $P{grupo} AND data BETWEEN str_to_date($P{data_inicial}, "%d/%m/%Y") AND str_to_date($P{data_final}, "%d/%m/%Y")
+	) AS a INNER JOIN perguntas AS b ON a.textop=b.id inner join colaborador AS c ON a.colaborador=c.id
+GROUP BY colaborador, a.textop;]]>
 	</queryString>
-	<field name="colaborador" class="java.lang.Integer">
+	<field name="colaborador" class="java.lang.Integer"/>
+	<field name="CONCAT(&apos;[ &apos;,c.id,&apos; ] - &apos;,c.nome)" class="java.lang.String"/>
+	<field name="PERGUNTA" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Pergunta" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="1 - Excelente" class="java.lang.Long"/>
-	<field name="2 - Muito Bom" class="java.lang.Long"/>
-	<field name="3 - Bom" class="java.lang.Long"/>
-	<field name="4 - Regular" class="java.lang.Long"/>
-	<field name="5 - Ruim" class="java.lang.Long"/>
+	<field name="1 - EXCELENTE" class="java.math.BigDecimal"/>
+	<field name="2 - MUITO BOM" class="java.math.BigDecimal"/>
+	<field name="3 - BOM" class="java.math.BigDecimal"/>
+	<field name="4 - REGULAR" class="java.math.BigDecimal"/>
+	<field name="5 - RUIM" class="java.math.BigDecimal"/>
 	<field name="TOTAL" class="java.lang.Long"/>
 	<group name="Colaborador" keepTogether="true">
 		<groupExpression><![CDATA[$F{colaborador}]]></groupExpression>
@@ -59,7 +70,7 @@ group by p.colaborador, p.pergunta]]>
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
-						<font fontName="Verdana" size="7" isBold="true"/>
+						<font fontName="Arial" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PERGUNTA]]></text>
 				</staticText>
@@ -73,9 +84,9 @@ group by p.colaborador, p.pergunta]]>
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Verdana" size="7" isBold="true"/>
+						<font fontName="Arial" size="7" isBold="true"/>
 					</textElement>
-					<text><![CDATA[1 - Excelente ]]></text>
+					<text><![CDATA[1 - EXCELENTE]]></text>
 				</staticText>
 				<rectangle>
 					<reportElement x="0" y="15" width="547" height="20" backcolor="#CCCCCC" uuid="a786530b-ddfb-4f63-a06f-3d055a9c9cdf"/>
@@ -93,7 +104,7 @@ group by p.colaborador, p.pergunta]]>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font fontName="Verdana" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{colaborador}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CONCAT('[ ',c.id,' ] - ',c.nome)}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="15" width="77" height="20" backcolor="#FFFFFF" uuid="262daac6-c8b6-4c27-a4c9-f10540ec908e"/>
@@ -117,9 +128,9 @@ group by p.colaborador, p.pergunta]]>
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Verdana" size="7" isBold="true"/>
+						<font fontName="Arial" size="7" isBold="true"/>
 					</textElement>
-					<text><![CDATA[2 - Muito Bom ]]></text>
+					<text><![CDATA[2 - MUITO BOM]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="283" y="35" width="66" height="20" uuid="707f3fc0-d885-4004-9a48-885470c69db4"/>
@@ -131,9 +142,9 @@ group by p.colaborador, p.pergunta]]>
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Verdana" size="7" isBold="true"/>
+						<font fontName="Arial" size="7" isBold="true"/>
 					</textElement>
-					<text><![CDATA[3 - Bom ]]></text>
+					<text><![CDATA[3 - BOM]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="349" y="35" width="66" height="20" uuid="3addf87e-6412-439a-8a5f-1895feaa56b6"/>
@@ -145,9 +156,9 @@ group by p.colaborador, p.pergunta]]>
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Verdana" size="7" isBold="true"/>
+						<font fontName="Arial" size="7" isBold="true"/>
 					</textElement>
-					<text><![CDATA[4 - Regular]]></text>
+					<text><![CDATA[4 - REGULAR]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="415" y="35" width="66" height="20" uuid="a8ae468f-55b8-4f9b-8adc-83d84b8b6709"/>
@@ -159,9 +170,9 @@ group by p.colaborador, p.pergunta]]>
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Verdana" size="7" isBold="true"/>
+						<font fontName="Arial" size="7" isBold="true"/>
 					</textElement>
-					<text><![CDATA[5 - Ruim]]></text>
+					<text><![CDATA[5 - RUIM]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="481" y="35" width="66" height="20" uuid="ba149de3-ea56-47e2-892a-fe2e48e3f183"/>
@@ -173,27 +184,27 @@ group by p.colaborador, p.pergunta]]>
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Verdana" size="7" isBold="true"/>
+						<font fontName="Arial" size="7" isBold="true"/>
 					</textElement>
 					<text><![CDATA[TOTAL]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="3">
+			<band height="2">
 				<subreport>
-					<reportElement isPrintRepeatedValues="false" x="4" y="-20" width="544" height="18" uuid="b69cbe44-e75e-4e99-932b-1ac8452033f1"/>
-					<subreportParameter name="grupo">
-						<subreportParameterExpression><![CDATA[$P{grupo}]]></subreportParameterExpression>
+					<reportElement x="4" y="-20" width="544" height="15" uuid="9782fe32-d56d-484e-92d4-f32873517676"/>
+					<subreportParameter name="colaborador">
+						<subreportParameterExpression><![CDATA[$F{colaborador}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="data_inicial">
 						<subreportParameterExpression><![CDATA[$P{data_inicial}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="colaborador">
-						<subreportParameterExpression><![CDATA[$F{colaborador}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="data_final">
 						<subreportParameterExpression><![CDATA[$P{data_final}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="grupo">
+						<subreportParameterExpression><![CDATA[$P{grupo}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sub_geral.jasper"]]></subreportExpression>
@@ -247,17 +258,21 @@ group by p.colaborador, p.pergunta]]>
 				<text><![CDATA[a]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="280" y="72" width="53" height="20" uuid="4271d26a-72c7-4e1b-9f6c-922bf6b7f8d7"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="280" y="72" width="53" height="21" uuid="4271d26a-72c7-4e1b-9f6c-922bf6b7f8d7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{data_inicial}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="349" y="72" width="53" height="20" uuid="c6321c35-2e45-4087-b844-f6268c1a60b6"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement x="349" y="72" width="53" height="21" uuid="c6321c35-2e45-4087-b844-f6268c1a60b6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{data_final}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="217" y="83" width="38" height="20" uuid="748f3f47-0fe2-4cd9-977a-ca5c080a8ea8"/>
+				<reportElement x="217" y="85" width="38" height="20" uuid="748f3f47-0fe2-4cd9-977a-ca5c080a8ea8"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Grupo :]]></text>
 			</staticText>
@@ -279,7 +294,10 @@ group by p.colaborador, p.pergunta]]>
 				<reportElement x="0" y="158" width="548" height="1" uuid="77292fd6-dd6f-4faf-920f-23a7ae453003"/>
 			</line>
 			<textField>
-				<reportElement x="259" y="87" width="100" height="20" uuid="3ddd927c-656e-47df-b5ea-b031e540c36d"/>
+				<reportElement x="257" y="85" width="100" height="21" uuid="a276c765-b0b7-4e53-979b-2b617f048482"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{grupo}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -296,9 +314,9 @@ group by p.colaborador, p.pergunta]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Pergunta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PERGUNTA}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="151" y="0" width="66" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
@@ -310,9 +328,9 @@ group by p.colaborador, p.pergunta]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{1 - Excelente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{1 - EXCELENTE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="217" y="0" width="66" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
@@ -324,9 +342,9 @@ group by p.colaborador, p.pergunta]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{2 - Muito Bom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{2 - MUITO BOM}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="283" y="0" width="66" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
@@ -338,9 +356,9 @@ group by p.colaborador, p.pergunta]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{3 - Bom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{3 - BOM}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="349" y="0" width="66" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
@@ -352,9 +370,9 @@ group by p.colaborador, p.pergunta]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{4 - Regular}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{4 - REGULAR}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="415" y="0" width="66" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
@@ -366,9 +384,9 @@ group by p.colaborador, p.pergunta]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{5 - Ruim}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{5 - RUIM}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="481" y="0" width="66" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
@@ -380,7 +398,7 @@ group by p.colaborador, p.pergunta]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Verdana"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>

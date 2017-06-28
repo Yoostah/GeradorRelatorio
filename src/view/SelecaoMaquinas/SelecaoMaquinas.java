@@ -1,18 +1,11 @@
 package view.SelecaoMaquinas;
 
 import model.Maquina;
-import model.Pesquisa;
 import controller.MaquinaDAO;
-import controller.PesquisaDAO;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import org.joda.time.DateTimeComparator;
 import view.TelaApp;
 
 /**
@@ -22,7 +15,7 @@ import view.TelaApp;
 public class SelecaoMaquinas extends javax.swing.JDialog {
 
     public static TelaApp telaApp;
-
+    private JProgressBar bar;
     /**
      * Creates new form Filho
      */
@@ -70,6 +63,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         jTableMaquinas = new javax.swing.JTable();
         jDateInicial = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
+        progresso = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("- IMPORTAÇÃO DE DADOS -");
@@ -150,7 +144,9 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                         .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addComponent(progresso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addComponent(jBtnImportar)
                 .addContainerGap())
         );
@@ -169,9 +165,15 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                         .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jBtnImportar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                .addGap(10, 10, 10))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jBtnImportar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                        .addGap(10, 10, 10))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(progresso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,46 +194,103 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     private void jBtnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImportarActionPerformed
         //DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
         MaquinaDAO m = new MaquinaDAO();
+        int maqImportadas = 0;
+        int progImportacao = 0;
+        int erro = 0;
 
         for (int linha = 0; linha < jTableMaquinas.getRowCount(); linha++) {
             int id = Integer.parseInt(jTableMaquinas.getValueAt(linha, 0).toString());
             boolean importar = Boolean.valueOf(jTableMaquinas.getValueAt(linha, 4).toString());
-            m.importar(id, importar);
-        }
+            boolean importado = Boolean.valueOf(jTableMaquinas.getValueAt(linha, 5).toString());
+            if (importado == true && importar == false) {
+                erro = 1;
+            } else if (importado == false && importar == true) {
+                maqImportadas++;
+                m.importar(id, importar);
 
-        if (jDateInicial.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Escolha a Data Inicial para importação!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Máquinas selecionadas.");
-            for (Maquina i : m.listar()) {
-                if (i.isImportar() && !i.isImportado()) {
-                    String dir = i.getCaminho();
-                    File file = new File(dir);
-                    try {
-                        for (String arq : file.list()) {
-                            if (arq.endsWith(".txt")) {
-                                System.out.println("------>" + arq + "<------");
-                                try {
-                                    System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
-                                    leitura(dir + "\\" + arq, i.getNome(), i.getGrupo());
-                                    m.importado(i.getId(), true);
-                                } catch (Exception ex) {
-                                    JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
-                                }
-                            }
-                        }
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
-                    }
-                }
             }
 
-            lerMaquinas();
-            telaApp.lerBanco();
         }
+
+        if (erro == 1) {
+            JOptionPane.showMessageDialog(null, "Erro! Máquinas previamente importadas não podem ser removidas da importação !", "ERRO", JOptionPane.ERROR_MESSAGE);
+        } else if (maqImportadas > 0) {
+            if (jDateInicial.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Escolha a Data Inicial para importação!");
+            } else {
+
+                Object[] options = {"Sim", "Não"};
+                int resposta = JOptionPane.showOptionDialog(null, "Deseja importar as " + maqImportadas + " máquinas selecionadas?", "Importação", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+                if (resposta == 0) {
+
+                    progresso.setMaximum(maqImportadas);
+                    progresso.setValue(0);
+                    
+                    for (Maquina i : m.listar()) {
+                        ImportarDados imp = new ImportarDados(i, jDateInicial.getDate());
+                        BarraDeProgresso bp = new BarraDeProgresso();
+                                
+                        //bp.run();
+                        
+                        BarraDeProgresso p = new BarraDeProgresso();
+                        p.jProgressBar1 = progresso; //Fill in with the bar you want painted
+                        
+                        imp.run();
+                        p.run();
+                        
+                        m.importado(i.getId(), true);
+                        progImportacao++;
+                        progresso.setValue(progImportacao);
+                        System.out.println("1");
+                        progresso.repaint();
+                        System.out.println("2");
+                    }
+                    //startt2
+                    
+                    /*
+                    for (Maquina i : m.listar()) {
+                        if (i.isImportar() && !i.isImportado()) {
+                            String dir = i.getCaminho();
+                            File file = new File(dir);
+                            try {
+                                for (String arq : file.list()) {
+                                    if (arq.endsWith(".txt")) {
+                                        System.out.println("------>" + arq + "<------");
+                                        try {
+                                            System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
+                                            leitura(dir + "\\" + arq, i.getNome(), i.getGrupo());
+                                            m.importado(i.getId(), true);
+                                            progImportacao++;
+
+                                            //atualizar bara de progresso
+
+                                            
+                                            System.out.println("ainda restam " + maqImportadas);
+                                        } catch (Exception ex) {
+                                            JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
+                                        }
+                                    }
+                                }
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
+                            }
+                        }
+                    }*/
+
+                    lerMaquinas();
+                    telaApp.lerBanco();
+                    //JOptionPane.showMessageDialog(null, "Importação finalizada.", "", JOptionPane.PLAIN_MESSAGE);
+                }
+            }
+        }
+
+
     }//GEN-LAST:event_jBtnImportarActionPerformed
 
-    public void leitura(String dir, String maquina, String grupo) throws Exception {
+  
+
+    /*public void leitura(String dir, String maquina, String grupo) throws Exception {
         String linha = "";
         BufferedReader br = new BufferedReader(new FileReader(new File(dir)));
         PesquisaDAO banco = new PesquisaDAO();
@@ -259,7 +318,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
             }
         }
         br.close();
-    }
+    }*/
 
     /**
      * @param args the command line arguments
@@ -312,5 +371,10 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMaquinas;
+    private javax.swing.JProgressBar progresso;
     // End of variables declaration//GEN-END:variables
+
+    
+   
+    
 }

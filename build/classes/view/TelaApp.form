@@ -162,10 +162,10 @@
                           <Component id="jBtnBDLer" min="-2" pref="105" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jBtnBDApagar" min="-2" pref="105" max="-2" attributes="0"/>
-                          <EmptySpace pref="476" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="logoHMC" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="logoFSFX" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="logoFSFX" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -272,7 +272,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="925" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -430,7 +430,7 @@
                           <EmptySpace pref="476" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="logoHMC1" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="logoFSFX1" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="logoFSFX1" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -590,7 +590,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="logoHMC2" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="logoFSFX2" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="logoFSFX2" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
