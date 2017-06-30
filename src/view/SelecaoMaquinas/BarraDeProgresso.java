@@ -6,7 +6,8 @@
 package view.SelecaoMaquinas;
 
 import javax.swing.JProgressBar;
-import javax.swing.Timer;
+import javax.swing.SwingUtilities;
+import static view.SelecaoMaquinas.SelecaoMaquinas.telaApp;
 
 /**
  *
@@ -14,14 +15,36 @@ import javax.swing.Timer;
  */
 public class BarraDeProgresso implements Runnable {
 
+    public SelecaoMaquinas selMaq;
     public JProgressBar jProgressBar1;
+    public int progresso[];
+
+    public BarraDeProgresso(JProgressBar barra, int progresso[], SelecaoMaquinas parent) {
+        this.jProgressBar1 = barra;
+        this.progresso = progresso;
+        this.selMaq = parent;
+    }
 
     @Override
     public void run() {
-        System.out.println("t2");
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(100);
+                    jProgressBar1.setValue(progresso[0]);
 
-        jProgressBar1.setValue(jProgressBar1.getValue() + 1);
-        
+                } catch (InterruptedException e) {
+                }
+            }
+        });
+        try {
+            Thread.sleep(300);
+            selMaq.lerMaquinas();
+            //telaApp.refreshTabela();
+            telaApp.lerBanco();
+
+        } catch (Exception e) {
+        }
 
     }
 }

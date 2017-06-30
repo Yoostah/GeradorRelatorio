@@ -125,6 +125,38 @@ public class MaquinaDAO {
         
         return maquinas;
     }
+    public List<Maquina> listarImportar(){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Maquina> maquinas = new ArrayList<>();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM maquinas where importar = true ORDER BY id");
+            rs = stmt.executeQuery();
+            
+            
+            while (rs.next()){
+                Maquina m = new Maquina();
+                
+                m.setId(rs.getInt("id"));
+                m.setNome(rs.getString("nome"));
+                m.setCaminho(rs.getString("caminho"));
+                m.setGrupo(rs.getString("grupo"));
+                m.setImportar(rs.getBoolean("importar"));
+                m.setImportado(rs.getBoolean("importado"));
+                
+                maquinas.add(m);
+                        
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MaquinaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            AcessoDB.closeConnection(con, stmt, rs);
+        }
+        
+        return maquinas;
+    }
     
     public boolean importar(int id, boolean importar){
         Connection con = AcessoDB.getConnection();

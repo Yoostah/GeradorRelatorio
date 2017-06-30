@@ -2,10 +2,15 @@ package view.SelecaoMaquinas;
 
 import model.Maquina;
 import controller.MaquinaDAO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import view.TelaApp;
 
 /**
@@ -15,16 +20,34 @@ import view.TelaApp;
 public class SelecaoMaquinas extends javax.swing.JDialog {
 
     public static TelaApp telaApp;
-    private JProgressBar bar;
+    public static BarraDeProgresso barraApp;
+    public int maqImportadas;
+
     /**
      * Creates new form Filho
      */
     public SelecaoMaquinas(TelaApp parent, boolean modal) {
-        //super(parent, modal);
+        super(parent, modal);
         this.telaApp = parent;
         this.setModal(modal);
         initComponents();
         lerMaquinas();
+        progresso.setVisible(false);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //" If you have a pattern and create a date object that strictly matches your pattern, set lenient to false"
+        sdf.setLenient(false);
+        Date data = null;
+        try {
+            //Pega a data inicial escolhida pelo usuário;
+
+            data = sdf.parse("01/01/2016");
+        } catch (ParseException ex) {
+            Logger.getLogger(SelecaoMaquinas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jDateInicial.setDate(data);
+
+        DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
+        jTableMaquinas.setRowSorter(new TableRowSorter(modelo));
 
     }
 
@@ -192,11 +215,12 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImportarActionPerformed
-        //DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
         MaquinaDAO m = new MaquinaDAO();
-        int maqImportadas = 0;
-        int progImportacao = 0;
+
+        int progImportacao[] = {0};
         int erro = 0;
+
+        maqImportadas = 0;
 
         for (int linha = 0; linha < jTableMaquinas.getRowCount(); linha++) {
             int id = Integer.parseInt(jTableMaquinas.getValueAt(linha, 0).toString());
@@ -219,6 +243,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Escolha a Data Inicial para importação!");
             } else {
 
+                progresso.setVisible(true);
                 Object[] options = {"Sim", "Não"};
                 int resposta = JOptionPane.showOptionDialog(null, "Deseja importar as " + maqImportadas + " máquinas selecionadas?", "Importação", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
@@ -226,99 +251,31 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
 
                     progresso.setMaximum(maqImportadas);
                     progresso.setValue(0);
-                    
-                    for (Maquina i : m.listar()) {
-                        ImportarDados imp = new ImportarDados(i, jDateInicial.getDate());
-                        BarraDeProgresso bp = new BarraDeProgresso();
-                                
-                        //bp.run();
-                        
-                        BarraDeProgresso p = new BarraDeProgresso();
-                        p.jProgressBar1 = progresso; //Fill in with the bar you want painted
-                        
-                        imp.run();
-                        p.run();
-                        
-                        m.importado(i.getId(), true);
-                        progImportacao++;
-                        progresso.setValue(progImportacao);
-                        System.out.println("1");
-                        progresso.repaint();
-                        System.out.println("2");
+
+                    for (Maquina i : m.listarImportar()) {
+                        ImportarDados imp = new ImportarDados(i, jDateInicial.getDate(), progImportacao, progresso, this);
+
+                        Thread t1 = new Thread(imp);
+
+                        t1.start();
+
                     }
-                    //startt2
-                    
-                    /*
-                    for (Maquina i : m.listar()) {
-                        if (i.isImportar() && !i.isImportado()) {
-                            String dir = i.getCaminho();
-                            File file = new File(dir);
-                            try {
-                                for (String arq : file.list()) {
-                                    if (arq.endsWith(".txt")) {
-                                        System.out.println("------>" + arq + "<------");
-                                        try {
-                                            System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
-                                            leitura(dir + "\\" + arq, i.getNome(), i.getGrupo());
-                                            m.importado(i.getId(), true);
-                                            progImportacao++;
+                } else {
+                    progresso.setVisible(false);
 
-                                            //atualizar bara de progresso
-
-                                            
-                                            System.out.println("ainda restam " + maqImportadas);
-                                        } catch (Exception ex) {
-                                            JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
-                                        }
-                                    }
-                                }
-                            } catch (Exception ex) {
-                                JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
-                            }
-                        }
-                    }*/
-
-                    lerMaquinas();
-                    telaApp.lerBanco();
-                    //JOptionPane.showMessageDialog(null, "Importação finalizada.", "", JOptionPane.PLAIN_MESSAGE);
                 }
+
             }
         }
+        //telaApp.lerBanco();
+        
 
 
     }//GEN-LAST:event_jBtnImportarActionPerformed
 
   
 
-    /*public void leitura(String dir, String maquina, String grupo) throws Exception {
-        String linha = "";
-        BufferedReader br = new BufferedReader(new FileReader(new File(dir)));
-        PesquisaDAO banco = new PesquisaDAO();
-        while ((linha = br.readLine()) != null) {
-            if (!linha.isEmpty() && linha.length() >= 39) {
-                //Divisão da linha da pesquisa por parametros
-                String[] dados = linha.split(";");
-
-                //Formatação da data
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                //" If you have a pattern and create a date object that strictly matches your pattern, set lenient to false"
-                sdf.setLenient(false);
-
-                //Pega a data inicial escolhida pelo usuário;
-                Date data_inicial = jDateInicial.getDate();
-
-                Date data = sdf.parse(dados[2] + " " + dados[3]);
-
-                //Se a data do registro for maior que a data informada no jCalendar fazer a inclusão do objeto no banco
-                if (DateTimeComparator.getDateOnlyInstance().compare(data_inicial, data) <= 0) {
-                    //Criação do objeto para guardar os dados no BD (String pesquisa, Date data, int pergunta, int resposta, int colaborador)
-                    Pesquisa p = new Pesquisa(dados[1], data, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()), maquina, grupo, Integer.parseInt(dados[4]));
-                    banco.create(p);
-                }
-            }
-        }
-        br.close();
-    }*/
+    
 
     /**
      * @param args the command line arguments

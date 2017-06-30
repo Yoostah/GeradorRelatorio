@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.SelecaoMaquinas.SelecaoMaquinas;
 import controller.MaquinaDAO;
 import model.Pesquisa;
 import controller.PesquisaDAO;
@@ -14,15 +15,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import z_ux.JTableUtilities;
-import view.SelecaoMaquinas.SelecaoMaquinas;
 import view.framesCadastro.FrameCadastroColaborador;
 import view.framesCadastro.FrameCadastroGrupo;
 import view.framesCadastro.FrameCadastroMaquinas;
@@ -34,7 +32,7 @@ import view.framesRelatorio.FrameRelatorioGeral;
  * @author Thulio
  */
 public class TelaApp extends javax.swing.JFrame {
-    
+
     GridBagLayout layout = new GridBagLayout();
     FrameCadastroMaquinas cadMaq;
     FrameCadastroGrupo cadGru;
@@ -42,51 +40,52 @@ public class TelaApp extends javax.swing.JFrame {
     FrameRelatorioColaborador relColab;
     FrameRelatorioGeral relGeral;
     public static SelecaoMaquinas telaSelecaoMaq;
+
     /**
      * Creates new form TelaApp
      */
     public TelaApp() {
         initComponents();
-        
-        
+
         lerBanco();
-        
+
         //Criação dos Paineis do Cadastro
         cadMaq = new FrameCadastroMaquinas();
         cadGru = new FrameCadastroGrupo();
         cadColab = new FrameCadastroColaborador();
-        
+
         jPainelDinamicoCad.setLayout(layout);
-    
+
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
         c.ipady = 10;
-        
+
         jPainelDinamicoCad.add(cadMaq, c);
         jPainelDinamicoCad.add(cadGru, c);
-        jPainelDinamicoCad.add(cadColab,c);
-        
+        jPainelDinamicoCad.add(cadColab, c);
+
         cadMaq.setVisible(false);
         cadGru.setVisible(false);
         cadColab.setVisible(false);
-        
+
         //Criação dos Paineis do Relatório
         relColab = new FrameRelatorioColaborador();
         relGeral = new FrameRelatorioGeral();
-        
+
         jPainelDinamicoRel.setLayout(layout);
-        
+
         c.ipady = 0;
         c.ipadx = 0;
-        
+
         jPainelDinamicoRel.add(relColab, c);
         jPainelDinamicoRel.add(relGeral, c);
-        
+
         relColab.setVisible(false);
         relGeral.setVisible(false);
+
     }
-    
+
     public void lerBanco() {
         DefaultTableModel modelo = (DefaultTableModel) jTableBD.getModel();
         JTableUtilities.setCellsAlignment(jTableBD, SwingConstants.LEFT);
@@ -110,6 +109,13 @@ public class TelaApp extends javax.swing.JFrame {
 
     }
 
+    public void classificarTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) jTableBD.getModel();
+        jTableBD.setRowSorter(new TableRowSorter(modelo));
+        modelo.setNumRows(0);
+        lerBanco();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,6 +137,7 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelTabelaBD = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableBD = new javax.swing.JTable();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jPanelRelatorio = new javax.swing.JPanel();
         jPanelBtnRel = new javax.swing.JPanel();
         jBtnRelGeral = new javax.swing.JButton();
@@ -170,6 +177,7 @@ public class TelaApp extends javax.swing.JFrame {
 
         jTabs.setBackground(new java.awt.Color(204, 204, 255));
         jTabs.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jTabs.setPreferredSize(new java.awt.Dimension(950, 636));
 
         jPanelBD.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -307,9 +315,19 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelTabelaBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTabelaBDLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
+
+        jCheckBox1.setBackground(new java.awt.Color(102, 102, 102));
+        jCheckBox1.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setText("ADICIONAR CLASSIFICADORES");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBDLayout = new javax.swing.GroupLayout(jPanelBD);
         jPanelBD.setLayout(jPanelBDLayout);
@@ -317,13 +335,19 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelBtnBD, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
             .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelBDLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jCheckBox1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBDLayout.setVerticalGroup(
             jPanelBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBDLayout.createSequentialGroup()
                 .addComponent(jPanelBtnBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox1)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         BufferedImage img = null;
@@ -422,9 +446,9 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelatorioLayout.createSequentialGroup()
                 .addComponent(jPanelBtnRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(62, 62, 62)
                 .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
 
         jTabs.addTab("RELATÓRIOS", jPanelRelatorio);
@@ -518,7 +542,7 @@ public class TelaApp extends javax.swing.JFrame {
         );
         jPainelDinamicoCadLayout.setVerticalGroup(
             jPainelDinamicoCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 499, Short.MAX_VALUE)
+            .addGap(0, 515, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
@@ -581,8 +605,10 @@ public class TelaApp extends javax.swing.JFrame {
         String title = "CONFIRME OPERAÇÃO";
         // display the JOptionPane showConfirmDialog
         int resposta = JOptionPane.showConfirmDialog(jPanelBD, message, title, JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION)
-        {
+        if (resposta == JOptionPane.YES_OPTION) {
+            jCheckBox1.setEnabled(true);
+            jCheckBox1.setSelected(false);
+            jTableBD.setRowSorter(null);
             PesquisaDAO dao = new PesquisaDAO();
             dao.truncarBD();
             MaquinaDAO m = new MaquinaDAO();
@@ -630,6 +656,11 @@ public class TelaApp extends javax.swing.JFrame {
         telaSelecaoMaq.setVisible(true);
     }//GEN-LAST:event_jBtnBDLerActionPerformed
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        classificarTabela();
+        jCheckBox1.setEnabled(false);
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -673,6 +704,7 @@ public class TelaApp extends javax.swing.JFrame {
     private javax.swing.JButton jBtnCadMaq;
     private javax.swing.JButton jBtnRelGeral;
     private javax.swing.JButton jBtnRelGrupo;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JMenuBar jMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
