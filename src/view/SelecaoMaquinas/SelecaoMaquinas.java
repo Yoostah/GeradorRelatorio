@@ -2,6 +2,7 @@ package view.SelecaoMaquinas;
 
 import model.Maquina;
 import controller.MaquinaDAO;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         this.telaApp = parent;
         this.setModal(modal);
         initComponents();
+        lblConcluido.setVisible(false);
         lerMaquinas();
         progresso.setVisible(false);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -69,6 +71,10 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
 
         }
     }
+    
+    public void concluido(){
+        lblConcluido.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,10 +89,31 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jBtnImportar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMaquinas = new javax.swing.JTable();
+        jTableMaquinas = new javax.swing.JTable(){
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    //comment row, exclude heading
+                    if(rowIndex != -1 && (colIndex == 1 || colIndex == 2 || colIndex == 3)){
+                        tip = getValueAt(rowIndex, colIndex).toString();
+                    }
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
+        }
+        ;
         jDateInicial = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         progresso = new javax.swing.JProgressBar();
+        lblConcluido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("- IMPORTAÇÃO DE DADOS -");
@@ -94,6 +121,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 25)); // NOI18N
@@ -105,10 +133,12 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         jLabel1.setName(""); // NOI18N
         jLabel1.setOpaque(true);
         jLabel1.setPreferredSize(new java.awt.Dimension(399, 34));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, 574, 36));
 
         jBtnImportar.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnImportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/ler.png"))); // NOI18N
         jBtnImportar.setText("IMPORTAR");
+        jBtnImportar.setToolTipText("Importar Máquinas selecionadas");
         jBtnImportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnImportarActionPerformed(evt);
@@ -116,6 +146,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         });
         jBtnImportar.setHorizontalTextPosition(SwingConstants.CENTER);
         jBtnImportar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jPanel1.add(jBtnImportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 352, -1, 57));
 
         jTableMaquinas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jTableMaquinas.setModel(new javax.swing.table.DefaultTableModel(
@@ -146,68 +177,29 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTableMaquinas);
         jTableMaquinas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 147, 575, 195));
+
         jDateInicial.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.add(jDateInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 117, 120, -1));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jLabel2.setText("DATA INICIAL DA IMPORTAÇÃO:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 121, -1, -1));
+        jPanel1.add(progresso, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 370, 385, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel2)
-                        .addGap(13, 13, 13)
-                        .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(progresso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(34, 34, 34)
-                .addComponent(jBtnImportar)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel2)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jBtnImportar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                        .addGap(10, 10, 10))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(progresso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
+        lblConcluido.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        lblConcluido.setText("CONCLUÍDO");
+        jPanel1.add(lblConcluido, new org.netbeans.lib.awtextra.AbsoluteConstraints(349, 350, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
         );
 
         pack();
@@ -215,6 +207,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImportarActionPerformed
+        
         MaquinaDAO m = new MaquinaDAO();
 
         int progImportacao[] = {0};
@@ -248,6 +241,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                 int resposta = JOptionPane.showOptionDialog(null, "Deseja importar as " + maqImportadas + " máquinas selecionadas?", "Importação", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
                 if (resposta == 0) {
+                    lblConcluido.setVisible(false);
 
                     progresso.setMaximum(maqImportadas);
                     progresso.setValue(0);
@@ -261,6 +255,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
 
                     }
                 } else {
+                    lblConcluido.setVisible(false);
                     progresso.setVisible(false);
 
                 }
@@ -328,6 +323,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMaquinas;
+    private javax.swing.JLabel lblConcluido;
     private javax.swing.JProgressBar progresso;
     // End of variables declaration//GEN-END:variables
 

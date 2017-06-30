@@ -26,6 +26,7 @@ import view.framesCadastro.FrameCadastroGrupo;
 import view.framesCadastro.FrameCadastroMaquinas;
 import view.framesRelatorio.FrameRelatorioColaborador;
 import view.framesRelatorio.FrameRelatorioGeral;
+import view.menu.Sobre;
 
 /**
  *
@@ -88,7 +89,15 @@ public class TelaApp extends javax.swing.JFrame {
 
     public void lerBanco() {
         DefaultTableModel modelo = (DefaultTableModel) jTableBD.getModel();
-        JTableUtilities.setCellsAlignment(jTableBD, SwingConstants.LEFT);
+        JTableUtilities.alinharColuna(jTableBD, SwingConstants.LEFT, 0);
+        JTableUtilities.alinharColuna(jTableBD, SwingConstants.CENTER, 1);
+        JTableUtilities.alinharColuna(jTableBD, SwingConstants.CENTER, 2);
+        JTableUtilities.alinharColuna(jTableBD, SwingConstants.CENTER, 3);
+        JTableUtilities.alinharColuna(jTableBD, SwingConstants.CENTER, 4);
+        JTableUtilities.alinharColuna(jTableBD, SwingConstants.CENTER, 5);
+        JTableUtilities.alinharColuna(jTableBD, SwingConstants.CENTER, 7);
+        JTableUtilities.centralizarHeader(jTableBD);
+
         PesquisaDAO p = new PesquisaDAO();
         modelo.setNumRows(0);
 
@@ -124,6 +133,7 @@ public class TelaApp extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCadastro = new javax.swing.JTable();
@@ -155,7 +165,10 @@ public class TelaApp extends javax.swing.JFrame {
         jPainelDinamicoCad = new javax.swing.JPanel();
         jMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItemConfigBD = new javax.swing.JMenuItem();
+        jMenuItemConfigUsuarios = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItemSobreSobre = new javax.swing.JMenuItem();
 
         jTableCadastro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -171,9 +184,10 @@ public class TelaApp extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTableCadastro);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(":: CORMED SISAT ::");
+        setTitle("::   SISTEMA DE CONTROLE DE SATISFAÇÃO - CORMED / WINNER   ::");
         setAutoRequestFocus(false);
         setResizable(false);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jTabs.setBackground(new java.awt.Color(204, 204, 255));
         jTabs.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -188,6 +202,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnBDApagar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnBDApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar_bd.png"))); // NOI18N
         jBtnBDApagar.setText("APAGAR");
+        jBtnBDApagar.setToolTipText("Apagar registros importados");
         jBtnBDApagar.setMaximumSize(new java.awt.Dimension(67, 23));
         jBtnBDApagar.setMinimumSize(new java.awt.Dimension(67, 23));
         jBtnBDApagar.setPreferredSize(new java.awt.Dimension(67, 23));
@@ -202,6 +217,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnBDLer.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnBDLer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/ler.png"))); // NOI18N
         jBtnBDLer.setText("LER");
+        jBtnBDLer.setToolTipText("Ler máquinas cadastradas");
         jBtnBDLer.setMaximumSize(new java.awt.Dimension(67, 23));
         jBtnBDLer.setMinimumSize(new java.awt.Dimension(67, 23));
         jBtnBDLer.setPreferredSize(new java.awt.Dimension(67, 23));
@@ -295,11 +311,9 @@ public class TelaApp extends javax.swing.JFrame {
             jTableBD.getColumnModel().getColumn(5).setMinWidth(110);
             jTableBD.getColumnModel().getColumn(5).setPreferredWidth(110);
             jTableBD.getColumnModel().getColumn(5).setMaxWidth(110);
-            jTableBD.getColumnModel().getColumn(6).setMinWidth(250);
-            jTableBD.getColumnModel().getColumn(6).setPreferredWidth(250);
-            jTableBD.getColumnModel().getColumn(6).setMaxWidth(250);
-            jTableBD.getColumnModel().getColumn(7).setResizable(false);
-            jTableBD.getColumnModel().getColumn(7).setPreferredWidth(125);
+            jTableBD.getColumnModel().getColumn(7).setMinWidth(225);
+            jTableBD.getColumnModel().getColumn(7).setPreferredWidth(225);
+            jTableBD.getColumnModel().getColumn(7).setMaxWidth(225);
         }
 
         javax.swing.GroupLayout jPanelTabelaBDLayout = new javax.swing.GroupLayout(jPanelTabelaBD);
@@ -314,15 +328,16 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelTabelaBDLayout.setVerticalGroup(
             jPanelTabelaBDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTabelaBDLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jCheckBox1.setBackground(new java.awt.Color(102, 102, 102));
         jCheckBox1.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setText("ADICIONAR CLASSIFICADORES");
+        jCheckBox1.setToolTipText("Adiciona classificadores na tabela");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
@@ -346,8 +361,8 @@ public class TelaApp extends javax.swing.JFrame {
                 .addComponent(jPanelBtnBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox1)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         BufferedImage img = null;
@@ -367,6 +382,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnRelGeral.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelGeral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
         jBtnRelGeral.setText("GERAL");
+        jBtnRelGeral.setToolTipText("Gerar relatório Geral por Grupo");
         jBtnRelGeral.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnRelGeralActionPerformed(evt);
@@ -378,6 +394,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnRelGrupo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user.png"))); // NOI18N
         jBtnRelGrupo.setText("COLABORADOR");
+        jBtnRelGrupo.setToolTipText("Gerar relatório de Colaborador por Grupo");
         jBtnRelGrupo.setBorder(null);
         jBtnRelGrupo.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnRelGrupo.addActionListener(new java.awt.event.ActionListener() {
@@ -446,9 +463,9 @@ public class TelaApp extends javax.swing.JFrame {
             jPanelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelatorioLayout.createSequentialGroup()
                 .addComponent(jPanelBtnRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(51, 51, 51)
                 .addComponent(jPainelDinamicoRel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addGap(267, 267, 267))
         );
 
         jTabs.addTab("RELATÓRIOS", jPanelRelatorio);
@@ -460,6 +477,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnCadColaborador.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnCadColaborador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user.png"))); // NOI18N
         jBtnCadColaborador.setText("COLABORADOR");
+        jBtnCadColaborador.setToolTipText("Cadastrar Colaborador");
         jBtnCadColaborador.setBorder(null);
         jBtnCadColaborador.setMargin(new java.awt.Insets(2, 0, 2, 0));
         jBtnCadColaborador.setMaximumSize(new java.awt.Dimension(67, 23));
@@ -476,6 +494,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnCadMaq.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnCadMaq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/pc.png"))); // NOI18N
         jBtnCadMaq.setText("MÁQUINA");
+        jBtnCadMaq.setToolTipText("Cadastrar Máquina");
         jBtnCadMaq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnCadMaqActionPerformed(evt);
@@ -487,6 +506,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnCadGrupo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnCadGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
         jBtnCadGrupo.setText("GRUPO");
+        jBtnCadGrupo.setToolTipText("Cadastrar Grupo");
         jBtnCadGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnCadGrupoActionPerformed(evt);
@@ -542,7 +562,7 @@ public class TelaApp extends javax.swing.JFrame {
         );
         jPainelDinamicoCadLayout.setVerticalGroup(
             jPainelDinamicoCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 515, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
@@ -571,30 +591,54 @@ public class TelaApp extends javax.swing.JFrame {
         ImageIcon iconCad = new ImageIcon( getClass().getResource("/_imagens/cadastro.png") );
         jTabs.setIconAt(2, iconCad);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 349;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
+        getContentPane().add(jTabs, gridBagConstraints);
+
         jMenu.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        jMenu1.setText("ARQUIVO");
+        jMenu1.setText("CONFIGURAR");
         jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItemConfigBD.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jMenuItemConfigBD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/database.png"))); // NOI18N
+        jMenuItemConfigBD.setText("Banco de Dados");
+        jMenuItemConfigBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConfigBDActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemConfigBD);
+
+        jMenuItemConfigUsuarios.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jMenuItemConfigUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user-icon.png"))); // NOI18N
+        jMenuItemConfigUsuarios.setText("Usuários");
+        jMenu1.add(jMenuItemConfigUsuarios);
+
         jMenu.add(jMenu1);
 
         jMenu2.setText("SOBRE");
         jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItemSobreSobre.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jMenuItemSobreSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/info.png"))); // NOI18N
+        jMenuItemSobreSobre.setText("Sobre o Software");
+        jMenuItemSobreSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSobreSobreActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemSobreSobre);
+
         jMenu.add(jMenu2);
 
         setJMenuBar(jMenu);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jTabs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getAccessibleContext().setAccessibleName(":: CORMED SISAT 2.0 ::");
 
         pack();
         setLocationRelativeTo(null);
@@ -661,6 +705,16 @@ public class TelaApp extends javax.swing.JFrame {
         jCheckBox1.setEnabled(false);
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void jMenuItemSobreSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreSobreActionPerformed
+        Sobre s = new Sobre();
+        //this.add(s);
+        s.setVisible(true);
+    }//GEN-LAST:event_jMenuItemSobreSobreActionPerformed
+
+    private void jMenuItemConfigBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConfigBDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemConfigBDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -708,6 +762,9 @@ public class TelaApp extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItemConfigBD;
+    private javax.swing.JMenuItem jMenuItemConfigUsuarios;
+    private javax.swing.JMenuItem jMenuItemSobreSobre;
     private javax.swing.JPanel jPainelDinamicoCad;
     private javax.swing.JPanel jPainelDinamicoRel;
     private javax.swing.JPanel jPanelBD;

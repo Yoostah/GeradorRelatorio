@@ -34,7 +34,8 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
 
     public void lerGrupos() {
         DefaultTableModel modelo = (DefaultTableModel) jTableGrupos.getModel();
-        JTableUtilities.setCellsAlignment(jTableGrupos, SwingConstants.LEFT);
+        JTableUtilities.centralizarHeader(jTableGrupos);
+        JTableUtilities.alinharColuna(jTableGrupos, SwingConstants.CENTER, 0);
         GrupoDAO g = new GrupoDAO();
         modelo.setNumRows(0);
 
@@ -90,6 +91,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         jBtnGruADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnGruADD.setForeground(new java.awt.Color(255, 255, 255));
         jBtnGruADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
+        jBtnGruADD.setToolTipText("Adicionar novo Grupo");
         jBtnGruADD.setBorder(null);
         jBtnGruADD.setBorderPainted(false);
         jBtnGruADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -108,6 +110,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         jBtnGruDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnGruDEL.setForeground(new java.awt.Color(255, 255, 255));
         jBtnGruDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
+        jBtnGruDEL.setToolTipText("Deletar Grupo");
         jBtnGruDEL.setBorder(null);
         jBtnGruDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnGruDEL.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -125,6 +128,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         jBtnGruUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnGruUPD.setForeground(new java.awt.Color(255, 255, 255));
         jBtnGruUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
+        jBtnGruUPD.setToolTipText("Editar Grupo");
         jBtnGruUPD.setBorder(null);
         jBtnGruUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnGruUPD.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -203,9 +207,9 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         jTableGrupos.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTableGrupos);
         if (jTableGrupos.getColumnModel().getColumnCount() > 0) {
-            jTableGrupos.getColumnModel().getColumn(0).setMinWidth(100);
-            jTableGrupos.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTableGrupos.getColumnModel().getColumn(0).setMaxWidth(100);
+            jTableGrupos.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableGrupos.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableGrupos.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 171, 574, 195));
@@ -300,7 +304,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         op = 1;
     }//GEN-LAST:event_jBtnGruADDActionPerformed
 
-    private void jBtnGruDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGruDELActionPerformed
+    private void jBtnGruDELActionPerformed(java.awt.event.ActionEvent evt) {                                           
         GrupoDAO gdao = new GrupoDAO();
         
         if (jTableGrupos.getSelectedRow() != -1) {
@@ -315,9 +319,9 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         }else {
             JOptionPane.showMessageDialog(null, "Escolha um Grupo para deletar!");
         }
-    }//GEN-LAST:event_jBtnMaqDELActionPerformed
+    }                                          
 
-    private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqUPDActionPerformed
+    private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {                                           
         //LER OS DADOS DA LINHA SELECIOANDA
         if (jTableGrupos.getSelectedRow() != -1) {
             //Travar a seleção de outra linha da tabela antes da alteração ser enviada
@@ -332,7 +336,7 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "Escolha um Grupo para alterar!");
         }
-    }//GEN-LAST:event_jBtnGruDELActionPerformed
+    }                                          
 
     private void jBtnGruUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGruUPDActionPerformed
         //LER OS DADOS DA LINHA SELECIOANDA

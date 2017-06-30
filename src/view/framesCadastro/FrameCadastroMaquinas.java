@@ -9,39 +9,45 @@ import model.Grupo;
 import model.Maquina;
 import controller.GrupoDAO;
 import controller.MaquinaDAO;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import z_ux.JTableUtilities;
 
 /**
  *
  * @author Thulio
  */
 public class FrameCadastroMaquinas extends javax.swing.JPanel {
-    
+
     //Variavel para controlar se o botao ADD fara uma inclusão ou alteração
     static int op;
-    
+
     /**
      * Creates new form FrameCadastroMaquinas2
      */
     public FrameCadastroMaquinas() {
         initComponents();
         lerMaquinas();
-        
+
         //Colocar os Grupos Cadastrados no banco no JCBox
         GrupoDAO g = new GrupoDAO();
-        
+
         for (Grupo i : g.listar()) {
             jCGrupo.addItem(i.getNome());
         }
-        
+
         //Esconder os Campos ao Iniciar Frame
         esconderCampos();
     }
-    
+
     public void lerMaquinas() {
         DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
+        JTableUtilities.alinharColuna(jTableMaquinas, SwingConstants.CENTER, 0);
         MaquinaDAO m = new MaquinaDAO();
         modelo.setNumRows(0);
 
@@ -58,8 +64,8 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         }
 
     }
-    
-    public void esconderCampos(){
+
+    public void esconderCampos() {
         jLabel2.setVisible(false);
         jLabel3.setVisible(false);
         jLabel4.setVisible(false);
@@ -68,10 +74,10 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jPanelBtnADD.setVisible(false);
         jCGrupo.setVisible(false);
         jBtnCaminho.setVisible(false);
-        
+
     }
 
-    public void mostrarCampos(){
+    public void mostrarCampos() {
         jLabel2.setVisible(true);
         jLabel3.setVisible(true);
         jLabel4.setVisible(true);
@@ -80,7 +86,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jPanelBtnADD.setVisible(true);
         jCGrupo.setVisible(true);
         jBtnCaminho.setVisible(true);
-        
+
     }
 
     /**
@@ -98,7 +104,26 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqUPD = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMaquinas = new javax.swing.JTable();
+        jTableMaquinas = new javax.swing.JTable(){
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+
+                try {
+                    //comment row, exclude heading
+                    if(rowIndex != -1 && (colIndex == 1 || colIndex == 2 || colIndex == 3)){
+                        tip = getValueAt(rowIndex, colIndex).toString();
+                    }
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+
+                return tip;
+            }
+        };
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -120,6 +145,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqADD.setForeground(new java.awt.Color(255, 255, 255));
         jBtnMaqADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
+        jBtnMaqADD.setToolTipText("Adicionar nova Máquina");
         jBtnMaqADD.setBorder(null);
         jBtnMaqADD.setBorderPainted(false);
         jBtnMaqADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -138,6 +164,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqDEL.setForeground(new java.awt.Color(255, 255, 255));
         jBtnMaqDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
+        jBtnMaqDEL.setToolTipText("Deletar Máquina");
         jBtnMaqDEL.setBorder(null);
         jBtnMaqDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnMaqDEL.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -155,6 +182,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         jBtnMaqUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnMaqUPD.setForeground(new java.awt.Color(255, 255, 255));
         jBtnMaqUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
+        jBtnMaqUPD.setToolTipText("Editar Máquina");
         jBtnMaqUPD.setBorder(null);
         jBtnMaqUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnMaqUPD.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -232,6 +260,11 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         });
         jTableMaquinas.setColumnSelectionAllowed(true);
         jTableMaquinas.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableMaquinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableMaquinasMouseEntered(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableMaquinas);
         jTableMaquinas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTableMaquinas.getColumnModel().getColumnCount() > 0) {
@@ -278,6 +311,11 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         add(jTxtCaminho, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 114, 290, -1));
 
         jBtnCaminho.setText("...");
+        jBtnCaminho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCaminhoActionPerformed(evt);
+            }
+        });
         add(jBtnCaminho, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 114, 20, 20));
 
         jCGrupo.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
@@ -324,19 +362,19 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
     private void jBtnMaqADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqADDActionPerformed
         //Habilitar Botoões
         mostrarCampos();
-        
+
         op = 1;
     }//GEN-LAST:event_jBtnMaqADDActionPerformed
 
     private void jBtnADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnADDActionPerformed
         MaquinaDAO mdao = new MaquinaDAO();
         Maquina m = new Maquina();
-        if (jTxtNome.getText().isEmpty() || jTxtCaminho.getText().isEmpty()){
+        if (jTxtNome.getText().isEmpty() || jTxtCaminho.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencher todos os Campos!");
-        }else if (jCGrupo.getSelectedIndex() == 0){
+        } else if (jCGrupo.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Escolha um Grupo!");
-        }else{
-            if (op == 1){
+        } else {
+            if (op == 1) {
                 m.setNome(jTxtNome.getText().toUpperCase());
                 m.setCaminho(jTxtCaminho.getText());
                 m.setGrupo(jCGrupo.getSelectedItem().toString());
@@ -365,25 +403,25 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
 
                 //Habilitar seleção de linhas novamente
                 jTableMaquinas.setEnabled(true);
-            } 
+            }
         }
     }//GEN-LAST:event_jBtnADDActionPerformed
 
     private void jBtnMaqDELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqDELActionPerformed
         MaquinaDAO mdao = new MaquinaDAO();
-        
+
         if (jTableMaquinas.getSelectedRow() != -1) {
             //DELETAR OS DADOS
-            
+
             int selecionado = (Integer.parseInt(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 0).toString()));
 
             //CHAMAR O OBJETO QUE MANIPULA O BANCO DE DADOS
             mdao.deletar(selecionado);
             lerMaquinas();
 
-        }else {
+        } else {
             JOptionPane.showMessageDialog(null, "Escolha uma Máquina para deletar!");
-            
+
         }
     }//GEN-LAST:event_jBtnMaqDELActionPerformed
 
@@ -394,19 +432,37 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
             jTableMaquinas.setEnabled(false);
             //Mostrar campos ocultos
             mostrarCampos();
-            
+
             jTxtNome.setText(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 1).toString());
             jTxtCaminho.setText(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 2).toString());
             jCGrupo.setSelectedItem(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 3).toString());
-            
+
             //TODO Fazer a leitura do campo boolean
             op = 2;
-        
+
         } else {
             JOptionPane.showMessageDialog(null, "Escolha uma Máquina para alterar!");
-            
+
         }
     }//GEN-LAST:event_jBtnMaqUPDActionPerformed
+
+    private void jBtnCaminhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCaminhoActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnVal = fc.showOpenDialog(FrameCadastroMaquinas.this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            jTxtCaminho.setText(file.getAbsolutePath());
+        }
+    }//GEN-LAST:event_jBtnCaminhoActionPerformed
+
+    private void jTableMaquinasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMaquinasMouseEntered
+        //DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        //String pathValue = jTableMaquinas.getValueAt(jTableMaquinasMouseEntered(evt), 2);
+        //renderer.setToolTipText("Click for combo box");
+        //jTableMaquinas.getColumnModel().getColumn(2).setCellRenderer(renderer);
+    }//GEN-LAST:event_jTableMaquinasMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

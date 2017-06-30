@@ -97,6 +97,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/_imagens/add.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Adicionar nova M&#xe1;quina"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -135,6 +136,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/_imagens/deletar.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Deletar M&#xe1;quina"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -172,6 +174,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/_imagens/edit.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Editar M&#xe1;quina"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -267,6 +270,12 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableMaquinasMouseEntered"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    //Implement table cell tool tips.&#xa;    public String getToolTipText(MouseEvent e) {&#xa;        String tip = null;&#xa;        java.awt.Point p = e.getPoint();&#xa;        int rowIndex = rowAtPoint(p);&#xa;        int colIndex = columnAtPoint(p);&#xa;&#xa;        try {&#xa;            //comment row, exclude heading&#xa;            if(rowIndex != -1 &amp;&amp; (colIndex == 1 || colIndex == 2 || colIndex == 3)){&#xa;                tip = getValueAt(rowIndex, colIndex).toString();&#xa;            }&#xa;        } catch (RuntimeException e1) {&#xa;            //catch null pointer exception if mouse is over an empty line&#xa;        }&#xa;&#xa;        return tip;&#xa;    }&#xa;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -360,6 +369,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="..."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnCaminhoActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="470" y="114" width="20" height="20"/>

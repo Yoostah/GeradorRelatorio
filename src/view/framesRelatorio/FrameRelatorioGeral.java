@@ -19,32 +19,27 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
-
 /**
  *
  * @author Thulio
  */
 public class FrameRelatorioGeral extends javax.swing.JPanel {
-    
-        
+
     /**
      * Creates new form FrameCadastroGrupo
      */
     public FrameRelatorioGeral() {
         initComponents();
-        
+
         //Colocar os Grupos Cadastrados no banco no JCBox
         GrupoDAO g = new GrupoDAO();
-        
+
         for (Grupo i : g.listar()) {
             jCGrupo.addItem(i.getNome());
         }
-        
-        
-        
+
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,6 +95,7 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
         jBtnGerar.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnGerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/gerar_relatorio.png"))); // NOI18N
         jBtnGerar.setText("GERAR");
+        jBtnGerar.setToolTipText("Gerar Relatório");
         jBtnGerar.setBorder(null);
         jBtnGerar.setIconTextGap(10);
         jBtnGerar.setMargin(new java.awt.Insets(2, 1, 2, 1));
@@ -205,35 +201,40 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGerarActionPerformed
-        if (jCGrupo.getSelectedIndex() == 0){
+        if (jCGrupo.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Selecione um Grupo!");
-        
-        }else if (jDateInicial.getDate() == null || jDateFinal.getDate() == null){
+
+        } else if (jDateInicial.getDate() == null || jDateFinal.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Preencha corretamente os campos Data Inicial e Data Final!");
-        
-        }else{
+
+        } else {
             Connection con = AcessoDB.getConnection();
-            
+
             try {
                 String data_inicial = new SimpleDateFormat("dd/MM/yyyy").format(jDateInicial.getDate());
                 String data_final = new SimpleDateFormat("dd/MM/yyyy").format(jDateFinal.getDate());
 
                 //Map com os parametro da query
                 Map map = new HashMap();
-                map.put("data_inicial",data_inicial);
-                map.put("data_final",data_final);
-                map.put("grupo",jCGrupo.getSelectedItem().toString());
+                map.put("data_inicial", data_inicial);
+                map.put("data_final", data_final);
+                map.put("grupo", jCGrupo.getSelectedItem().toString());
 
                 //Carregando o Relatório
                 InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Geral.jasper");
 
                 //Passando os dados para a query e a conexao ao relatorio
-                JasperPrint p = JasperFillManager.fillReport(jasper,map, con);
+                JasperPrint p = JasperFillManager.fillReport(jasper, map, con);
                 JasperViewer view = new JasperViewer(p, false);
+                if (p.getPages().isEmpty()) {
+                    // Se o JasperViewer constructor não tiver páginas, ele irá mostrar "the document has no pages"
+                    // e e vez de abrir o jasperviewer vazio ele simplesmente não exibe e retorna.
+                    return;
+                }
                 view.setVisible(true);
                 view.toFront();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( "+e+" )");
+                JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( " + e + " )");
             }
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed

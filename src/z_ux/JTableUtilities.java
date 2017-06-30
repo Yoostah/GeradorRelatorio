@@ -8,16 +8,23 @@ import javax.swing.table.TableModel;
 
 public class JTableUtilities
 {
-    public static void setCellsAlignment(JTable table, int alignment)
+    public static void alinharColuna(JTable table, int alignment, int row)
     {
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(alignment);
+        DefaultTableCellRenderer alinhamento = new DefaultTableCellRenderer();
+        alinhamento.setHorizontalAlignment(alignment);
 
         TableModel tableModel = table.getModel();
 
-        for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++)
-        {
-            table.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
-        }
+        
+        table.getColumnModel().getColumn(row).setCellRenderer(alinhamento);
+        
     }
+    
+    public static void centralizarHeader(JTable table)
+    {
+        ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
+
+    }
+    
 }

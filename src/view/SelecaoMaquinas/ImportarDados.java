@@ -24,7 +24,7 @@ import org.joda.time.DateTimeComparator;
  */
 public class ImportarDados implements Runnable {
 
-    public  SelecaoMaquinas selMaq;
+    public SelecaoMaquinas selMaq;
     private Maquina i = new Maquina();
     private Date dataform = new Date();
     int progresso[] = null;
@@ -62,7 +62,6 @@ public class ImportarDados implements Runnable {
                         }
                     }
 
-                    
                     BarraDeProgresso bp = new BarraDeProgresso(pbar, progresso, selMaq);
                     Thread t2 = new Thread(bp);
                     t2.start();
@@ -72,7 +71,7 @@ public class ImportarDados implements Runnable {
             }
         } catch (Exception e) {
         }
-        
+
     }
 
     public void leitura(String dir, String maquina, String grupo, Date dataForm) throws Exception {

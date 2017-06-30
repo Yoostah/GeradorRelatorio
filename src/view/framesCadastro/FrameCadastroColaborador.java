@@ -48,7 +48,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     
     public void lerColaboradores() {
         DefaultTableModel modelo = (DefaultTableModel) jTableColaboradores.getModel();
-        JTableUtilities.setCellsAlignment(jTableColaboradores, SwingConstants.LEFT);
+        JTableUtilities.alinharColuna(jTableColaboradores, SwingConstants.CENTER, 0);
         ColaboradorDAO c = new ColaboradorDAO();
         modelo.setNumRows(0);
 
@@ -122,6 +122,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnColabADD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnColabADD.setForeground(new java.awt.Color(255, 255, 255));
         jBtnColabADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/add.png"))); // NOI18N
+        jBtnColabADD.setToolTipText("Adicionar novo Colaborador");
         jBtnColabADD.setBorder(null);
         jBtnColabADD.setBorderPainted(false);
         jBtnColabADD.setMargin(new java.awt.Insets(2, 0, 2, 0));
@@ -140,6 +141,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnColabDEL.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnColabDEL.setForeground(new java.awt.Color(255, 255, 255));
         jBtnColabDEL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar.png"))); // NOI18N
+        jBtnColabDEL.setToolTipText("Deletar Colaborador");
         jBtnColabDEL.setBorder(null);
         jBtnColabDEL.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnColabDEL.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -157,6 +159,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jBtnColabUPD.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnColabUPD.setForeground(new java.awt.Color(255, 255, 255));
         jBtnColabUPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/edit.png"))); // NOI18N
+        jBtnColabUPD.setToolTipText("Editar Colaborador");
         jBtnColabUPD.setBorder(null);
         jBtnColabUPD.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnColabUPD.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -235,9 +238,9 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         jTableColaboradores.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTableColaboradores);
         if (jTableColaboradores.getColumnModel().getColumnCount() > 0) {
-            jTableColaboradores.getColumnModel().getColumn(0).setMinWidth(100);
-            jTableColaboradores.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTableColaboradores.getColumnModel().getColumn(0).setMaxWidth(100);
+            jTableColaboradores.getColumnModel().getColumn(0).setMinWidth(50);
+            jTableColaboradores.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableColaboradores.getColumnModel().getColumn(0).setMaxWidth(50);
             jTableColaboradores.getColumnModel().getColumn(2).setMinWidth(200);
             jTableColaboradores.getColumnModel().getColumn(2).setPreferredWidth(200);
             jTableColaboradores.getColumnModel().getColumn(2).setMaxWidth(200);

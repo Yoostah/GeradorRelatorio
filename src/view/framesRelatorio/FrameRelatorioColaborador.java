@@ -101,6 +101,7 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         jBtnGerar.setFont(new java.awt.Font("Verdana", 0, 9)); // NOI18N
         jBtnGerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/gerar_relatorio.png"))); // NOI18N
         jBtnGerar.setText("GERAR");
+        jBtnGerar.setToolTipText("Gerar Relatório");
         jBtnGerar.setBorder(null);
         jBtnGerar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jBtnGerar.setIconTextGap(10);
@@ -269,6 +270,11 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                 //Passando os dados para a query e a conexao ao relatorio
                 JasperPrint p = JasperFillManager.fillReport(jasper,map, con);
                 JasperViewer view = new JasperViewer(p, false);
+                if (p.getPages().isEmpty()) {
+                    // Se o JasperViewer constructor não tiver páginas, ele irá mostrar "the document has no pages"
+                    // e e vez de abrir o jasperviewer vazio ele simplesmente não exibe e retorna.
+                    return;
+                }
                 view.setVisible(true);
                 view.toFront();
             } catch (Exception e) {

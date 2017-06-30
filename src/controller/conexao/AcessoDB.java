@@ -9,6 +9,7 @@ package controller.conexao;
  *
  * @author Thulio
  */
+import _propriedades.CarregarConfig;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,20 +19,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
-
 /**
  * @version 1.0
  * @author Thulio
  * @since 2017
  */
 public class AcessoDB {
-    
+
+    private static CarregarConfig p = new CarregarConfig();
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/relatoriodb";
-    private static final String USER = "root";
-    private static final String PASS = "";
-    
+    private static final String URL = "jdbc:mysql://" + p.getValor("host") + ":" + p.getValor("porta") + "/" + p.getValor("db");
+    private static final String USER = p.getValor("login");
+    private static final String PASS = p.getValor("senha");
+
     public static Connection getConnection() {
         try {
             Class.forName(DRIVER);
