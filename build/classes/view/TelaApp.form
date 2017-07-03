@@ -116,6 +116,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-103,0,0,3,-74"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
@@ -133,7 +134,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="ImageIcon iconBd = new ImageIcon( getClass().getResource(&quot;/_imagens/bd.png&quot;) );&#xa;jTabs.setIconAt(0, iconBd);&#xa;&#xa;ImageIcon iconRel = new ImageIcon( getClass().getResource(&quot;/_imagens/relatorio.png&quot;) );&#xa;jTabs.setIconAt(1, iconRel);&#xa;&#xa;ImageIcon iconCad = new ImageIcon( getClass().getResource(&quot;/_imagens/cadastro.png&quot;) );&#xa;jTabs.setIconAt(2, iconCad);"/>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="ImageIcon iconBd = new ImageIcon( getClass().getResource(&quot;/_imagens/bd.png&quot;) );&#xa;jTabs.setIconAt(0, iconBd);&#xa;&#xa;ImageIcon iconRel = new ImageIcon( getClass().getResource(&quot;/_imagens/relatorio.png&quot;) );&#xa;jTabs.setIconAt(1, iconRel);&#xa;&#xa;ImageIcon iconCad = new ImageIcon( getClass().getResource(&quot;/_imagens/cadastro.png&quot;) );&#xa;jTabs.setIconAt(2, iconCad);&#xa;&#xa;jTabs.addChangeListener(new ChangeListener() { //add the Listener&#xa;&#xa;        public void stateChanged(ChangeEvent e) {&#xa;            if(jTabs.getSelectedIndex() == 1){&#xa;                ColaboradorDAO c = new ColaboradorDAO();&#xa;                if (!c.listarColaboradoresSemCadastro().isEmpty()){&#xa;&#xa;                        int resp = JOptionPane.showConfirmDialog(null, &quot;&lt;html&gt;&lt;body align=center&gt;EXISTEM COLABORADORES N&#xc3;O CADASTRADOS NO SISTEMA.&lt;br&gt;&lt;br&gt;Gostaria de cadastr&#xe1;-los?&quot;, &quot;ERRO&quot;, JOptionPane.ERROR_MESSAGE,JOptionPane.YES_NO_OPTION);&#xa;                    &#xa;                        if (resp == 0){&#xa;                        for (Colaborador i : c.listarColaboradoresSemCadastro()){&#xa;                            c.createSemCadastro(i.getId());&#xa;                        }&#xa;                        relColab.mostrarBtnRelatorio();&#xa;                        relGeral.mostrarBtnRelatorio();&#xa;                        &#xa;                        JOptionPane.showMessageDialog(null, &quot;&lt;html&gt;&lt;body align=center&gt;COLABORADORES CADASTRADOS.&lt;br&gt;&lt;br&gt;Especifique o grupo dos Colaboradores inseridos na Aba CADASTRO !&quot;);&#xa;                    }else{&#xa;                        relColab.esconderBtnRelatorio();&#xa;                        relGeral.esconderBtnRelatorio();&#xa;                    }&#xa;                }&#xa;&#xa;            }else if(jTabs.getSelectedIndex() == 2){&#xa;                cadColab.lerColaboradores();&#xa;                cadGru.lerGrupos();&#xa;                cadMaq.lerMaquinas();&#xa;            }&#xa;        }&#xa;    });"/>
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -168,7 +169,7 @@
                   <Component id="jPanelTabelaBD" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCheckBoxClassificadores" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -178,7 +179,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jPanelBtnBD" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCheckBoxClassificadores" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jPanelTabelaBD" max="32767" attributes="0"/>
                   </Group>
@@ -418,7 +419,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+            <Component class="javax.swing.JCheckBox" name="jCheckBoxClassificadores">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="66" green="66" red="66" type="rgb"/>
@@ -433,7 +434,7 @@
                 <Property name="toolTipText" type="java.lang.String" value="Adiciona classificadores na tabela"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxClassificadoresActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

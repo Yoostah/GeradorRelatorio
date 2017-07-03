@@ -44,7 +44,13 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         
     }
 
+    public void esconderBtnRelatorio() {
+        jBtnGerar.setVisible(false);
+    }
     
+    public void mostrarBtnRelatorio() {
+        jBtnGerar.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -299,4 +305,6 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel textura;
     // End of variables declaration//GEN-END:variables
+
+    
 }

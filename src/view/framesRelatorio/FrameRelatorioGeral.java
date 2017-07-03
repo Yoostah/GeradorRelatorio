@@ -39,6 +39,14 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
         }
 
     }
+    
+    public void esconderBtnRelatorio() {
+        jBtnGerar.setVisible(false);
+    }
+    
+    public void mostrarBtnRelatorio() {
+        jBtnGerar.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

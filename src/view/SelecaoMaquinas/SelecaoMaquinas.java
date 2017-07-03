@@ -75,6 +75,8 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     public void concluido(){
         lblConcluido.setVisible(true);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -262,10 +264,6 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
 
             }
         }
-        //telaApp.lerBanco();
-        
-
-
     }//GEN-LAST:event_jBtnImportarActionPerformed
 
   
@@ -327,7 +325,6 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     private javax.swing.JProgressBar progresso;
     // End of variables declaration//GEN-END:variables
 
-    
    
     
 }

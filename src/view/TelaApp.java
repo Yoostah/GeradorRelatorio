@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.ColaboradorDAO;
 import view.SelecaoMaquinas.SelecaoMaquinas;
 import controller.MaquinaDAO;
 import model.Pesquisa;
@@ -20,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.Colaborador;
 import z_ux.JTableUtilities;
 import view.framesCadastro.FrameCadastroColaborador;
 import view.framesCadastro.FrameCadastroGrupo;
@@ -27,6 +29,9 @@ import view.framesCadastro.FrameCadastroMaquinas;
 import view.framesRelatorio.FrameRelatorioColaborador;
 import view.framesRelatorio.FrameRelatorioGeral;
 import view.menu.Sobre;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import view.menu.Configuracoes;
 
 /**
  *
@@ -147,7 +152,7 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelTabelaBD = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableBD = new javax.swing.JTable();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBoxClassificadores = new javax.swing.JCheckBox();
         jPanelRelatorio = new javax.swing.JPanel();
         jPanelBtnRel = new javax.swing.JPanel();
         jBtnRelGeral = new javax.swing.JButton();
@@ -333,14 +338,14 @@ public class TelaApp extends javax.swing.JFrame {
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        jCheckBox1.setBackground(new java.awt.Color(102, 102, 102));
-        jCheckBox1.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("ADICIONAR CLASSIFICADORES");
-        jCheckBox1.setToolTipText("Adiciona classificadores na tabela");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxClassificadores.setBackground(new java.awt.Color(102, 102, 102));
+        jCheckBoxClassificadores.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        jCheckBoxClassificadores.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBoxClassificadores.setText("ADICIONAR CLASSIFICADORES");
+        jCheckBoxClassificadores.setToolTipText("Adiciona classificadores na tabela");
+        jCheckBoxClassificadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                jCheckBoxClassificadoresActionPerformed(evt);
             }
         });
 
@@ -352,7 +357,7 @@ public class TelaApp extends javax.swing.JFrame {
             .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelBDLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jCheckBox1)
+                .addComponent(jCheckBoxClassificadores)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBDLayout.setVerticalGroup(
@@ -360,7 +365,7 @@ public class TelaApp extends javax.swing.JFrame {
             .addGroup(jPanelBDLayout.createSequentialGroup()
                 .addComponent(jPanelBtnBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(jCheckBoxClassificadores)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelTabelaBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -591,6 +596,37 @@ public class TelaApp extends javax.swing.JFrame {
         ImageIcon iconCad = new ImageIcon( getClass().getResource("/_imagens/cadastro.png") );
         jTabs.setIconAt(2, iconCad);
 
+        jTabs.addChangeListener(new ChangeListener() { //add the Listener
+
+            public void stateChanged(ChangeEvent e) {
+                if(jTabs.getSelectedIndex() == 1){
+                    ColaboradorDAO c = new ColaboradorDAO();
+                    if (!c.listarColaboradoresSemCadastro().isEmpty()){
+
+                        int resp = JOptionPane.showConfirmDialog(null, "<html><body align=center>EXISTEM COLABORADORES NÃO CADASTRADOS NO SISTEMA.<br><br>Gostaria de cadastrá-los?", "ERRO", JOptionPane.ERROR_MESSAGE,JOptionPane.YES_NO_OPTION);
+
+                        if (resp == 0){
+                            for (Colaborador i : c.listarColaboradoresSemCadastro()){
+                                c.createSemCadastro(i.getId());
+                            }
+                            relColab.mostrarBtnRelatorio();
+                            relGeral.mostrarBtnRelatorio();
+
+                            JOptionPane.showMessageDialog(null, "<html><body align=center>COLABORADORES CADASTRADOS.<br><br>Especifique o grupo dos Colaboradores inseridos na Aba CADASTRO !");
+                        }else{
+                            relColab.esconderBtnRelatorio();
+                            relGeral.esconderBtnRelatorio();
+                        }
+                    }
+
+                }else if(jTabs.getSelectedIndex() == 2){
+                    cadColab.lerColaboradores();
+                    cadGru.lerGrupos();
+                    cadMaq.lerMaquinas();
+                }
+            }
+        });
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -645,13 +681,13 @@ public class TelaApp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnBDApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBDApagarActionPerformed
-        String message = "DESEJA REALMENTE APAGAR O BANCO DE DADOS ? ";
+        String message = "<html><body align=center>DESEJA REALMENTE APAGAR OS REGISTROS CADASTRADOS ? ";
         String title = "CONFIRME OPERAÇÃO";
         // display the JOptionPane showConfirmDialog
         int resposta = JOptionPane.showConfirmDialog(jPanelBD, message, title, JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
-            jCheckBox1.setEnabled(true);
-            jCheckBox1.setSelected(false);
+            jCheckBoxClassificadores.setEnabled(true);
+            jCheckBoxClassificadores.setSelected(false);
             jTableBD.setRowSorter(null);
             PesquisaDAO dao = new PesquisaDAO();
             dao.truncarBD();
@@ -665,24 +701,18 @@ public class TelaApp extends javax.swing.JFrame {
         cadColab.setVisible(false);
         cadMaq.setVisible(false);
         cadGru.setVisible(true);
-        FrameCadastroGrupo g = new FrameCadastroGrupo();
-        g.lerGrupos();
     }//GEN-LAST:event_jBtnCadGrupoActionPerformed
 
     private void jBtnCadMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadMaqActionPerformed
         cadColab.setVisible(false);
         cadGru.setVisible(false);
         cadMaq.setVisible(true);
-        FrameCadastroMaquinas m = new FrameCadastroMaquinas();
-        m.lerMaquinas();
     }//GEN-LAST:event_jBtnCadMaqActionPerformed
 
     private void jBtnCadColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadColaboradorActionPerformed
         cadGru.setVisible(false);
         cadMaq.setVisible(false);
         cadColab.setVisible(true);
-        FrameCadastroColaborador f = new FrameCadastroColaborador();
-        f.lerColaboradores();
     }//GEN-LAST:event_jBtnCadColaboradorActionPerformed
 
     private void jBtnRelGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelGeralActionPerformed
@@ -693,6 +723,8 @@ public class TelaApp extends javax.swing.JFrame {
     private void jBtnRelGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelGrupoActionPerformed
         relGeral.setVisible(false);
         relColab.setVisible(true);
+        
+              
     }//GEN-LAST:event_jBtnRelGrupoActionPerformed
 
     private void jBtnBDLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBDLerActionPerformed
@@ -700,10 +732,10 @@ public class TelaApp extends javax.swing.JFrame {
         telaSelecaoMaq.setVisible(true);
     }//GEN-LAST:event_jBtnBDLerActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void jCheckBoxClassificadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxClassificadoresActionPerformed
         classificarTabela();
-        jCheckBox1.setEnabled(false);
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+        jCheckBoxClassificadores.setEnabled(false);
+    }//GEN-LAST:event_jCheckBoxClassificadoresActionPerformed
 
     private void jMenuItemSobreSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreSobreActionPerformed
         Sobre s = new Sobre();
@@ -712,7 +744,9 @@ public class TelaApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSobreSobreActionPerformed
 
     private void jMenuItemConfigBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConfigBDActionPerformed
-        // TODO add your handling code here:
+        Configuracoes c = new Configuracoes();
+        //this.add(s);
+        c.setVisible(true);
     }//GEN-LAST:event_jMenuItemConfigBDActionPerformed
 
     /**
@@ -758,7 +792,7 @@ public class TelaApp extends javax.swing.JFrame {
     private javax.swing.JButton jBtnCadMaq;
     private javax.swing.JButton jBtnRelGeral;
     private javax.swing.JButton jBtnRelGrupo;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxClassificadores;
     private javax.swing.JMenuBar jMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

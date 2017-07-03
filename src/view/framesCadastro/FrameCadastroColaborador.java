@@ -10,10 +10,18 @@ import model.Grupo;
 import controller.ColaboradorDAO;
 import controller.GrupoDAO;
 import java.awt.BorderLayout;
+import static java.awt.Event.DELETE;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import z_ux.JTableUtilities;
@@ -47,13 +55,13 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     }
     
     public void lerColaboradores() {
+        
         DefaultTableModel modelo = (DefaultTableModel) jTableColaboradores.getModel();
         JTableUtilities.alinharColuna(jTableColaboradores, SwingConstants.CENTER, 0);
         ColaboradorDAO c = new ColaboradorDAO();
         modelo.setNumRows(0);
 
         for (Colaborador i : c.listar()) {
-
             modelo.addRow(new Object[]{
                 i.getId(),
                 i.getNome(),
@@ -61,7 +69,6 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             });
 
         }
-
     }
     
     public void esconderCampos(){
@@ -245,6 +252,18 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             jTableColaboradores.getColumnModel().getColumn(2).setPreferredWidth(200);
             jTableColaboradores.getColumnModel().getColumn(2).setMaxWidth(200);
         }
+        // assume JTable is named "table"
+        int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
+        InputMap inputMap = jTableColaboradores.getInputMap(condition);
+        ActionMap actionMap = jTableColaboradores.getActionMap();
+
+        // DELETE is a String constant that for me was defined as "Delete"
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), DELETE);
+        actionMap.put(DELETE, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                jBtnColabDEL.doClick();
+            }
+        });
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 171, 574, 195));
 

@@ -1,8 +1,13 @@
 package _propriedades;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -11,14 +16,17 @@ import java.util.Properties;
 public class Configuracoes {
 
     private Properties props;
-    private String nomeDoProperties = "/_propriedades/config.properties";
+    private String nomeDoProperties = "C:/Relatórios/config.properties";
 
     protected Configuracoes() {
         props = new Properties();
-        InputStream in = this.getClass().getResourceAsStream(nomeDoProperties);
+        FileInputStream in;
         try {
+            in = new FileInputStream(nomeDoProperties);
             props.load(in);
             in.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,4 +56,35 @@ public class Configuracoes {
         return config;
     }
 
+    protected void setValor(String host, String porta, String banco, String usuario, String senha) {
+        Properties prop = new Properties();
+        OutputStream output = null;
+
+        try {
+
+            output = new FileOutputStream("C:/Relatórios/config.properties");
+
+            // set the properties value
+            prop.setProperty("sisat.host", host);
+            prop.setProperty("sisat.port", porta);
+            prop.setProperty("sisat.db", banco);
+            prop.setProperty("sisat.login", usuario);
+            prop.setProperty("sisat.password", senha);
+
+            // save properties to project root folder
+            prop.store(output, null);
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        } finally {
+            if (output != null) {
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
 }

@@ -233,7 +233,7 @@
                 <Column editable="false" title="IMPORTAR?" type="java.lang.Boolean"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="// assume JTable is named &quot;table&quot;&#xa;  int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;&#xa;  InputMap inputMap = jTableMaquinas.getInputMap(condition);&#xa;  ActionMap actionMap = jTableMaquinas.getActionMap();&#xa;&#xa;  // DELETE is a String constant that for me was defined as &quot;Delete&quot;&#xa;  inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), DELETE);&#xa;  actionMap.put(DELETE, new AbstractAction() {&#xa;     public void actionPerformed(ActionEvent e) {&#xa;        jBtnMaqDEL.doClick();&#xa;     }&#xa;  });">
               <TableColumnModel selectionModel="1">
                 <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                   <Title/>

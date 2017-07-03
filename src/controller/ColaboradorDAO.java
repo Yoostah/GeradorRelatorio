@@ -121,4 +121,53 @@ public class ColaboradorDAO {
         
         return colaboradores;
     }
+    
+    public List<Colaborador> listarColaboradoresSemCadastro(){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Colaborador> colaboradores = new ArrayList<>();
+        
+        try {
+            stmt = con.prepareStatement("SELECT DISTINCT colaborador FROM pesquisa AS p WHERE (NOT EXISTS (SELECT id FROM colaborador AS c WHERE c.id = p.colaborador));");
+            rs = stmt.executeQuery();
+            
+            
+            while (rs.next()){
+                Colaborador c = new Colaborador();
+                
+                c.setId(rs.getInt("colaborador"));
+                
+                
+                colaboradores.add(c);
+                        
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PesquisaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            AcessoDB.closeConnection(con, stmt, rs);
+        }
+        
+        return colaboradores;
+    }
+    
+    public void createSemCadastro(int id_colab){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("INSERT INTO colaborador (id,nome,grupo) VALUE (?, CONCAT('COLABORADOR',' - ',id),'SEM GRUPO')");
+            stmt.setInt(1,id_colab);
+                        
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            JOptionPane.showMessageDialog(null, "Colaborador já cadastrado.");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar!" + ex);
+        } finally{
+            AcessoDB.closeConnection(con,stmt);
+        }
+    }
 }

@@ -38,11 +38,12 @@ public class AcessoDB {
             return DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {
             //throw new RuntimeException("Erro na conexão: ", ex);
-            JOptionPane.showMessageDialog(null, "Erro de conexão com o banco de dados!");
+            JOptionPane.showMessageDialog(null, "<html><body align=center>Erro de conexão com o banco de dados!");
             System.exit(1);
             return null;
         }
     }
+    
 
     public static void closeConnection(Connection con) {
         try {

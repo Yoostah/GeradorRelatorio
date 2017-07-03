@@ -9,10 +9,18 @@ import model.Grupo;
 import model.Maquina;
 import controller.GrupoDAO;
 import controller.MaquinaDAO;
+import static java.awt.Event.DELETE;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -281,6 +289,18 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
             jTableMaquinas.getColumnModel().getColumn(4).setPreferredWidth(75);
             jTableMaquinas.getColumnModel().getColumn(4).setMaxWidth(75);
         }
+        // assume JTable is named "table"
+        int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
+        InputMap inputMap = jTableMaquinas.getInputMap(condition);
+        ActionMap actionMap = jTableMaquinas.getActionMap();
+
+        // DELETE is a String constant that for me was defined as "Delete"
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), DELETE);
+        actionMap.put(DELETE, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                jBtnMaqDEL.doClick();
+            }
+        });
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 171, 574, 195));
 

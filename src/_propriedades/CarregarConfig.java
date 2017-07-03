@@ -6,10 +6,14 @@ package _propriedades;
  */
 public class CarregarConfig {
 
-    private static Configuracoes loader = new Configuracoes();
+    private Configuracoes loader = new Configuracoes();
 
-    public static String getValor(String chave) {
+    public String getValor(String chave) {
         return (String) loader.getValor(chave);
+    }
+    
+    public void setValor(String host, String porta, String banco, String usuario, String senha) {
+        loader.setValor(host, porta, banco, usuario, senha);
     }
 
 }

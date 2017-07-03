@@ -7,7 +7,15 @@ package view.framesCadastro;
 
 import model.Grupo;
 import controller.GrupoDAO;
+import static java.awt.Event.DELETE;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import z_ux.JTableUtilities;
@@ -211,6 +219,18 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
             jTableGrupos.getColumnModel().getColumn(0).setPreferredWidth(50);
             jTableGrupos.getColumnModel().getColumn(0).setMaxWidth(50);
         }
+        // assume JTable is named "table"
+        int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
+        InputMap inputMap = jTableGrupos.getInputMap(condition);
+        ActionMap actionMap = jTableGrupos.getActionMap();
+
+        // DELETE is a String constant that for me was defined as "Delete"
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), DELETE);
+        actionMap.put(DELETE, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                jBtnGruDEL.doClick();
+            }
+        });
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 171, 574, 195));
 

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Colaborador;
 
 /**
  *
@@ -67,22 +68,6 @@ public class PesquisaDAO {
             AcessoDB.closeConnection(con,stmt);
         }
     }
-    
-    /*public void indexarBD(){
-        Connection con = AcessoDB.getConnection();
-        PreparedStatement stmt = null;
-        
-        try {
-            stmt = con.prepareStatement("ALTER TABLE pesquisa ADD INDEX(data), ADD INDEX(colaborador);");
-            
-            stmt.executeUpdate();
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Indexar!" + ex);
-        } finally{
-            AcessoDB.closeConnection(con, stmt);
-        }
-    }*/
     
     public List<Pesquisa> listar(){
         Connection con = AcessoDB.getConnection();
