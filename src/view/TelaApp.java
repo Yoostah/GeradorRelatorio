@@ -138,7 +138,6 @@ public class TelaApp extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCadastro = new javax.swing.JTable();
@@ -192,7 +191,7 @@ public class TelaApp extends javax.swing.JFrame {
         setTitle("::   SISTEMA DE CONTROLE DE SATISFAÇÃO - CORMED / WINNER   ::");
         setAutoRequestFocus(false);
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTabs.setBackground(new java.awt.Color(204, 204, 255));
         jTabs.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -627,13 +626,7 @@ public class TelaApp extends javax.swing.JFrame {
             }
         });
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 349;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        getContentPane().add(jTabs, gridBagConstraints);
+        getContentPane().add(jTabs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, -1, 639));
 
         jMenu.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 

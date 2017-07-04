@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório Geral por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="134"/>
+	<property name="ireport.y" value="124"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="style2"/>
 	<parameter name="data_inicial" class="java.lang.String">
@@ -12,7 +12,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Relatórios\\arq_test\\AppRelatorio\\Relatórios\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\SISAT-v2\\lib\\etc\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="grupo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -238,7 +238,7 @@ GROUP BY colaborador, a.textop;]]>
 			</staticText>
 			<image>
 				<reportElement x="5" y="45" width="200" height="57" uuid="81a6039f-2c84-4ad4-bad6-70abda92a076"/>
-				<imageExpression><![CDATA["C:\\Relatórios\\arq_test\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\SISAT-v2\\lib\\etc\\CORMED_200.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="48" width="216" height="20" uuid="095019a3-f1b6-4c96-9f8f-83c3f34a47e6"/>

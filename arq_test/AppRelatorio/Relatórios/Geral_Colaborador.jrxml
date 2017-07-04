@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório de Colaborador por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="81"/>
 	<style name="style1" backcolor="#C0C0C0"/>
 	<parameter name="colaborador" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -103,7 +103,7 @@ FROM (SELECT colaborador,
 			</staticText>
 			<image>
 				<reportElement x="5" y="45" width="200" height="57" uuid="b88adbfe-5e09-4463-8b87-92e0c7bad754"/>
-				<imageExpression><![CDATA["C:\\Relatórios\\arq_test\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\SISAT-v2\\lib\\etc\\CORMED_200.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="48" width="307" height="20" uuid="94e1778d-88be-42a6-8abd-8713c904d82a"/>

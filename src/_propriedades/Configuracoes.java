@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class Configuracoes {
 
     private Properties props;
-    private String nomeDoProperties = "C:/Relatórios/config.properties";
+    private String nomeDoProperties = "C:/SISAT-v2/config.properties";
 
     protected Configuracoes() {
         props = new Properties();
@@ -62,7 +62,7 @@ public class Configuracoes {
 
         try {
 
-            output = new FileOutputStream("C:/Relatórios/config.properties");
+            output = new FileOutputStream("C:/SISAT-v2/config.properties");
 
             // set the properties value
             prop.setProperty("sisat.host", host);
