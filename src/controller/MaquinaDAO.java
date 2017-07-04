@@ -178,6 +178,26 @@ public class MaquinaDAO {
             AcessoDB.closeConnection(con,stmt);
         }
     }
+    
+    public boolean importarTodos(boolean op){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE maquinas set importar = ? ");
+            stmt.setBoolean(1, op);
+           
+            
+            stmt.executeUpdate();
+            return true;
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar!" + ex);
+            return false;
+        } finally{
+            AcessoDB.closeConnection(con,stmt);
+        }
+    }
     public boolean importado(int id, boolean importado){
         Connection con = AcessoDB.getConnection();
         PreparedStatement stmt = null;

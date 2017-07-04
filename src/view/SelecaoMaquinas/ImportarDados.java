@@ -57,6 +57,8 @@ public class ImportarDados implements Runnable {
                                 progresso[0] += 1;
                                 Thread.sleep(1000);
                             } catch (Exception ex) {
+                                //selMaq.maqImportadas--;
+                                progresso[0] += 1;
                                 JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
                             }
                         }
@@ -66,6 +68,7 @@ public class ImportarDados implements Runnable {
                     Thread t2 = new Thread(bp);
                     t2.start();
                 } catch (Exception ex) {
+                    progresso[0] += 1;
                     JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
                 }
             }

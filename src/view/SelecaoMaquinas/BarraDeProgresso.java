@@ -41,7 +41,10 @@ public class BarraDeProgresso implements Runnable {
             Thread.sleep(300);
             selMaq.lerMaquinas();
             //telaApp.refreshTabela();
-            telaApp.lerBanco();
+            if (progresso[0] >= selMaq.maqImportadas - 3){
+                telaApp.lerBanco();
+            }
+    
             if (progresso[0] == selMaq.maqImportadas){
                 selMaq.concluido();
             }
