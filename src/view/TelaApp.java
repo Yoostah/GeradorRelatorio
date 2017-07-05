@@ -31,6 +31,10 @@ import view.framesRelatorio.FrameRelatorioGeral;
 import view.menu.Sobre;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import view.framesCadastro.FrameCadastroPergunta;
+import view.framesRelatorio.FrameRelatorioGeralColab;
+import view.framesRelatorio.FrameRelatorioPerguntasGrupo;
+import view.framesRelatorio.FrameRelatorioRespostasGrupo;
 import view.menu.Configuracoes;
 
 /**
@@ -43,8 +47,12 @@ public class TelaApp extends javax.swing.JFrame {
     FrameCadastroMaquinas cadMaq;
     FrameCadastroGrupo cadGru;
     FrameCadastroColaborador cadColab;
+    FrameCadastroPergunta cadPerg;
     FrameRelatorioColaborador relColab;
     FrameRelatorioGeral relGeral;
+    FrameRelatorioGeralColab relGeralColab;
+    FrameRelatorioRespostasGrupo relRespGrupo;
+    FrameRelatorioPerguntasGrupo relPergGrupo;
     public static SelecaoMaquinas telaSelecaoMaq;
 
     /**
@@ -59,6 +67,7 @@ public class TelaApp extends javax.swing.JFrame {
         cadMaq = new FrameCadastroMaquinas();
         cadGru = new FrameCadastroGrupo();
         cadColab = new FrameCadastroColaborador();
+        cadPerg = new FrameCadastroPergunta();
 
         jPainelDinamicoCad.setLayout(layout);
 
@@ -70,14 +79,19 @@ public class TelaApp extends javax.swing.JFrame {
         jPainelDinamicoCad.add(cadMaq, c);
         jPainelDinamicoCad.add(cadGru, c);
         jPainelDinamicoCad.add(cadColab, c);
+        jPainelDinamicoCad.add(cadPerg, c);
 
         cadMaq.setVisible(false);
         cadGru.setVisible(false);
         cadColab.setVisible(false);
+        cadPerg.setVisible(false);
 
         //Criação dos Paineis do Relatório
         relColab = new FrameRelatorioColaborador();
         relGeral = new FrameRelatorioGeral();
+        relGeralColab = new FrameRelatorioGeralColab();
+        relRespGrupo = new FrameRelatorioRespostasGrupo();
+        relPergGrupo = new FrameRelatorioPerguntasGrupo();
 
         jPainelDinamicoRel.setLayout(layout);
 
@@ -86,9 +100,15 @@ public class TelaApp extends javax.swing.JFrame {
 
         jPainelDinamicoRel.add(relColab, c);
         jPainelDinamicoRel.add(relGeral, c);
+        jPainelDinamicoRel.add(relGeralColab, c);
+        jPainelDinamicoRel.add(relRespGrupo, c);
+        jPainelDinamicoRel.add(relPergGrupo, c);
 
         relColab.setVisible(false);
         relGeral.setVisible(false);
+        relGeralColab.setVisible(false);
+        relRespGrupo.setVisible(false);
+        relPergGrupo.setVisible(false);
 
     }
 
@@ -158,6 +178,9 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnRelGrupo = new javax.swing.JButton();
         logoHMC1 = new javax.swing.JLabel();
         logoFSFX1 = new javax.swing.JLabel();
+        jBtnRelPergunta = new javax.swing.JButton();
+        jBtnRelGeralColab = new javax.swing.JButton();
+        jBtnRelResposta = new javax.swing.JButton();
         jPainelDinamicoRel = new javax.swing.JPanel();
         jPanelCadastro = new javax.swing.JPanel();
         jPanelBtnCad = new javax.swing.JPanel();
@@ -166,6 +189,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnCadGrupo = new javax.swing.JButton();
         logoHMC2 = new javax.swing.JLabel();
         logoFSFX2 = new javax.swing.JLabel();
+        jBtnCadPerg = new javax.swing.JButton();
         jPainelDinamicoCad = new javax.swing.JPanel();
         jMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -383,6 +407,7 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelBtnRel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelBtnRel.setPreferredSize(new java.awt.Dimension(942, 91));
 
+        jBtnRelGeral.setBackground(new java.awt.Color(204, 255, 204));
         jBtnRelGeral.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelGeral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
         jBtnRelGeral.setText("GERAL");
@@ -413,6 +438,51 @@ public class TelaApp extends javax.swing.JFrame {
 
         logoFSFX1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/fsfx.png"))); // NOI18N
 
+        jBtnRelPergunta.setBackground(new java.awt.Color(204, 204, 255));
+        jBtnRelPergunta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnRelPergunta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/Pergunta.png"))); // NOI18N
+        jBtnRelPergunta.setText("PERGUNTA");
+        jBtnRelPergunta.setToolTipText("Gerar relatório de Perguntas por Colaborador");
+        jBtnRelPergunta.setBorder(null);
+        jBtnRelPergunta.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnRelPergunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnRelPerguntaActionPerformed(evt);
+            }
+        });
+        jBtnRelPergunta.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnRelPergunta.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        jBtnRelGeralColab.setBackground(new java.awt.Color(204, 255, 204));
+        jBtnRelGeralColab.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnRelGeralColab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
+        jBtnRelGeralColab.setText("COLABORADOR");
+        jBtnRelGeralColab.setToolTipText("Gerar relatório Geral por Grupo dos Colaboradores");
+        jBtnRelGeralColab.setBorder(null);
+        jBtnRelGeralColab.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnRelGeralColab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnRelGeralColabActionPerformed(evt);
+            }
+        });
+        jBtnRelGeralColab.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnRelGeralColab.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        jBtnRelResposta.setBackground(new java.awt.Color(204, 204, 255));
+        jBtnRelResposta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnRelResposta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/Resposta.png"))); // NOI18N
+        jBtnRelResposta.setText("RESPOSTA");
+        jBtnRelResposta.setToolTipText("Gerar relatório de Perguntas por Colaborador");
+        jBtnRelResposta.setBorder(null);
+        jBtnRelResposta.setMargin(new java.awt.Insets(2, 1, 2, 1));
+        jBtnRelResposta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnRelRespostaActionPerformed(evt);
+            }
+        });
+        jBtnRelResposta.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnRelResposta.setHorizontalTextPosition(SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanelBtnRelLayout = new javax.swing.GroupLayout(jPanelBtnRel);
         jPanelBtnRel.setLayout(jPanelBtnRelLayout);
         jPanelBtnRelLayout.setHorizontalGroup(
@@ -421,8 +491,14 @@ public class TelaApp extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jBtnRelGeralColab, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 476, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jBtnRelPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBtnRelResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(logoHMC1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(logoFSFX1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -439,7 +515,10 @@ public class TelaApp extends javax.swing.JFrame {
                         .addComponent(logoHMC1))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelBtnRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBtnRelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnRelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnRelPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnRelGeralColab, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnRelResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -449,7 +528,7 @@ public class TelaApp extends javax.swing.JFrame {
         jPainelDinamicoRel.setLayout(jPainelDinamicoRelLayout);
         jPainelDinamicoRelLayout.setHorizontalGroup(
             jPainelDinamicoRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 945, Short.MAX_VALUE)
         );
         jPainelDinamicoRelLayout.setVerticalGroup(
             jPainelDinamicoRelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,6 +602,18 @@ public class TelaApp extends javax.swing.JFrame {
 
         logoFSFX2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/fsfx.png"))); // NOI18N
 
+        jBtnCadPerg.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jBtnCadPerg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/Pergunta.png"))); // NOI18N
+        jBtnCadPerg.setText("PERGUNTA");
+        jBtnCadPerg.setToolTipText("Cadastrar Máquina");
+        jBtnCadPerg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCadPergActionPerformed(evt);
+            }
+        });
+        jBtnCadPerg.setVerticalTextPosition(SwingConstants.BOTTOM);
+        jBtnCadPerg.setHorizontalTextPosition(SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanelBtnCadLayout = new javax.swing.GroupLayout(jPanelBtnCad);
         jPanelBtnCad.setLayout(jPanelBtnCadLayout);
         jPanelBtnCadLayout.setHorizontalGroup(
@@ -534,6 +625,8 @@ public class TelaApp extends javax.swing.JFrame {
                 .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBtnCadPerg, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(logoHMC2, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -552,7 +645,8 @@ public class TelaApp extends javax.swing.JFrame {
                     .addGroup(jPanelBtnCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBtnCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBtnCadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnCadMaq, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnCadPerg, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -610,18 +704,26 @@ public class TelaApp extends javax.swing.JFrame {
                             }
                             relColab.mostrarBtnRelatorio();
                             relGeral.mostrarBtnRelatorio();
+                            relGeralColab.mostrarBtnRelatorio();
+                            relPergGrupo.mostrarBtnRelatorio();
+                            relRespGrupo.mostrarBtnRelatorio();
 
                             JOptionPane.showMessageDialog(null, "<html><body align=center>COLABORADORES CADASTRADOS.<br><br>Especifique o grupo dos Colaboradores inseridos na Aba CADASTRO !");
                         }else{
                             relColab.esconderBtnRelatorio();
                             relGeral.esconderBtnRelatorio();
+                            relGeralColab.esconderBtnRelatorio();
+                            relPergGrupo.esconderBtnRelatorio();
+                            relRespGrupo.esconderBtnRelatorio();
                         }
                     }
 
                 }else if(jTabs.getSelectedIndex() == 2){
                     cadColab.lerColaboradores();
                     cadGru.lerGrupos();
+                    cadPerg.lerPerguntas();
                     cadMaq.lerMaquinas();
+
                 }
             }
         });
@@ -692,32 +794,39 @@ public class TelaApp extends javax.swing.JFrame {
 
     private void jBtnCadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadGrupoActionPerformed
         cadColab.setVisible(false);
+        cadPerg.setVisible(false);
         cadMaq.setVisible(false);
         cadGru.setVisible(true);
     }//GEN-LAST:event_jBtnCadGrupoActionPerformed
 
     private void jBtnCadMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadMaqActionPerformed
         cadColab.setVisible(false);
+        cadPerg.setVisible(false);
         cadGru.setVisible(false);
         cadMaq.setVisible(true);
     }//GEN-LAST:event_jBtnCadMaqActionPerformed
 
     private void jBtnCadColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadColaboradorActionPerformed
         cadGru.setVisible(false);
+        cadPerg.setVisible(false);
         cadMaq.setVisible(false);
         cadColab.setVisible(true);
     }//GEN-LAST:event_jBtnCadColaboradorActionPerformed
 
     private void jBtnRelGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelGeralActionPerformed
         relColab.setVisible(false);
+        relPergGrupo.setVisible(false);
+        relRespGrupo.setVisible(false);
+        relGeralColab.setVisible(false);
         relGeral.setVisible(true);
     }//GEN-LAST:event_jBtnRelGeralActionPerformed
 
     private void jBtnRelGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelGrupoActionPerformed
         relGeral.setVisible(false);
+        relPergGrupo.setVisible(false);
+        relRespGrupo.setVisible(false);
+        relGeralColab.setVisible(false);
         relColab.setVisible(true);
-        
-              
     }//GEN-LAST:event_jBtnRelGrupoActionPerformed
 
     private void jBtnBDLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBDLerActionPerformed
@@ -741,6 +850,37 @@ public class TelaApp extends javax.swing.JFrame {
         //this.add(s);
         c.setVisible(true);
     }//GEN-LAST:event_jMenuItemConfigBDActionPerformed
+
+    private void jBtnRelPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelPerguntaActionPerformed
+        relGeral.setVisible(false);
+        relRespGrupo.setVisible(false);
+        relColab.setVisible(false);
+        relGeralColab.setVisible(false);
+        relPergGrupo.setVisible(true);
+    }//GEN-LAST:event_jBtnRelPerguntaActionPerformed
+
+    private void jBtnRelGeralColabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelGeralColabActionPerformed
+        relGeral.setVisible(false);
+        relRespGrupo.setVisible(false);
+        relPergGrupo.setVisible(false);
+        relColab.setVisible(false);
+        relGeralColab.setVisible(true);
+    }//GEN-LAST:event_jBtnRelGeralColabActionPerformed
+
+    private void jBtnRelRespostaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelRespostaActionPerformed
+        relGeral.setVisible(false);
+        relPergGrupo.setVisible(false);
+        relColab.setVisible(false);
+        relGeralColab.setVisible(false);
+        relRespGrupo.setVisible(true);
+    }//GEN-LAST:event_jBtnRelRespostaActionPerformed
+
+    private void jBtnCadPergActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadPergActionPerformed
+        cadColab.setVisible(false);
+        cadGru.setVisible(false);
+        cadMaq.setVisible(false);
+        cadPerg.setVisible(true);
+    }//GEN-LAST:event_jBtnCadPergActionPerformed
 
     /**
      * @param args the command line arguments
@@ -783,8 +923,12 @@ public class TelaApp extends javax.swing.JFrame {
     private javax.swing.JButton jBtnCadColaborador;
     private javax.swing.JButton jBtnCadGrupo;
     private javax.swing.JButton jBtnCadMaq;
+    private javax.swing.JButton jBtnCadPerg;
     private javax.swing.JButton jBtnRelGeral;
+    private javax.swing.JButton jBtnRelGeralColab;
     private javax.swing.JButton jBtnRelGrupo;
+    private javax.swing.JButton jBtnRelPergunta;
+    private javax.swing.JButton jBtnRelResposta;
     private javax.swing.JCheckBox jCheckBoxClassificadores;
     private javax.swing.JMenuBar jMenu;
     private javax.swing.JMenu jMenu1;

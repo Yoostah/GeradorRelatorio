@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório Geral por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="124"/>
+	<property name="ireport.y" value="0"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="style2"/>
 	<parameter name="data_inicial" class="java.lang.String">
@@ -241,11 +241,11 @@ GROUP BY colaborador, a.textop;]]>
 				<imageExpression><![CDATA["C:\\SISAT-v2\\lib\\etc\\CORMED_200.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="217" y="48" width="216" height="20" uuid="095019a3-f1b6-4c96-9f8f-83c3f34a47e6"/>
+				<reportElement x="217" y="48" width="334" height="20" uuid="095019a3-f1b6-4c96-9f8f-83c3f34a47e6"/>
 				<textElement verticalAlignment="Middle">
 					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO GERAL POR GRUPO]]></text>
+				<text><![CDATA[RELATÓRIO GERAL POR COLABORADOR]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="217" y="72" width="63" height="20" uuid="da6bc1bc-24cf-4e5e-9cce-a2abc538f827"/>
@@ -294,7 +294,7 @@ GROUP BY colaborador, a.textop;]]>
 				<reportElement x="0" y="158" width="548" height="1" uuid="77292fd6-dd6f-4faf-920f-23a7ae453003"/>
 			</line>
 			<textField>
-				<reportElement x="257" y="85" width="100" height="21" uuid="a276c765-b0b7-4e53-979b-2b617f048482"/>
+				<reportElement x="257" y="85" width="298" height="21" uuid="a276c765-b0b7-4e53-979b-2b617f048482"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>

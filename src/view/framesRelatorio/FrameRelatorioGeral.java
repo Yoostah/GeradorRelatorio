@@ -93,7 +93,7 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 25)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("RELATÓRIO GERAL");
+        jLabel1.setText("RELATÓRIO GERAL POR GRUPO");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel1.setOpaque(true);
 
@@ -137,11 +137,6 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
 
         jCGrupo.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jCGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "( Escolha um Grupo )" }));
-        jCGrupo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCGrupoActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel5.setText("DATA:");
@@ -229,7 +224,7 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                 map.put("grupo", jCGrupo.getSelectedItem().toString());
 
                 //Carregando o Relatório
-                InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Geral.jasper");
+                InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Geral_Setor.jasper");
 
                 //Passando os dados para a query e a conexao ao relatorio
                 JasperPrint p = JasperFillManager.fillReport(jasper, map, con);
@@ -246,10 +241,6 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed
-
-    private void jCGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCGrupoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCGrupoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
