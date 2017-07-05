@@ -34,18 +34,10 @@ public class FrameRelatorioPerguntasGrupo extends javax.swing.JPanel {
         initComponents();
 
         //Colocar os Grupos Cadastrados no banco no JCBox
-        GrupoDAO g = new GrupoDAO();
-
-        for (Grupo i : g.listar()) {
-            jCGrupo.addItem(i.getNome());
-        }
+        atualizarJCBGrupo();
         
         //Colocar as Perguntas Cadastradas no banco no JCBox
-        PerguntaDAO p = new PerguntaDAO();
-
-        for (Pergunta i : p.listar()) {
-            jCPergunta.addItem(i.getId()+"- "+i.getPergunta());
-        }
+        atualizarJCBPergunta();
 
     }
     
@@ -57,6 +49,25 @@ public class FrameRelatorioPerguntasGrupo extends javax.swing.JPanel {
         jBtnGerar.setVisible(true);
     }
 
+    public void atualizarJCBPergunta(){
+        //Colocar as Perguntas Cadastradas no banco no JCBox
+        PerguntaDAO p = new PerguntaDAO();
+        jCPergunta.removeAllItems();
+        jCPergunta.addItem("( Escolha uma Pergunta )");
+        for (Pergunta i : p.listar()) {
+            jCPergunta.addItem(i.getId()+"- "+i.getPergunta());
+        }
+    }    
+    
+    public void atualizarJCBGrupo(){
+        //Colocar os Grupos Cadastrados no banco no JCBox
+        GrupoDAO g = new GrupoDAO();
+        jCGrupo.removeAllItems();
+        jCGrupo.addItem("( Escolha um Grupo )");
+        for (Grupo i : g.listar()) {
+            jCGrupo.addItem(i.getNome());
+        }
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,6 +243,8 @@ public class FrameRelatorioPerguntasGrupo extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Preencha corretamente os campos Data Inicial e Data Final!");
 
         } else {
+            jBtnGerar.setText("GERANDO");
+            jBtnGerar.setEnabled(false);
             Connection con = AcessoDB.getConnection();
 
             try {
@@ -255,10 +268,14 @@ public class FrameRelatorioPerguntasGrupo extends javax.swing.JPanel {
                 if (p.getPages().isEmpty()) {
                     // Se o JasperViewer constructor não tiver páginas, ele irá mostrar "the document has no pages"
                     // e e vez de abrir o jasperviewer vazio ele simplesmente não exibe e retorna.
+                    jBtnGerar.setText("GERAR");
+                    jBtnGerar.setEnabled(true);
                     return;
                 }
                 view.setVisible(true);
                 view.toFront();
+                jBtnGerar.setText("GERAR");
+                jBtnGerar.setEnabled(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( " + e + " )");
             }

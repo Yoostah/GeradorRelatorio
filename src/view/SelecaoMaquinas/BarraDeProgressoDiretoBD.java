@@ -5,24 +5,21 @@
  */
 package view.SelecaoMaquinas;
 
-import controller.PesquisaDAO;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import static view.SelecaoMaquinas.SelecaoMaquinas.telaApp;
-import view.TelaApp;
 
 /**
  *
  * @author Thulio
  */
-public class BarraDeProgresso implements Runnable {
+public class BarraDeProgressoDiretoBD implements Runnable {
 
     public SelecaoMaquinas selMaq;
     public JProgressBar jProgressBar1;
     public int progresso[];
-    public TelaApp tela = new TelaApp();
 
-    public BarraDeProgresso(JProgressBar barra, int progresso[], SelecaoMaquinas parent) {
+    public BarraDeProgressoDiretoBD(JProgressBar barra, int progresso[], SelecaoMaquinas parent) {
         this.jProgressBar1 = barra;
         this.progresso = progresso;
         this.selMaq = parent;
@@ -35,19 +32,21 @@ public class BarraDeProgresso implements Runnable {
                 try {
                     Thread.sleep(100);
                     jProgressBar1.setValue(progresso[0]);
-                    selMaq.lerMaquinas();
 
-                } catch (Exception e) {
+                } catch (InterruptedException e) {
                 }
             }
         });
         try {
-            
-            if (progresso[0] == selMaq.maqImportadas ){
+            Thread.sleep(300);
+            selMaq.lerMaquinas();
+            //telaApp.refreshTabela();
+            if (progresso[0] >= selMaq.maqImportadas - 3){
+                telaApp.lerBanco();
+            }
+    
+            if (progresso[0] == selMaq.maqImportadas){
                 selMaq.concluido();
-                selMaq.finalizado();
-                Confirmacao conf = new Confirmacao(telaApp, true);
-                conf.setVisible(true);
             }
 
         } catch (Exception e) {

@@ -3,6 +3,7 @@ package view.SelecaoMaquinas;
 import model.Maquina;
 import controller.MaquinaDAO;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,9 +74,19 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     }
 
     public void concluido() {
+        lblConcluido.setText("CONCLUÍDO");
         lblConcluido.setVisible(true);
     }
 
+    public void finalizado() {
+        jBtnImportar.setEnabled(true);
+        jBtnImportar.setText("IMPORTAR");
+    }
+    
+    public void completarBarra() {
+        progresso.setMaximum(1);
+        progresso.setValue(1);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -237,9 +248,6 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImportarActionPerformed
-        jBtnImportar.setText("IMPORTANDO");
-        jBtnImportar.setEnabled(false);
-
         MaquinaDAO m = new MaquinaDAO();
 
         int progImportacao[] = {0};
@@ -272,8 +280,11 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                 Object[] options = {"Sim", "Não"};
                 int resposta = JOptionPane.showOptionDialog(null, "Deseja importar as " + maqImportadas + " máquinas selecionadas?", "Importação", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-                if (resposta == 0) {
-                    lblConcluido.setVisible(false);
+                if (resposta == 0 && maqImportadas > 0) {
+                    jBtnImportar.setText("IMPORTANDO");
+                    jBtnImportar.setEnabled(false);
+                    lblConcluido.setText("IMPORTANDO...");
+                    lblConcluido.setVisible(true);
 
                     progresso.setMaximum(maqImportadas);
                     progresso.setValue(0);
@@ -286,8 +297,8 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                         t1.start();
 
                     }
-                    jBtnImportar.setEnabled(true);
-                    jBtnImportar.setText("IMPORTAR");
+//                    jBtnImportar.setEnabled(true);
+//                    jBtnImportar.setText("IMPORTAR");
                 } else {
                     lblConcluido.setVisible(false);
                     progresso.setVisible(false);

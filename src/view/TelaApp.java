@@ -407,7 +407,7 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelBtnRel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelBtnRel.setPreferredSize(new java.awt.Dimension(942, 91));
 
-        jBtnRelGeral.setBackground(new java.awt.Color(204, 255, 204));
+        jBtnRelGeral.setBackground(new java.awt.Color(153, 255, 153));
         jBtnRelGeral.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelGeral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
         jBtnRelGeral.setText("GERAL");
@@ -420,6 +420,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnRelGeral.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnRelGeral.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        jBtnRelGrupo.setBackground(new java.awt.Color(255, 204, 102));
         jBtnRelGrupo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user.png"))); // NOI18N
         jBtnRelGrupo.setText("COLABORADOR");
@@ -438,11 +439,11 @@ public class TelaApp extends javax.swing.JFrame {
 
         logoFSFX1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/fsfx.png"))); // NOI18N
 
-        jBtnRelPergunta.setBackground(new java.awt.Color(204, 204, 255));
+        jBtnRelPergunta.setBackground(new java.awt.Color(102, 204, 255));
         jBtnRelPergunta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelPergunta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/Pergunta.png"))); // NOI18N
         jBtnRelPergunta.setText("PERGUNTA");
-        jBtnRelPergunta.setToolTipText("Gerar relatório de Perguntas por Colaborador");
+        jBtnRelPergunta.setToolTipText("Gerar relatório de Perguntas por Grupo");
         jBtnRelPergunta.setBorder(null);
         jBtnRelPergunta.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnRelPergunta.addActionListener(new java.awt.event.ActionListener() {
@@ -453,7 +454,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnRelPergunta.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnRelPergunta.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnRelGeralColab.setBackground(new java.awt.Color(204, 255, 204));
+        jBtnRelGeralColab.setBackground(new java.awt.Color(153, 255, 153));
         jBtnRelGeralColab.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelGeralColab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
         jBtnRelGeralColab.setText("COLABORADOR");
@@ -468,11 +469,11 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnRelGeralColab.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnRelGeralColab.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        jBtnRelResposta.setBackground(new java.awt.Color(204, 204, 255));
+        jBtnRelResposta.setBackground(new java.awt.Color(102, 204, 255));
         jBtnRelResposta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnRelResposta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/Resposta.png"))); // NOI18N
         jBtnRelResposta.setText("RESPOSTA");
-        jBtnRelResposta.setToolTipText("Gerar relatório de Perguntas por Colaborador");
+        jBtnRelResposta.setToolTipText("Gerar relatório de Respostas por Grupo");
         jBtnRelResposta.setBorder(null);
         jBtnRelResposta.setMargin(new java.awt.Insets(2, 1, 2, 1));
         jBtnRelResposta.addActionListener(new java.awt.event.ActionListener() {
@@ -693,6 +694,15 @@ public class TelaApp extends javax.swing.JFrame {
 
             public void stateChanged(ChangeEvent e) {
                 if(jTabs.getSelectedIndex() == 1){
+                    //Atualizar os JCBOX caso tenho sido feita alguma alteração
+                    relPergGrupo.atualizarJCBGrupo();
+                    relPergGrupo.atualizarJCBPergunta();
+                    relColab.atualizarJCBGrupo();
+                    relColab.atualizarJCBColaboradorGrupo();
+                    relGeral.atualizarJCBGrupo();
+                    relGeralColab.atualizarJCBGrupo();
+                    relRespGrupo.atualizarJCBGrupo();
+
                     ColaboradorDAO c = new ColaboradorDAO();
                     if (!c.listarColaboradoresSemCadastro().isEmpty()){
 
@@ -702,6 +712,7 @@ public class TelaApp extends javax.swing.JFrame {
                             for (Colaborador i : c.listarColaboradoresSemCadastro()){
                                 c.createSemCadastro(i.getId());
                             }
+
                             relColab.mostrarBtnRelatorio();
                             relGeral.mostrarBtnRelatorio();
                             relGeralColab.mostrarBtnRelatorio();
@@ -781,6 +792,12 @@ public class TelaApp extends javax.swing.JFrame {
         // display the JOptionPane showConfirmDialog
         int resposta = JOptionPane.showConfirmDialog(jPanelBD, message, title, JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
+            
+            //Apagar o arquivo com os registros;
+            File dir = new File("C:\\SISAT-v2");
+            File arq = new File(dir, "log.txt");
+            arq.delete();
+            
             jCheckBoxClassificadores.setEnabled(true);
             jCheckBoxClassificadores.setSelected(false);
             jTableBD.setRowSorter(null);

@@ -31,12 +31,7 @@ public class FrameRelatorioGeralColab extends javax.swing.JPanel {
     public FrameRelatorioGeralColab() {
         initComponents();
 
-        //Colocar os Grupos Cadastrados no banco no JCBox
-        GrupoDAO g = new GrupoDAO();
-
-        for (Grupo i : g.listar()) {
-            jCGrupo.addItem(i.getNome());
-        }
+        atualizarJCBGrupo();
 
     }
     
@@ -46,6 +41,16 @@ public class FrameRelatorioGeralColab extends javax.swing.JPanel {
     
     public void mostrarBtnRelatorio() {
         jBtnGerar.setVisible(true);
+    }
+    
+    public void atualizarJCBGrupo(){
+        //Colocar os Grupos Cadastrados no banco no JCBox
+        GrupoDAO g = new GrupoDAO();
+        jCGrupo.removeAllItems();
+        jCGrupo.addItem("( Escolha um Grupo )");
+        for (Grupo i : g.listar()) {
+            jCGrupo.addItem(i.getNome());
+        }
     }
 
     /**
@@ -211,6 +216,8 @@ public class FrameRelatorioGeralColab extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Preencha corretamente os campos Data Inicial e Data Final!");
 
         } else {
+            jBtnGerar.setText("GERANDO");
+            jBtnGerar.setEnabled(false);
             Connection con = AcessoDB.getConnection();
 
             try {
@@ -232,10 +239,14 @@ public class FrameRelatorioGeralColab extends javax.swing.JPanel {
                 if (p.getPages().isEmpty()) {
                     // Se o JasperViewer constructor não tiver páginas, ele irá mostrar "the document has no pages"
                     // e e vez de abrir o jasperviewer vazio ele simplesmente não exibe e retorna.
+                    jBtnGerar.setText("GERAR");
+                    jBtnGerar.setEnabled(true);
                     return;
                 }
                 view.setVisible(true);
                 view.toFront();
+                jBtnGerar.setText("GERAR");
+                jBtnGerar.setEnabled(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( " + e + " )");
             }

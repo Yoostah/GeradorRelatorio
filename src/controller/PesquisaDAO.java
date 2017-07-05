@@ -105,5 +105,17 @@ public class PesquisaDAO {
         return pesquisa;
     }
     
+    public void inserirDadosporArquivo(){
+        Connection con = AcessoDB.getConnection();
+        PreparedStatement stmt = null;
+        
+            try {
+                stmt = con.prepareStatement("LOAD DATA LOCAL INFILE 'C:/SISAT-v2/log.txt' INTO TABLE pesquisa LINES TERMINATED BY '\\r\\n'");
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(PesquisaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        ;
+    }
     
 }

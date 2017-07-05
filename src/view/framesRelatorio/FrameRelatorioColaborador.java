@@ -21,36 +21,67 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
-
 /**
  *
  * @author Thulio
  */
 public class FrameRelatorioColaborador extends javax.swing.JPanel {
-    
-        
+
     /**
      * Creates new form FrameCadastroGrupo
      */
     public FrameRelatorioColaborador() {
         initComponents();
-        
-        //Colocar os Grupos Cadastrados no banco no JCBox
-        GrupoDAO g = new GrupoDAO();
-        
-        for (Grupo i : g.listar()) {
-            jCGrupo.addItem(i.getNome());
-        }
-        
+
+        atualizarJCBGrupo();
+        atualizarJCBColaboradorGrupo();
+
     }
 
     public void esconderBtnRelatorio() {
         jBtnGerar.setVisible(false);
     }
-    
+
     public void mostrarBtnRelatorio() {
         jBtnGerar.setVisible(true);
     }
+
+    public void atualizarJCBGrupo() {
+        //Colocar os Grupos Cadastrados no banco no JCBox
+        GrupoDAO g = new GrupoDAO();
+        jCGrupo.removeAllItems();
+        jCGrupo.addItem("( Escolha um Grupo )");
+        for (Grupo i : g.listar()) {
+            jCGrupo.addItem(i.getNome());
+        }
+    }
+
+//    public void atualizarJCBColaborador() {
+//        //Colocar os Grupos Cadastrados no banco no JCBox
+//        ColaboradorDAO c = new ColaboradorDAO();
+//        jCColaborador.removeAllItems();
+//        jCColaborador.addItem("( Escolha um Colaborador )");
+//        for (Colaborador i : c.listar()) {
+//            jCColaborador.addItem(i.getNome());
+//        }
+//    }
+
+    public void atualizarJCBColaboradorGrupo() {
+        if (jCGrupo.getSelectedIndex() == -1) {
+            jCColaborador.setSelectedIndex(0);
+        } else {
+            //Colocar os Colaboradores Cadastrados no banco no JCBox
+            ColaboradorDAO c = new ColaboradorDAO();
+            jCColaborador.removeAllItems();
+            jCColaborador.addItem("( Escolha um Colaborador )");
+            for (Colaborador i : c.listar()) {
+                if (i.getGrupo().equals(jCGrupo.getSelectedItem().toString())) {
+                    jCColaborador.addItem(i.getId() + " - " + i.getNome());
+                }
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -223,31 +254,22 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCGrupoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCGrupoItemStateChanged
-        //Colocar os Colaboradores Cadastrados no banco no JCBox
-        ColaboradorDAO c = new ColaboradorDAO();
-        jCColaborador.removeAllItems();
-        jCColaborador.addItem("( Escolha um Colaborador )");
-        for (Colaborador i : c.listar()) {
-            if (i.getGrupo().equals(jCGrupo.getSelectedItem().toString())){
-                jCColaborador.addItem(i.getId()+" - "+i.getNome());
-            }
-        }
-    }//GEN-LAST:event_jCGrupoItemStateChanged
-
     private void jBtnGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGerarActionPerformed
-        if (jCGrupo.getSelectedIndex() == 0){
+        
+        if (jCGrupo.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Selecione um Grupo!");
-        
-        }else if(jCColaborador.getSelectedIndex() == 0){
+
+        } else if (jCColaborador.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Selecione um Colaborador!");
-        
-        }else if (jDateInicial.getDate() == null || jDateFinal.getDate() == null){
+
+        } else if (jDateInicial.getDate() == null || jDateFinal.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Preencha corretamente os campos Data Inicial e Data Final!");
-        
-        }else{
+
+        } else {
+            jBtnGerar.setText("GERANDO");
+            jBtnGerar.setEnabled(false);
             Connection con = AcessoDB.getConnection();
-            
+
             try {
                 String data_inicial = new SimpleDateFormat("dd/MM/yyyy").format(jDateInicial.getDate());
                 String data_final = new SimpleDateFormat("dd/MM/yyyy").format(jDateFinal.getDate());
@@ -255,29 +277,41 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
 
                 //Map com os parametro da query
                 Map map = new HashMap();
-                map.put("colaborador",Integer.parseInt(colaborador[0]));
-                map.put("data_inicial",data_inicial);
-                map.put("data_final",data_final);
-                map.put("grupo",jCGrupo.getSelectedItem().toString());
+                map.put("colaborador", Integer.parseInt(colaborador[0]));
+                map.put("data_inicial", data_inicial);
+                map.put("data_final", data_final);
+                map.put("grupo", jCGrupo.getSelectedItem().toString());
 
                 //Carregando o Relatório
                 InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Geral_Colaborador.jasper");
 
                 //Passando os dados para a query e a conexao ao relatorio
-                JasperPrint p = JasperFillManager.fillReport(jasper,map, con);
+                JasperPrint p = JasperFillManager.fillReport(jasper, map, con);
                 JasperViewer view = new JasperViewer(p, false);
                 if (p.getPages().isEmpty()) {
                     // Se o JasperViewer constructor não tiver páginas, ele irá mostrar "the document has no pages"
                     // e e vez de abrir o jasperviewer vazio ele simplesmente não exibe e retorna.
+                    jBtnGerar.setText("GERAR");
+                    jBtnGerar.setEnabled(true);
                     return;
                 }
                 view.setVisible(true);
                 view.toFront();
+                jBtnGerar.setText("GERAR");
+                jBtnGerar.setEnabled(true);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( "+e+" )");
+                JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( " + e + " )");
             }
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed
+
+    private void jCGrupoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCGrupoItemStateChanged
+        if (jCGrupo.getSelectedIndex() == -1) {
+            jCColaborador.setSelectedIndex(0);
+        } else {
+            atualizarJCBColaboradorGrupo();
+        }
+    }//GEN-LAST:event_jCGrupoItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -296,5 +330,4 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
     private javax.swing.JLabel textura;
     // End of variables declaration//GEN-END:variables
 
-    
 }
