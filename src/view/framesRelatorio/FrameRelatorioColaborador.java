@@ -280,7 +280,9 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                 map.put("colaborador", Integer.parseInt(colaborador[0]));
                 map.put("data_inicial", data_inicial);
                 map.put("data_final", data_final);
+                map.put("imagem", "_imagens/CORMED_200.png");
                 map.put("grupo", jCGrupo.getSelectedItem().toString());
+                
 
                 //Carregando o Relatório
                 InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Geral_Colaborador.jasper");
@@ -301,6 +303,8 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                 jBtnGerar.setEnabled(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( " + e + " )");
+                jBtnGerar.setText("GERAR");
+                jBtnGerar.setEnabled(true);
             }
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed

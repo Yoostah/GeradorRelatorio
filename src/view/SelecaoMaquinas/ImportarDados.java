@@ -94,7 +94,7 @@ public class ImportarDados implements Runnable {
             if (!linha.isEmpty() && linha.length() >= 39) {
                 //Divisão da linha da pesquisa por parametros
                 String[] dados = linha.split(";");
-/*
+
                 //Formatação da data
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 //" If you have a pattern and create a date object that strictly matches your pattern, set lenient to false"
@@ -103,22 +103,22 @@ public class ImportarDados implements Runnable {
                 //Pega a data inicial escolhida pelo usuário;
                 Date data_inicial = dataForm;
 
-                Date data = sdf.parse(dados[2] + " " + dados[3]);
+                Date datas = sdf.parse(dados[2] + " " + dados[3]);
 
                 //Se a data do registro for maior que a data informada no jCalendar fazer a inclusão do objeto no banco
-                if (DateTimeComparator.getDateOnlyInstance().compare(data_inicial, data) <= 0) {
+                if (DateTimeComparator.getDateOnlyInstance().compare(data_inicial, datas) <= 0) {
                     //Criação do objeto para guardar os dados no BD (String pesquisa, Date data, int pergunta, int resposta, int colaborador)
-                    Pesquisa p = new Pesquisa(dados[1], data, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()), maquina, grupo, Integer.parseInt(dados[4]));
-                    banco.create(p);
+                    //Pesquisa p = new Pesquisa(dados[1], datas, Integer.parseInt(dados[4]), Integer.parseInt(dados[5]), Integer.parseInt(dados[6].trim()), maquina, grupo, Integer.parseInt(dados[4]));
+                    //banco.create(p);
 
-                }*/
-                String[] d = dados[2].split("/");
-                
-                String data = (d[2]+"/"+d[1]+"/"+d[0]);
-                
-                linha = ""+"\t"+dados[1] +"\t"+ data +"\t"+ Integer.parseInt(dados[4]) +"\t"+ Integer.parseInt(dados[5]) +"\t"+grupo+"\t"+ Integer.parseInt(dados[6].trim()) +"\t"+ maquina +"\t"+ Integer.parseInt(dados[4]);
-                conteudo = new StringBuilder(conteudo).append(linha.concat("\n")).toString();
-                escrever(linha);
+                    String[] d = dados[2].split("/");
+
+                    String data = (d[2]+"/"+d[1]+"/"+d[0]);
+
+                    linha = ""+"\t"+dados[1] +"\t"+ data +"\t"+ Integer.parseInt(dados[4]) +"\t"+ Integer.parseInt(dados[5]) +"\t"+grupo+"\t"+ Integer.parseInt(dados[6].trim()) +"\t"+ maquina +"\t"+ Integer.parseInt(dados[4]);
+                    conteudo = new StringBuilder(conteudo).append(linha.concat("\n")).toString();
+                    escrever(linha);
+                }
             }
         }
         br.close();

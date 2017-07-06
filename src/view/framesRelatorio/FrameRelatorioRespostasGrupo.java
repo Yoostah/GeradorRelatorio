@@ -229,6 +229,7 @@ public class FrameRelatorioRespostasGrupo extends javax.swing.JPanel {
                 map.put("data_inicial", data_inicial);
                 map.put("data_final", data_final);
                 map.put("grupo", jCGrupo.getSelectedItem().toString());
+                map.put("imagem", "_imagens/CORMED_200.png");
 
                 //Carregando o Relatório
                 InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Respostas_Setor.jasper");
@@ -249,6 +250,8 @@ public class FrameRelatorioRespostasGrupo extends javax.swing.JPanel {
                 jBtnGerar.setEnabled(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao gerar Relatório ( " + e + " )");
+                jBtnGerar.setText("GERAR");
+                jBtnGerar.setEnabled(true);
             }
         }
     }//GEN-LAST:event_jBtnGerarActionPerformed

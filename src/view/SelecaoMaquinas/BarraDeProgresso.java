@@ -6,6 +6,8 @@
 package view.SelecaoMaquinas;
 
 import controller.PesquisaDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import static view.SelecaoMaquinas.SelecaoMaquinas.telaApp;
@@ -43,11 +45,15 @@ public class BarraDeProgresso implements Runnable {
         });
 
         if (progresso[0] == selMaq.maqImportadas) {
-            
-            selMaq.concluido();
-            selMaq.finalizado();
-            Confirmacao conf = Confirmacao.getInstance(selMaq);
-            conf.setVisible(true);
+            try {
+                Thread.sleep(3000);
+                selMaq.concluido();
+                selMaq.finalizado();
+                Confirmacao conf = Confirmacao.getInstance(selMaq);
+                conf.setVisible(true);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BarraDeProgresso.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

@@ -16,6 +16,9 @@
 	<parameter name="grupo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="imagem" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT CONCAT('[ ',c.id,' ] - ',c.nome),
        CONCAT(a.textop,'- ',b.pergunta) AS 'PERGUNTA',
@@ -103,7 +106,7 @@ FROM (SELECT colaborador,
 			</staticText>
 			<image>
 				<reportElement x="5" y="45" width="200" height="57" uuid="b88adbfe-5e09-4463-8b87-92e0c7bad754"/>
-				<imageExpression><![CDATA["C:\\SISAT-v2\\lib\\etc\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{imagem}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="48" width="307" height="20" uuid="94e1778d-88be-42a6-8abd-8713c904d82a"/>
@@ -166,8 +169,8 @@ FROM (SELECT colaborador,
 				<reportElement x="0" y="158" width="548" height="1" uuid="c3c27a87-3da4-4d05-960c-7b043c2ed70f"/>
 			</line>
 			<textField>
-				<reportElement x="283" y="103" width="272" height="15" uuid="bf04c2f7-bb25-4650-9d2c-84588b3473ea"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="283" y="103" width="265" height="44" uuid="bf04c2f7-bb25-4650-9d2c-84588b3473ea"/>
+				<textElement verticalAlignment="Top">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CONCAT('[ ',c.id,' ] - ',c.nome)}]]></textFieldExpression>
@@ -364,7 +367,7 @@ FROM (SELECT colaborador,
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PERGUNTA}]]></textFieldExpression>
 			</textField>

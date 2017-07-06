@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório Geral por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="162"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="style2"/>
 	<parameter name="data_inicial" class="java.lang.String">
@@ -11,12 +11,13 @@
 	<parameter name="data_final" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\SISAT-v2\\lib\\etc\\"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="grupo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="imagem" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT a.colaborador,
        CONCAT('[ ',c.id,' ] - ',c.nome),
@@ -207,7 +208,7 @@ GROUP BY colaborador, a.textop;]]>
 						<subreportParameterExpression><![CDATA[$P{grupo}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "sub_geral.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{subreport}+"sub_geral.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupFooter>
@@ -238,7 +239,7 @@ GROUP BY colaborador, a.textop;]]>
 			</staticText>
 			<image>
 				<reportElement x="5" y="45" width="200" height="57" uuid="81a6039f-2c84-4ad4-bad6-70abda92a076"/>
-				<imageExpression><![CDATA["C:\\SISAT-v2\\lib\\etc\\CORMED_200.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{imagem}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="217" y="48" width="334" height="20" uuid="095019a3-f1b6-4c96-9f8f-83c3f34a47e6"/>
@@ -314,7 +315,7 @@ GROUP BY colaborador, a.textop;]]>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PERGUNTA}]]></textFieldExpression>
 			</textField>

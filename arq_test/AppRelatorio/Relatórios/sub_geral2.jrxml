@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório Geral por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style2"/>
+	<parameter name="colaborador" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_inicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_final" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="grupo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 'TOTAL',
+       SUM(EXCELENTE) AS '1 - EXCELENTE',
+	   SUM(MUITOBOM) AS '2 - MUITO BOM',
+       SUM(BOM) AS '3 - BOM',
+       SUM(REGULAR) AS '4 - REGULAR',
+       SUM(RUIM) AS '5 - RUIM',
+       COUNT('TOTAL')
+FROM (SELECT colaborador,
+				 CASE WHEN resposta = 1 THEN 1 ELSE 0 END AS 'EXCELENTE',
+				 CASE WHEN resposta = 2 THEN 1 ELSE 0 END AS 'MUITOBOM',
+				 CASE WHEN resposta = 3 THEN 1 ELSE 0 END AS 'BOM',
+				 CASE WHEN resposta = 4 THEN 1 ELSE 0 END AS 'REGULAR',
+				 CASE WHEN resposta = 5 THEN 1 ELSE 0 END AS 'RUIM'
+		  FROM pesquisa AS c
+		  WHERE grupo = $P{grupo} AND colaborador = $P{colaborador} AND data BETWEEN str_to_date($P{data_inicial}, "%d/%m/%Y") AND str_to_date($P{data_final}, "%d/%m/%Y")) AS a
+ GROUP BY colaborador;]]>
+	</queryString>
+	<field name="TOTAL" class="java.lang.String"/>
+	<field name="1 - EXCELENTE" class="java.math.BigDecimal"/>
+	<field name="2 - MUITO BOM" class="java.math.BigDecimal"/>
+	<field name="3 - BOM" class="java.math.BigDecimal"/>
+	<field name="4 - REGULAR" class="java.math.BigDecimal"/>
+	<field name="5 - RUIM" class="java.math.BigDecimal"/>
+	<field name="COUNT(&apos;TOTAL&apos;)" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="127" y="0" width="66" height="20" uuid="3bdbf0cc-a1f6-48a9-9f9b-1aeb155ee55d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{1 - EXCELENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="0" width="66" height="20" uuid="c170d9fb-9fe3-4a6e-a5f0-8639c448574b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{2 - MUITO BOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="259" y="0" width="66" height="20" uuid="324e36dc-9502-44cb-8b15-b36e1803c68c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{3 - BOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="0" width="66" height="20" uuid="ee936b6d-df38-4198-95a6-92779a9a393c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{4 - REGULAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="391" y="0" width="66" height="20" uuid="c5096f74-009f-4734-9ed0-b1991095e05a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{5 - RUIM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="0" width="66" height="20" uuid="924d166e-3e2d-4a14-b431-258d22527d92"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COUNT('TOTAL')}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-24" y="0" width="151" height="20" uuid="c35785ed-d79f-4738-af43-b401769bd1ef"/>
+				<box leftPadding="6">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<text><![CDATA[TOTALIS]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
