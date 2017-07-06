@@ -140,9 +140,10 @@ public class TelaApp extends javax.swing.JFrame {
             });
 
         }
-
+        
     }
 
+    
     public void classificarTabela() {
         DefaultTableModel modelo = (DefaultTableModel) jTableBD.getModel();
         jTableBD.setRowSorter(new TableRowSorter(modelo));
@@ -227,6 +228,7 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelBtnBD.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelBtnBD.setPreferredSize(new java.awt.Dimension(942, 91));
 
+        jBtnBDApagar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBDApagar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnBDApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/deletar_bd.png"))); // NOI18N
         jBtnBDApagar.setText("APAGAR");
@@ -242,6 +244,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnBDApagar.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnBDApagar.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        jBtnBDLer.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBDLer.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnBDLer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/ler.png"))); // NOI18N
         jBtnBDLer.setText("LER");
@@ -558,6 +561,7 @@ public class TelaApp extends javax.swing.JFrame {
         jPanelBtnCad.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelBtnCad.setPreferredSize(new java.awt.Dimension(950, 91));
 
+        jBtnCadColaborador.setBackground(new java.awt.Color(255, 255, 255));
         jBtnCadColaborador.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnCadColaborador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/user.png"))); // NOI18N
         jBtnCadColaborador.setText("COLABORADOR");
@@ -575,6 +579,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnCadColaborador.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnCadColaborador.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        jBtnCadMaq.setBackground(new java.awt.Color(255, 255, 255));
         jBtnCadMaq.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnCadMaq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/pc.png"))); // NOI18N
         jBtnCadMaq.setText("MÁQUINA");
@@ -587,6 +592,7 @@ public class TelaApp extends javax.swing.JFrame {
         jBtnCadMaq.setVerticalTextPosition(SwingConstants.BOTTOM);
         jBtnCadMaq.setHorizontalTextPosition(SwingConstants.CENTER);
 
+        jBtnCadGrupo.setBackground(new java.awt.Color(255, 255, 255));
         jBtnCadGrupo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnCadGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/geral.png"))); // NOI18N
         jBtnCadGrupo.setText("GRUPO");
@@ -603,6 +609,7 @@ public class TelaApp extends javax.swing.JFrame {
 
         logoFSFX2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/fsfx.png"))); // NOI18N
 
+        jBtnCadPerg.setBackground(new java.awt.Color(255, 255, 255));
         jBtnCadPerg.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jBtnCadPerg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/_imagens/Pergunta.png"))); // NOI18N
         jBtnCadPerg.setText("PERGUNTA");

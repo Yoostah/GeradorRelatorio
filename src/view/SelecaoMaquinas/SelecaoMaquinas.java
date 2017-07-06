@@ -7,6 +7,8 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,9 +26,10 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     public static TelaApp telaApp;
     public static BarraDeProgresso barraApp;
     public int maqImportadas;
+    volatile boolean ok = true;
 
     /**
-     * Creates new form Filho
+     * Creates new form SelecaoMaquinas
      */
     public SelecaoMaquinas(TelaApp parent, boolean modal) {
         super(parent, modal);
@@ -86,6 +89,11 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     public void completarBarra() {
         progresso.setMaximum(1);
         progresso.setValue(1);
+    }
+    
+    
+    public void atualizarApp (){
+        telaApp.lerBanco();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -290,6 +298,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
                     progresso.setValue(0);
 
                     for (Maquina i : m.listarImportar()) {
+                                                
                         ImportarDados imp = new ImportarDados(i, jDateInicial.getDate(), progImportacao, progresso, this);
 
                         Thread t1 = new Thread(imp);

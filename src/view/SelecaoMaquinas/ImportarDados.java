@@ -30,7 +30,7 @@ public class ImportarDados implements Runnable {
     public SelecaoMaquinas selMaq;
     private Maquina i = new Maquina();
     private Date dataform = new Date();
-    int progresso[] = null;
+    volatile int progresso[] = null;
     JProgressBar pbar;
     MaquinaDAO m = new MaquinaDAO();
 
@@ -60,8 +60,7 @@ public class ImportarDados implements Runnable {
                                 progresso[0] += 1;
                                 Thread.sleep(1000);
                             } catch (Exception ex) {
-                                //selMaq.maqImportadas--;
-                                progresso[0] += 1;
+                                    progresso[0] += 1;
                                 JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
                                 
                             }
@@ -72,7 +71,7 @@ public class ImportarDados implements Runnable {
                     Thread t2 = new Thread(bp);
                     t2.start();
                 } catch (Exception ex) {
-                    progresso[0] += 1;
+                                    progresso[0] += 1;
                     JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
                     if (progresso[0] == selMaq.maqImportadas ){
                                     selMaq.concluido();

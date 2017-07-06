@@ -41,16 +41,13 @@ public class BarraDeProgresso implements Runnable {
                 }
             }
         });
-        try {
-            
-            if (progresso[0] == selMaq.maqImportadas ){
-                selMaq.concluido();
-                selMaq.finalizado();
-                Confirmacao conf = new Confirmacao(telaApp, true);
-                conf.setVisible(true);
-            }
 
-        } catch (Exception e) {
+        if (progresso[0] == selMaq.maqImportadas) {
+            
+            selMaq.concluido();
+            selMaq.finalizado();
+            Confirmacao conf = Confirmacao.getInstance(selMaq);
+            conf.setVisible(true);
         }
 
     }

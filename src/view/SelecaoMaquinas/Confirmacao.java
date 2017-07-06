@@ -8,22 +8,29 @@ package view.SelecaoMaquinas;
 import controller.PesquisaDAO;
 import javax.swing.SwingConstants;
 import static view.SelecaoMaquinas.SelecaoMaquinas.telaApp;
-import view.TelaApp;
 
 /**
  *
  * @author Thulio
  */
 public class Confirmacao extends javax.swing.JDialog {
-    public static TelaApp telaApp;
+    public static SelecaoMaquinas selMaq;
+    private static Confirmacao instancia;
     /**
-     * Creates new form Confirmação
+     * Creates new form Confirmacao
      */
-    public Confirmacao(TelaApp parent, boolean modal) {
+    private Confirmacao(SelecaoMaquinas parent, boolean modal) {
         super(parent, modal);
-        this.telaApp = parent;
+        this.selMaq = parent;
         this.setModal(modal);
         initComponents();
+    }
+    
+    public synchronized static Confirmacao getInstance(SelecaoMaquinas tela){
+        if (instancia == null){
+            instancia = new Confirmacao(tela, true);
+        }
+        return instancia;
     }
 
     /**
@@ -123,15 +130,11 @@ public class Confirmacao extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
-        PesquisaDAO p = new PesquisaDAO();
-        p.inserirDadosporArquivo();
-        
-        
-        telaApp.lerBanco();
-        
-        dispose();
+            PesquisaDAO p = new PesquisaDAO();
+            p.inserirDadosporArquivo();
+            selMaq.atualizarApp();
+            dispose();
             
     }//GEN-LAST:event_jButtonOKActionPerformed
 
@@ -166,7 +169,7 @@ public class Confirmacao extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Confirmacao dialog = new Confirmacao(telaApp, true);
+                Confirmacao dialog = new Confirmacao(selMaq, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
