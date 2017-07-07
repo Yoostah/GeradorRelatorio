@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import z_ux.JTableUtilities;
 
 /**
@@ -53,6 +54,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     public void lerColaboradores() {
         
         DefaultTableModel modelo = (DefaultTableModel) jTableColaboradores.getModel();
+        jTableColaboradores.setRowSorter(new TableRowSorter(modelo));
         JTableUtilities.alinharColuna(jTableColaboradores, SwingConstants.CENTER, 0);
         ColaboradorDAO c = new ColaboradorDAO();
         modelo.setNumRows(0);

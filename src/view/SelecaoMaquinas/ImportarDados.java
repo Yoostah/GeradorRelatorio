@@ -44,44 +44,60 @@ public class ImportarDados implements Runnable {
 
     @Override
     public void run() {
-        try {
-            Thread.sleep(500);
-            if (i.isImportar() && !i.isImportado()) {
-                String dir = i.getCaminho();
-                File file = new File(dir);
-                try {
-                    for (String arq : file.list()) {
-                        if (arq.endsWith(".txt")) {
-                            System.out.println("------>" + arq + "<------");
-                            try {
-                                //System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
-                                leitura(dir + "\\" + arq, i.getNome(), i.getGrupo(), dataform);
-                                m.importado(i.getId(), true);
-                                progresso[0] += 1;
-                                Thread.sleep(1000);
-                            } catch (Exception ex) {
-                                    progresso[0] += 1;
-                                JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
-                                
+        synchronized (this) {
+            try {
+                //Thread.sleep(1000);
+                if (i.isImportar() && !i.isImportado()) {
+                    String dir = i.getCaminho();
+                    File file = new File(dir);
+                    if (file.list() != null) {
+
+                        try {
+                            for (String arq : file.list()) {
+                                if (arq.endsWith(".txt")) {
+                                    System.out.println("------>" + arq + "<------");
+                                    try {
+                                        //System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
+                                        progresso[0] += 1;
+                                        leitura(dir + "\\" + arq, i.getNome(), i.getGrupo(), dataform);
+                                        m.importado(i.getId(), true);
+                                        System.out.println("Try 1: " + i.getNome() + " /" + progresso[0]);
+                                        //Thread.sleep(1000);
+                                    } catch (Exception ex) {
+                                        progresso[0] += 1;
+                                        System.out.println("Catch1: " + i.getNome() + " /" + progresso[0]);
+                                        JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
+
+                                    }
+                                }
                             }
+
+                            BarraDeProgresso bp = new BarraDeProgresso(pbar, progresso, selMaq);
+                            Thread t2 = new Thread(bp);
+                            t2.start();
+                        } catch (Exception ex) {
+
+                        }
+
+                    } else {
+                        progresso[0] += 1;
+                        System.out.println("Catch 2: " + i.getNome() + " /" + progresso[0]);
+                        selMaq.maquinasComErro(i.getNome());
+                        if (progresso[0] == selMaq.maqImportadas) {
+                            selMaq.concluido();
+                            selMaq.completarBarra();
+                            selMaq.finalizado();
+                            BarraDeProgresso bp = new BarraDeProgresso(pbar, progresso, selMaq);
+                            Thread t2 = new Thread(bp);
+                            t2.start();
+
                         }
                     }
 
-                    BarraDeProgresso bp = new BarraDeProgresso(pbar, progresso, selMaq);
-                    Thread t2 = new Thread(bp);
-                    t2.start();
-                } catch (Exception ex) {
-                                    progresso[0] += 1;
-                    JOptionPane.showMessageDialog(null, "Não foi possível importar os dados da máquina " + i.getNome());
-                    if (progresso[0] == selMaq.maqImportadas ){
-                                    selMaq.concluido();
-                                    selMaq.completarBarra();
-                                    selMaq.finalizado();
-                                    
-                    }
                 }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
+
         }
 
     }
@@ -113,9 +129,9 @@ public class ImportarDados implements Runnable {
 
                     String[] d = dados[2].split("/");
 
-                    String data = (d[2]+"/"+d[1]+"/"+d[0]);
+                    String data = (d[2] + "/" + d[1] + "/" + d[0]);
 
-                    linha = ""+"\t"+dados[1] +"\t"+ data +"\t"+ Integer.parseInt(dados[4]) +"\t"+ Integer.parseInt(dados[5]) +"\t"+grupo+"\t"+ Integer.parseInt(dados[6].trim()) +"\t"+ maquina +"\t"+ Integer.parseInt(dados[4]);
+                    linha = "" + "\t" + dados[1] + "\t" + data + "\t" + Integer.parseInt(dados[4]) + "\t" + Integer.parseInt(dados[5]) + "\t" + grupo + "\t" + Integer.parseInt(dados[6].trim()) + "\t" + maquina + "\t" + Integer.parseInt(dados[4]);
                     conteudo = new StringBuilder(conteudo).append(linha.concat("\n")).toString();
                     escrever(linha);
                 }
@@ -124,14 +140,13 @@ public class ImportarDados implements Runnable {
         br.close();
         return conteudo;
     }
-    
+
     private void escrever(String s) {
         File dir = new File("C:\\SISAT-v2");
         File arq = new File(dir, "log.txt");
-        
 
         try {
-            
+
             //neste ponto criamos o arquivo fisicamente
             arq.createNewFile();
 

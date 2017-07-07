@@ -35,7 +35,7 @@ public class BarraDeProgresso implements Runnable {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep(100);
+                    //Thread.sleep(100);
                     jProgressBar1.setValue(progresso[0]);
                     selMaq.lerMaquinas();
 
@@ -44,15 +44,14 @@ public class BarraDeProgresso implements Runnable {
             }
         });
 
-        if (progresso[0] == selMaq.maqImportadas) {
-            try {
-                Thread.sleep(3000);
+        synchronized (this) {
+            if (progresso[0] >= selMaq.maqImportadas-2) {
+
                 selMaq.concluido();
                 selMaq.finalizado();
                 Confirmacao conf = Confirmacao.getInstance(selMaq);
                 conf.setVisible(true);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(BarraDeProgresso.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         }
 

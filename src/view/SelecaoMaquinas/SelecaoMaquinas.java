@@ -6,7 +6,9 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -26,7 +28,7 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     public static TelaApp telaApp;
     public static BarraDeProgresso barraApp;
     public int maqImportadas;
-    volatile boolean ok = true;
+    List<String> erros = new ArrayList();
 
     /**
      * Creates new form SelecaoMaquinas
@@ -94,6 +96,24 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
     
     public void atualizarApp (){
         telaApp.lerBanco();
+    }
+    
+    public void maquinasComErro(String maquina){
+        erros.add(maquina);
+    }
+    
+    public void lerErros (){
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < erros.size(); i++ ){
+            str.append("<b>Máquina: </b><i><font size=\"3\" color=\"red\">"+erros.get(i)+"</i><br>");
+        }
+        if (erros.size() > 1){
+            JOptionPane.showMessageDialog(this, "<html><body text-align:center; width='300'><h1>Não foi possível importar as seguintes máquinas:</h1><br>"+str+"<br><br><h2>Verifique o caminho das máquinas na seção de cadastro!</h2>","ERRO NA IMPORTAÇÃO",
+        JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "<html><body text-align:center; width='300'><h1>Não foi possível importar a seguinte máquina:</h1><br>"+str+"<br><br><h2>Verifique o caminho da máquina na seção de cadastro!</h2>","ERRO NA IMPORTAÇÃO",
+        JOptionPane.ERROR_MESSAGE);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -257,8 +277,8 @@ public class SelecaoMaquinas extends javax.swing.JDialog {
 
     private void jBtnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImportarActionPerformed
         MaquinaDAO m = new MaquinaDAO();
-
-        int progImportacao[] = {0};
+        erros.clear();
+        int[] progImportacao = {0};
         int erro = 0;
 
         maqImportadas = 0;

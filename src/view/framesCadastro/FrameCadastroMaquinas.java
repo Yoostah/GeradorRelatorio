@@ -24,6 +24,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import z_ux.JTableUtilities;
 
 /**
@@ -55,6 +56,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
 
     public void lerMaquinas() {
         DefaultTableModel modelo = (DefaultTableModel) jTableMaquinas.getModel();
+        jTableMaquinas.setRowSorter(new TableRowSorter(modelo));
         JTableUtilities.alinharColuna(jTableMaquinas, SwingConstants.CENTER, 0);
         MaquinaDAO m = new MaquinaDAO();
         modelo.setNumRows(0);

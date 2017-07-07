@@ -7,7 +7,6 @@ package view.SelecaoMaquinas;
 
 import controller.PesquisaDAO;
 import javax.swing.SwingConstants;
-import static view.SelecaoMaquinas.SelecaoMaquinas.telaApp;
 
 /**
  *
@@ -131,9 +130,12 @@ public class Confirmacao extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
+            selMaq.completarBarra();
+            selMaq.finalizado();
             PesquisaDAO p = new PesquisaDAO();
             p.inserirDadosporArquivo();
             selMaq.atualizarApp();
+            selMaq.lerErros();
             dispose();
             
     }//GEN-LAST:event_jButtonOKActionPerformed
