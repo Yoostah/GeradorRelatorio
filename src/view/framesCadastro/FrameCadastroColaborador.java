@@ -39,14 +39,6 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
         initComponents();
         lerColaboradores();
         
-        
-        //Colocar os Grupos Cadastrados no banco no JCBox
-        GrupoDAO g = new GrupoDAO();
-        
-        for (Grupo i : g.listar()) {
-            jCGrupo.addItem(i.getNome());
-        }
-        
         //Esconder os Campos ao Iniciar Frame
         esconderCampos();
     }
@@ -66,6 +58,14 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
                 i.getGrupo()
             });
 
+        }
+        
+        //Colocar os Grupos Cadastrados no banco no JCBox
+        GrupoDAO g = new GrupoDAO();
+        jCGrupo.removeAllItems();
+        jCGrupo.addItem("( Escolha um Grupo )");
+        for (Grupo i : g.listar()) {
+            jCGrupo.addItem(i.getId()+"-"+i.getNome());
         }
     }
     
@@ -246,9 +246,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             jTableColaboradores.getColumnModel().getColumn(0).setMinWidth(50);
             jTableColaboradores.getColumnModel().getColumn(0).setPreferredWidth(50);
             jTableColaboradores.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTableColaboradores.getColumnModel().getColumn(2).setMinWidth(200);
             jTableColaboradores.getColumnModel().getColumn(2).setPreferredWidth(200);
-            jTableColaboradores.getColumnModel().getColumn(2).setMaxWidth(200);
+            jTableColaboradores.getColumnModel().getColumn(2).setMaxWidth(500);
         }
         // assume JTable is named "table"
         int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -343,7 +342,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             if (op == 1){
                 c.setNome(jTxtNome.getText().toUpperCase());
                 c.setId(Integer.parseInt(jTxtID.getText()));
-                c.setGrupo(jCGrupo.getSelectedItem().toString());
+                String[] grupo = jCGrupo.getSelectedItem().toString().split("-");
+                c.setGrupo(grupo[0]);
                 cdao.create(c);
                 lerColaboradores();
 
@@ -357,7 +357,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
 
                 c.setNome(jTxtNome.getText().toUpperCase());
                 c.setId(Integer.parseInt(jTxtID.getText()));
-                c.setGrupo(jCGrupo.getSelectedItem().toString());
+                String[] grupo = jCGrupo.getSelectedItem().toString().split("-");
+                c.setGrupo(grupo[0]);
                 cdao.atualizar(c, selecionado);
                 lerColaboradores();
 

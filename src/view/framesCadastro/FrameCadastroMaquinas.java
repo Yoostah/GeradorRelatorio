@@ -43,12 +43,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
         initComponents();
         lerMaquinas();
 
-        //Colocar os Grupos Cadastrados no banco no JCBox
-        GrupoDAO g = new GrupoDAO();
-
-        for (Grupo i : g.listar()) {
-            jCGrupo.addItem(i.getNome());
-        }
+        
 
         //Esconder os Campos ao Iniciar Frame
         esconderCampos();
@@ -72,7 +67,14 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
             });
 
         }
-
+        
+        //Colocar os Grupos Cadastrados no banco no JCBox
+        GrupoDAO g = new GrupoDAO();
+        jCGrupo.removeAllItems();
+        jCGrupo.addItem("( Escolha um Grupo )");
+        for (Grupo i : g.listar()) {
+            jCGrupo.addItem(i.getId()+"-"+i.getNome());
+        }
     }
 
     public void esconderCampos() {
@@ -399,7 +401,8 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
             if (op == 1) {
                 m.setNome(jTxtNome.getText().toUpperCase());
                 m.setCaminho(jTxtCaminho.getText());
-                m.setGrupo(jCGrupo.getSelectedItem().toString());
+                String[] grupo = jCGrupo.getSelectedItem().toString().split("-");
+                m.setGrupo(grupo[0]);
                 mdao.create(m);
                 lerMaquinas();
 
@@ -413,7 +416,8 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
 
                 m.setNome(jTxtNome.getText().toUpperCase());
                 m.setCaminho(jTxtCaminho.getText());
-                m.setGrupo(jCGrupo.getSelectedItem().toString());
+                String[] grupo = jCGrupo.getSelectedItem().toString().split("-");
+                m.setGrupo(grupo[0]);
                 mdao.atualizar(m, selecionado);
                 lerMaquinas();
 

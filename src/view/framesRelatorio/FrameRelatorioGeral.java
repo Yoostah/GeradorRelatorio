@@ -34,24 +34,25 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
         atualizarJCBGrupo();
 
     }
-    
+
     public void esconderBtnRelatorio() {
         jBtnGerar.setVisible(false);
     }
-    
+
     public void mostrarBtnRelatorio() {
         jBtnGerar.setVisible(true);
     }
 
-    public void atualizarJCBGrupo(){
+    public void atualizarJCBGrupo() {
         //Colocar os Grupos Cadastrados no banco no JCBox
         GrupoDAO g = new GrupoDAO();
         jCGrupo.removeAllItems();
         jCGrupo.addItem("( Escolha um Grupo )");
         for (Grupo i : g.listar()) {
-            jCGrupo.addItem(i.getNome());
+            jCGrupo.addItem(i.getId() + "-  " + i.getNome());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -219,6 +220,13 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
             jBtnGerar.setEnabled(false);
             Connection con = AcessoDB.getConnection();
 
+            String[] grupo = jCGrupo.getSelectedItem().toString().split("-  ");
+            String g = "";
+            for (int i = 1; i < grupo.length; i++) {
+                g += (grupo[i]);
+
+            }
+
             try {
                 String data_inicial = new SimpleDateFormat("dd/MM/yyyy").format(jDateInicial.getDate());
                 String data_final = new SimpleDateFormat("dd/MM/yyyy").format(jDateFinal.getDate());
@@ -227,7 +235,7 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                 Map map = new HashMap();
                 map.put("data_inicial", data_inicial);
                 map.put("data_final", data_final);
-                map.put("grupo", jCGrupo.getSelectedItem().toString());
+                map.put("grupo", g);
                 map.put("imagem", "_imagens/CORMED_200.png");
 
                 //Carregando o Relatório

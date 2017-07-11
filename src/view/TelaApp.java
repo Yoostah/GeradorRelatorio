@@ -717,7 +717,7 @@ public class TelaApp extends javax.swing.JFrame {
 
                         if (resp == 0){
                             for (Colaborador i : c.listarColaboradoresSemCadastro()){
-                                c.createSemCadastro(i.getId());
+                                c.createSemCadastro(999,i.getId());
                             }
 
                             relColab.mostrarBtnRelatorio();
@@ -828,6 +828,7 @@ public class TelaApp extends javax.swing.JFrame {
         cadPerg.setVisible(false);
         cadGru.setVisible(false);
         cadMaq.setVisible(true);
+        cadMaq.lerMaquinas();
     }//GEN-LAST:event_jBtnCadMaqActionPerformed
 
     private void jBtnCadColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCadColaboradorActionPerformed
@@ -835,6 +836,7 @@ public class TelaApp extends javax.swing.JFrame {
         cadPerg.setVisible(false);
         cadMaq.setVisible(false);
         cadColab.setVisible(true);
+        cadColab.lerColaboradores();
     }//GEN-LAST:event_jBtnCadColaboradorActionPerformed
 
     private void jBtnRelGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRelGeralActionPerformed

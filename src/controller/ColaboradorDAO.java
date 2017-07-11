@@ -32,7 +32,7 @@ public class ColaboradorDAO {
             stmt = con.prepareStatement("INSERT INTO colaborador (ID, NOME, GRUPO) VALUES (?,?,?)");
             stmt.setInt(1,c.getId());
             stmt.setString(2,c.getNome());
-            stmt.setString(3,c.getGrupo());
+            stmt.setInt(3,Integer.parseInt(c.getGrupo()));
                         
             
             stmt.executeUpdate();
@@ -54,7 +54,7 @@ public class ColaboradorDAO {
             stmt = con.prepareStatement("UPDATE colaborador set id = ?, nome = ?, grupo = ? where id = ?");
             stmt.setInt(1, c.getId());
             stmt.setString(2,c.getNome());
-            stmt.setString(3,c.getGrupo());
+            stmt.setInt(3,Integer.parseInt(c.getGrupo()));
             stmt.setInt(4, id);
            
             
@@ -99,16 +99,16 @@ public class ColaboradorDAO {
         List<Colaborador> colaboradores = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM colaborador ORDER BY id");
+            stmt = con.prepareStatement("SELECT c.id, c.nome, g.nome FROM colaborador AS c JOIN grupo AS g ON c.grupo = g.id");
             rs = stmt.executeQuery();
             
             
             while (rs.next()){
                 Colaborador c = new Colaborador();
                 
-                c.setId(rs.getInt("id"));
-                c.setNome(rs.getString("nome"));
-                c.setGrupo(rs.getString("grupo"));
+                c.setId(rs.getInt("c.id"));
+                c.setNome(rs.getString("c.nome"));
+                c.setGrupo(rs.getString("g.nome"));
                 
                 colaboradores.add(c);
                         
@@ -151,13 +151,14 @@ public class ColaboradorDAO {
         return colaboradores;
     }
     
-    public void createSemCadastro(int id_colab){
+    public void createSemCadastro(int fixo, int id_colab){
         Connection con = AcessoDB.getConnection();
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("INSERT INTO colaborador (id,nome,grupo) VALUE (?, CONCAT('COLABORADOR',' - ',id),'SEM GRUPO')");
+            stmt = con.prepareStatement("INSERT INTO colaborador (id,nome,grupo) VALUE (?, CONCAT('COLABORADOR',' - ',id),?)");
             stmt.setInt(1,id_colab);
+            stmt.setInt(2,fixo);
                         
             
             stmt.executeUpdate();

@@ -34,7 +34,7 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         initComponents();
 
         atualizarJCBGrupo();
-        atualizarJCBColaboradorGrupo();
+        
 
     }
 
@@ -52,8 +52,9 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
         jCGrupo.removeAllItems();
         jCGrupo.addItem("( Escolha um Grupo )");
         for (Grupo i : g.listar()) {
-            jCGrupo.addItem(i.getNome());
+            jCGrupo.addItem(i.getId()+"-  "+i.getNome());
         }
+        atualizarJCBColaboradorGrupo();
     }
 
 //    public void atualizarJCBColaborador() {
@@ -74,8 +75,15 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
             ColaboradorDAO c = new ColaboradorDAO();
             jCColaborador.removeAllItems();
             jCColaborador.addItem("( Escolha um Colaborador )");
+            String[] grupo = jCGrupo.getSelectedItem().toString().split("-  ");
+            String g = "" ;
+            for (int i = 1; i < grupo.length; i++){
+                g += (grupo[i]);
+            
+            }
             for (Colaborador i : c.listar()) {
-                if (i.getGrupo().equals(jCGrupo.getSelectedItem().toString())) {
+                
+                if (i.getGrupo().equals(g)) {
                     jCColaborador.addItem(i.getId() + " - " + i.getNome());
                 }
             }

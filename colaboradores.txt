@@ -1,0 +1,74 @@
+﻿1001	Amanda Vieira Godoi	1
+1002	Ana Paula Senna Moreira Santos	1
+1003	Ana Paula Ramos	1
+1004	Anedina Izabel Duarte Souza	1
+1005	Anne Caroline Bueno Assunção 	1
+1006	Arilene Januário Fernandes	1
+1007	Bruna Iris Dos Santos	1
+1008	Cíntia Elaine de Moura	1
+1009	Cíntia Morais Alves Nogueira	1
+1010	Cláudia Botelho de Andrade	1
+1011	Cláudia Roseli Teixeira Siqueira	1
+1012	Claudiane Santos Souza	1
+1013	Cristiane Ângela Veridiano	1
+1014	Cristiane Lorene de Oliveira Camargo	1
+1015	Daiane Pires Lima de Souza	1
+1016	Daniel Oliveira de Paula	1
+1017	Daniela Cristina de Oliveira Balbino	1
+1018	Daniele Pereira Quintão Bueno	1
+1019	Débora Natália Vasconcelos Rigueira	1
+1020	Edilene Teixeira de Carvalho Tavares	1
+1021	Eduarda Ribeiro Milholo	1
+1022	Emilda Meire Pereira Damasceno	1
+1023	Fabbiana Pinheiro dos Reis	1
+1024	Fernanda Pereira Leite	1
+1025	Geiziele Ana de Jesus	1
+1026	Gercica Tamires Rodrigues dos Santos	1
+1027	Gessymara da Silva Olimpio	1
+1028	Iara Poliana Toledo Costa	1
+1029	Jaíta Dias da Silva Bitencourt	1
+1030	Jessica Daiane Moreira de Souza	1
+1031	Juliana Perpetua de Sá	1
+1032	Juliana Soares Oliveira	1
+1033	Juliane Duarte Botelho	1
+1034	Kátia Maria Silveira	1
+1035	Kátia Marines Oliveira	1
+1036	Kelly Cristina Gomes da Luz	1
+1037	Lélia Vieira da Silva	1
+1038	Lívia Quintão Cordeiro	1
+1039	Lorena de Souza Machado	1
+1040	Luana Caroline Guilherme Pires	1
+1041	Luciane Campos Duarte	1
+1042	Luciene Gomes Peixoto de Lima	1
+1043	Ludimila Reis Figueira	1
+1044	Marcelle Ribeiro Pinho Soares	1
+1045	Marielen Sangi Mariano	1
+1046	Marylucy Gonçalves Melo	1
+1047	Meyrelle Hayume Braga Coelho	1
+1048	Natália Sousa Silva	1
+1049	Natalia Teodoro Silva	1
+1050	Nathália Lane Coelho de Oliveira	1
+1051	Patrícia Alves Ferreira	1
+1052	Patrícia Cristina Quintão Paiva	1
+1053	Priscila Chrystian Tomaz	1
+1054	Raiane Kely Burmann	1
+1055	Samara Araujo de Barros Quaresma Alves	1
+1056	Samara Lopes Constantino	1
+1057	Sandila Oliveira Ramos Sena	1
+1058	Suelen Cristina Pereira Sousa	1
+1059	Talina dos Santos Alves	1
+1060	Tatiane Moreira do Carmo	1
+1061	Thaiany Caroline da Silva Esteves	1
+1062	Thais Amorim Santos	1   
+1063	Thauany Domingues Lima Bernardes Serqueira	1
+1064	Thaylandia Cristina Soares Pereira	1
+1065	Wartiley Junior Silva Fernandes	1
+1066	Melyssa Senivades Pereira	1
+1067	Karen Elen Turco Leal	1
+1068	Flavia Lima Santos	1
+1069	Charlene Verdin De Avellar De Carvalho	1
+1070	Keyla Carvalho Costa Souza	1
+1071	Larissa Lima Viana	1
+1072	Lourdes Marla Lima Dos Reis Cardoso	1
+1073	Stefany Lorriny Pereira Alvarenga	1
+1074	Yasmin Vieira Martins	1

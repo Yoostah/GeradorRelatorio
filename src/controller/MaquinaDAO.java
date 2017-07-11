@@ -100,19 +100,19 @@ public class MaquinaDAO {
         List<Maquina> maquinas = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM maquinas ORDER BY id");
+            stmt = con.prepareStatement("SELECT m.id, m.nome, m.caminho, g.nome, m.importar, m.importado FROM maquinas AS m JOIN grupo AS g ON m.grupo = g.id;");
             rs = stmt.executeQuery();
             
             
             while (rs.next()){
                 Maquina m = new Maquina();
                 
-                m.setId(rs.getInt("id"));
-                m.setNome(rs.getString("nome"));
-                m.setCaminho(rs.getString("caminho"));
-                m.setGrupo(rs.getString("grupo"));
-                m.setImportar(rs.getBoolean("importar"));
-                m.setImportado(rs.getBoolean("importado"));
+                m.setId(rs.getInt("m.id"));
+                m.setNome(rs.getString("m.nome"));
+                m.setCaminho(rs.getString("m.caminho"));
+                m.setGrupo(rs.getString("g.nome"));
+                m.setImportar(rs.getBoolean("m.importar"));
+                m.setImportado(rs.getBoolean("m.importado"));
                 
                 maquinas.add(m);
                         

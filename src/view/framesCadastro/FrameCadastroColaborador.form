@@ -246,7 +246,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="200" minWidth="200" prefWidth="200" resizable="true">
+                <Column maxWidth="500" minWidth="-1" prefWidth="200" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
