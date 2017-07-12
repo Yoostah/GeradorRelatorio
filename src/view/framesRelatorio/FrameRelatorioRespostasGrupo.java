@@ -235,7 +235,8 @@ public class FrameRelatorioRespostasGrupo extends javax.swing.JPanel {
                 Map map = new HashMap();
                 map.put("data_inicial", data_inicial);
                 map.put("data_final", data_final);
-                map.put("grupo", g);
+                map.put("grupo", grupo[0]);
+                map.put("g", g);
                 map.put("imagem", "_imagens/CORMED_200.png");
 
                 //Carregando o Relatório

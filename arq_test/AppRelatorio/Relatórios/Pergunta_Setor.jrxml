@@ -19,6 +19,7 @@
 	<parameter name="imagem" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="g" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 	   p.pergunta,
@@ -138,7 +139,7 @@ FROM (SELECT a.grupo,
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{grupo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{grupo}+' - '+$P{g}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="158" width="548" height="1" uuid="c3c27a87-3da4-4d05-960c-7b043c2ed70f"/>

@@ -717,7 +717,7 @@ public class TelaApp extends javax.swing.JFrame {
 
                         if (resp == 0){
                             for (Colaborador i : c.listarColaboradoresSemCadastro()){
-                                c.createSemCadastro(999,i.getId());
+                                c.createSemCadastro(0,i.getId());
                             }
 
                             relColab.mostrarBtnRelatorio();

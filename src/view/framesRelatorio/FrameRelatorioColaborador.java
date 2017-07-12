@@ -278,6 +278,13 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
             jBtnGerar.setEnabled(false);
             Connection con = AcessoDB.getConnection();
 
+            String[] grupo = jCGrupo.getSelectedItem().toString().split("-  ");
+            String g = "";
+            for (int i = 1; i < grupo.length; i++) {
+                g += (grupo[i]);
+
+            }
+            
             try {
                 String data_inicial = new SimpleDateFormat("dd/MM/yyyy").format(jDateInicial.getDate());
                 String data_final = new SimpleDateFormat("dd/MM/yyyy").format(jDateFinal.getDate());
@@ -289,7 +296,8 @@ public class FrameRelatorioColaborador extends javax.swing.JPanel {
                 map.put("data_inicial", data_inicial);
                 map.put("data_final", data_final);
                 map.put("imagem", "_imagens/CORMED_200.png");
-                map.put("grupo", jCGrupo.getSelectedItem().toString());
+                map.put("grupo", grupo[0]);
+                map.put("g", g);
                 
 
                 //Carregando o Relatório

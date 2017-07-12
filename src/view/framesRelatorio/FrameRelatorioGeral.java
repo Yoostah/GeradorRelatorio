@@ -226,6 +226,7 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                 g += (grupo[i]);
 
             }
+            
 
             try {
                 String data_inicial = new SimpleDateFormat("dd/MM/yyyy").format(jDateInicial.getDate());
@@ -235,8 +236,9 @@ public class FrameRelatorioGeral extends javax.swing.JPanel {
                 Map map = new HashMap();
                 map.put("data_inicial", data_inicial);
                 map.put("data_final", data_final);
-                map.put("grupo", g);
+                map.put("grupo", grupo[0]);
                 map.put("imagem", "_imagens/CORMED_200.png");
+                map.put("g",g);
 
                 //Carregando o Relatório
                 InputStream jasper = this.getClass().getResourceAsStream("/_relatorios/Geral_Setor.jasper");

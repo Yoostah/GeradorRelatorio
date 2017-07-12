@@ -58,9 +58,9 @@ public class ImportarDados implements Runnable {
                                     System.out.println("------>" + arq + "<------");
                                     try {
                                         //System.out.println("Importando dados de (" + dir + "\\" + arq + ")");
-                                        progresso[0] += 1;
                                         leitura(dir + "\\" + arq, i.getNome(), i.getGrupo(), dataform);
                                         m.importado(i.getId(), true);
+                                        progresso[0] += 1;
                                         System.out.println("Try 1: " + i.getNome() + " /" + progresso[0]);
                                         //Thread.sleep(1000);
                                     } catch (Exception ex) {

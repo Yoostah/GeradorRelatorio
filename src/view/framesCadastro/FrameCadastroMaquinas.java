@@ -386,6 +386,9 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
     private void jBtnMaqADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqADDActionPerformed
         //Habilitar Botoões
         mostrarCampos();
+        
+        jBtnMaqDEL.setEnabled(false);
+        jBtnMaqUPD.setEnabled(false);
 
         op = 1;
     }//GEN-LAST:event_jBtnMaqADDActionPerformed
@@ -409,7 +412,11 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
                 jTxtNome.setText("");
                 jTxtCaminho.setText("");
                 jCGrupo.setSelectedIndex(0);
+                
+                esconderCampos();
 
+                jBtnMaqUPD.setEnabled(true);
+                jBtnMaqDEL.setEnabled(true);
             } else {
                 //Pega ID do item Selecionado na tabela
                 int selecionado = (Integer.parseInt(jTableMaquinas.getValueAt(jTableMaquinas.getSelectedRow(), 0).toString()));
@@ -427,6 +434,8 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
 
                 esconderCampos();
 
+                jBtnMaqADD.setEnabled(true);
+                jBtnMaqDEL.setEnabled(true);
                 //Habilitar seleção de linhas novamente
                 jTableMaquinas.setEnabled(true);
             }
@@ -454,6 +463,8 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
     private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMaqUPDActionPerformed
         //LER OS DADOS DA LINHA SELECIOANDA
         if (jTableMaquinas.getSelectedRow() != -1) {
+            jBtnMaqADD.setEnabled(false);
+            jBtnMaqDEL.setEnabled(false);
             //Travar a seleção de outra linha da tabela antes da alteração ser enviada
             jTableMaquinas.setEnabled(false);
             //Mostrar campos ocultos
@@ -484,10 +495,7 @@ public class FrameCadastroMaquinas extends javax.swing.JPanel {
     }//GEN-LAST:event_jBtnCaminhoActionPerformed
 
     private void jTableMaquinasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMaquinasMouseEntered
-        //DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        //String pathValue = jTableMaquinas.getValueAt(jTableMaquinasMouseEntered(evt), 2);
-        //renderer.setToolTipText("Click for combo box");
-        //jTableMaquinas.getColumnModel().getColumn(2).setCellRenderer(renderer);
+        
     }//GEN-LAST:event_jTableMaquinasMouseEntered
 
 

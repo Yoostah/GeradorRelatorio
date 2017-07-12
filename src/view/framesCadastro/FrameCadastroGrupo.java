@@ -298,6 +298,10 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
                 lerGrupos();
 
                 jTxtNome.setText("");
+                
+                esconderCampos();
+                jBtnGruUPD.setEnabled(true);
+                jBtnGruDEL.setEnabled(true);
 
             } else {
                 //Pega ID do item Selecionado na tabela
@@ -310,7 +314,9 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
                 jTxtNome.setText("");
 
                 esconderCampos();
-
+                
+                jBtnGruADD.setEnabled(true);
+                jBtnGruDEL.setEnabled(true);
                 //Habilitar seleção de linhas novamente
                 jTableGrupos.setEnabled(true);
             }   
@@ -320,7 +326,9 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
     private void jBtnGruADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGruADDActionPerformed
         //Habilitar Botoões
         mostrarCampos();
-
+        jBtnGruDEL.setEnabled(false);
+        jBtnGruUPD.setEnabled(false);
+        
         op = 1;
     }//GEN-LAST:event_jBtnGruADDActionPerformed
 
@@ -341,26 +349,12 @@ public class FrameCadastroGrupo extends javax.swing.JPanel {
         }
     }                                          
 
-    private void jBtnMaqUPDActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        //LER OS DADOS DA LINHA SELECIOANDA
-        if (jTableGrupos.getSelectedRow() != -1) {
-            //Travar a seleção de outra linha da tabela antes da alteração ser enviada
-            jTableGrupos.setEnabled(false);
-            //Mostrar campos ocultos
-            mostrarCampos();
-            
-            jTxtNome.setText(jTableGrupos.getValueAt(jTableGrupos.getSelectedRow(), 1).toString());
-            
-            op = 2;
-        
-        } else {
-            JOptionPane.showMessageDialog(null, "Escolha um Grupo para alterar!");
-        }
-    }                                          
 
     private void jBtnGruUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGruUPDActionPerformed
         //LER OS DADOS DA LINHA SELECIOANDA
         if (jTableGrupos.getSelectedRow() != -1) {
+            jBtnGruADD.setEnabled(false);
+            jBtnGruDEL.setEnabled(false);
             //Travar a seleção de outra linha da tabela antes da alteração ser enviada
             jTableGrupos.setEnabled(false);
             //Mostrar campos ocultos

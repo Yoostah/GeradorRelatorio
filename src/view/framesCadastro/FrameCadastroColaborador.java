@@ -350,6 +350,10 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
                 jTxtNome.setText("");
                 jTxtID.setText("");
                 jCGrupo.setSelectedIndex(0);
+                
+                esconderCampos();
+                jBtnColabUPD.setEnabled(true);
+                jBtnColabDEL.setEnabled(true);
 
             } else {
                 //Pega ID do item Selecionado na tabela
@@ -370,6 +374,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
 
                 //Habilitar seleção de linhas novamente
                 jTableColaboradores.setEnabled(true);
+                jBtnColabADD.setEnabled(true);
+                jBtnColabDEL.setEnabled(true);
             }    
         }
     }//GEN-LAST:event_jBtnADDActionPerformed
@@ -377,6 +383,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     private void jBtnColabADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnColabADDActionPerformed
         //Habilitar Botoões
         mostrarCampos();
+        jBtnColabDEL.setEnabled(false);
+        jBtnColabUPD.setEnabled(false);
 
         op = 1;
     }//GEN-LAST:event_jBtnColabADDActionPerformed
@@ -402,6 +410,8 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
     private void jBtnColabUPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnColabUPDActionPerformed
         //LER OS DADOS DA LINHA SELECIOANDA
         if (jTableColaboradores.getSelectedRow() != -1) {
+            jBtnColabADD.setEnabled(false);
+            jBtnColabDEL.setEnabled(false);
             //Travar a seleção de outra linha da tabela antes da alteração ser enviada
             jTableColaboradores.setEnabled(false);
             //Mostrar campos ocultos
@@ -412,7 +422,7 @@ public class FrameCadastroColaborador extends javax.swing.JPanel {
             jCGrupo.setSelectedItem(jTableColaboradores.getValueAt(jTableColaboradores.getSelectedRow(), 2).toString());
             
             op = 2;
-        
+            
         } else {
             JOptionPane.showMessageDialog(null, "Escolha um Colaborador para alterar!");
             

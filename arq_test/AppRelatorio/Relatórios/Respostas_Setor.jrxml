@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório de Colaborador por Grupo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80f277e3-cbec-4031-9257-a3eb0bd3be76">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="114"/>
+	<property name="ireport.y" value="52"/>
 	<style name="style1" backcolor="#C0C0C0"/>
 	<parameter name="data_inicial" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -16,6 +16,7 @@
 	<parameter name="imagem" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="g" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 	   grupo,
@@ -128,7 +129,7 @@ FROM (SELECT a.grupo,
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{grupo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{grupo}+' - '+$P{g}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="158" width="548" height="1" uuid="c3c27a87-3da4-4d05-960c-7b043c2ed70f"/>
